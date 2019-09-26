@@ -1,0 +1,106 @@
+body{
+  height: auto;
+  margin: 0px;
+  display: inline-flex;
+}
+
+header {
+	background-color: #ffb100;
+  position: absolute;
+	font-size: 10px;
+	font-family: cursive;
+	height: 80px;
+	top:0px;
+	right: 0px;
+	left: 0px;
+}
+
+#vaquita_cabeza {
+	margin-left: 100px;
+	max-height: 100px
+}
+
+#carrito {
+	margin-right: 50px;
+	float: right;
+	max-height: 100px
+}
+
+#usuario {
+	margin-right: 20px;
+	float: right;
+	max-height: 100px
+}
+
+nav {
+	background-color: #ffebc6;
+  position: sticky;
+	font-size: 10px;
+	font-family: cursive;
+	text-align: center;
+	width: 300px;
+	margin-top: 80px;
+  height: inherit;
+	right: 0px;
+  bottom: 0px;
+	margin-bottom: 50px;
+}
+
+#buscador{
+	margin-top: 20px;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+#buscar {
+	margin-top: 10px;
+	margin-right: 50px;
+	width: 100px;
+	float: right;
+}
+
+#novedades {
+	margin-top: 20px;
+	width: 200px;
+}
+
+#mas_visto {
+	margin-top: 20px;
+	width: 200px;
+}
+
+#categorias {
+
+}
+
+article{
+  margin-top: 80px;
+  height: inherit;
+  margin-bottom: 50px;
+  margin-left: 15px;
+  position: sticky;
+}
+
+footer{;
+  position: fixed;
+  bottom: 0px;
+  right: 0px;
+  left: 0px;
+  height: 50px;
+  background-color:#003844;
+  color:#FFFFFF;
+}
+
+#cert{
+  margin-top: 10px;
+  margin-left: 60px;
+}
+
+#certificated{
+  max-width: 20;
+}
+
+#terminosycond{
+  margin-left: 900;
+  color: #FFFFFF;
+}
