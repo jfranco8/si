@@ -1,5 +1,5 @@
 body{
-  height: auto;
+  min-height: 100vh;
   margin: 0px;
   display: inline-flex;
 }
@@ -40,7 +40,6 @@ nav {
 	text-align: center;
 	width: 300px;
 	margin-top: 80px;
-  height: inherit;
 	right: 0px;
   bottom: 0px;
 	margin-bottom: 50px;
@@ -75,7 +74,6 @@ nav {
 
 article{
   margin-top: 80px;
-  height: inherit;
   margin-bottom: 50px;
   margin-left: 15px;
   position: sticky;
@@ -83,6 +81,7 @@ article{
 
 footer{;
   position: fixed;
+  margin-top: 0px;
   bottom: 0px;
   right: 0px;
   left: 0px;
@@ -101,6 +100,6 @@ footer{;
 }
 
 #terminosycond{
-  margin-left: 900;
+  margin-left: 30px;
   color: #FFFFFF;
 }
