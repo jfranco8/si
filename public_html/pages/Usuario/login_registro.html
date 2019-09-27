@@ -2,26 +2,25 @@
 
   <head>
     <title>muuuvie</title>
-    <link rel="stylesheet" type="text/css" href= "../css/styles.css" />
+    <link rel="stylesheet" type="text/css" href= "../../css/styles.css" />
     <meta charset="utf-8">
   </head>
 
   <body>
 
     <header>
-  		<a href = "https://google.es"><img id="vaquita_cabeza" src="../images/diseño/vaca.PNG"></a>
-      <a href = "https://google.es"><img id="logo" src="../images/diseño/muuuvie.png"></a>
-  		<a href = "https://google.es"><img id="usuario" src="../images/diseño/login.png"></a>
+      <a href = "https://google.es"><img id="vaquita_cabeza" src="../../images/diseño/vaca.PNG"></a>
+      <a href = "https://google.es"><img id="logo" src="../../images/diseño/muuuvie.png"></a>
     </header>
 
 
     <nav>
-  		<input id="buscador" type="search" placeholder="Introduce una muuuvie..."> <!--autocomplete="" -->
-  		<button id="buscar">Buscar</button>
-  		<a href = "https://google.es"><button id="novedades">Novedades</button></a>
-  		<a href = "https://google.es"><button id="mas_visto">Muuuvies + vistas</button></a>
-  		<a href = "https://google.es"><button id="mas_visto">Todas</button></a>
-  		<br><br/>
+      <input id="buscador" type="search" placeholder="Introduce una muuuvie..."> <!--autocomplete="" -->
+      <button id="buscar">Buscar</button>
+      <a href = "https://google.es"><button id="novedades">Novedades</button></a>
+      <a href = "https://google.es"><button id="mas_visto">Muuuvies + vistas</button></a>
+      <a href = "https://google.es"><button id="mas_visto">Todas</button></a>
+      <br><br/>
 
       <select id="categorias" onchange="location = this.value;">
         <option>Elegir categoría</option>
@@ -31,24 +30,28 @@
         <option value="base_usuario.html">Drama</option>
         <option value="base_usuario.html">Miedo</option>
       </select>
-  	</nav>
+    </nav>
 
     <article>
-      <p>INICIO</p>
-      <p>lo del medio</p>
-      <p>lo del medio</p>
-      <p>lo del medio</p>
-      <p>lo del medio</p>
-      <p>lo del CCCCCCCCCCCCCCCC</p>
-      <p>FIN</p>
-      <p>A</p>
+      <h1>log in</h1>
+      <div id="login">
+        Usuario: <input type="text" class="cuadradito">
+        <br><br/>
+        Contraseña: <input type="password" class="cuadradito">
+        <br><br/>
+        <button id="enviar_datos">Enviar datos</button>
+      </div>
+      <div id="registrar">
+        <img id="registro_foto" src="../../images/diseño/registro.png">
+        <a href = "registro.html"><button id="registrate">Registrate!!</button>
+      </div>
     </article>
 
     <footer>
       <div id="cert">
-        <img id="copyright" src="../images/diseño/copyright.png">
+        <img id="copyright" src="../../images/diseño/copyright.png">
         2019, muuuvie
-        <a id="terminosycond" href="../files/terms_and_cond.md">Términos y condiciones</a>
+        <a id="terminosycond" href="../../files/terms_and_cond.md">Términos y condiciones</a>
       </div>
     </footer>
   </body>

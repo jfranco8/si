@@ -112,12 +112,13 @@ article{
 }
 
 h1{
-  margin-top: 50px;
+  margin-top: 70px;
   margin-left: 220px;
   font-size: 40px;
   font-family: cursive;
 }
 
+/*html de ayuda*/
 #ayuda{
   margin-top: 10px;
   margin-left: 120px;
@@ -135,8 +136,9 @@ h1{
   max-width: 200px;
 }
 
+/*html de registro*/
 #registro{
-  margin-top: 50px;
+  margin-top: 30px;
   margin-left: 200px;
   margin-right: 280px;
 }
@@ -160,7 +162,29 @@ h1{
   max-width: 200px;
 }
 
-footer{;
+/*html de login_registro*/
+
+#login{
+  float: left;
+  margin-top: 30px;
+  margin-left: 100px;
+}
+#registrar{
+  float: right;
+  margin-left: -50px;
+}
+#registro_foto{
+  max-width: 200px;
+  margin-top: -70px;
+  float: left;
+}
+#registrate{
+  margin-top: 100px;
+  margin-right: 50px;
+  float: right;
+}
+
+footer{
   position: fixed;
   margin-top: 0px;
   bottom: 0px;
