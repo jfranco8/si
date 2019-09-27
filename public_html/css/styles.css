@@ -16,20 +16,39 @@ header {
 }
 
 #vaquita_cabeza {
+  margin-top: 5px;
 	margin-left: 100px;
-	max-height: 100px
+	max-height: 70px;
+}
+
+#logo{
+  max-height: 65px;
+  margin-top: 7px;
+  margin-left: 300px;
 }
 
 #carrito {
-	margin-right: 50px;
+	margin-right: 40px;
+  margin-top: 20px;
 	float: right;
-	max-height: 100px
+	max-height: 40px;
 }
 
 #usuario {
-	margin-right: 20px;
+	margin-right: 40px;
+  margin-top: 20px;
 	float: right;
-	max-height: 100px
+	max-height: 40px;
+}
+
+#menu_usuario {
+	margin-right: 20px;
+  margin-top: 30px;
+	float: right;
+	max-height: 40px;
+  color: black;
+  background-color: white;
+  border-color: white;
 }
 
 nav {
@@ -52,24 +71,37 @@ nav {
 }
 
 #buscar {
+  font-weight: bold;
 	margin-top: 10px;
 	margin-right: 50px;
 	width: 100px;
 	float: right;
+  color: #FFFFFF;
+  background-color: #f8c630;
+  border-color: #f8c630;
 }
 
 #novedades {
+  font-weight: bold;
 	margin-top: 20px;
 	width: 200px;
+  color: #FFFFFF;
+  background-color: #f8c630;
+  border-color: #f8c630;
 }
 
 #mas_visto {
+  font-weight: bold;
 	margin-top: 20px;
 	width: 200px;
+  color: #FFFFFF;
+  background-color: #f8c630;
+  border-color: #f8c630;
 }
 
 #categorias {
-
+  color: grey;
+  background-color: #ffffff;
 }
 
 article{
@@ -86,7 +118,7 @@ footer{;
   right: 0px;
   left: 0px;
   height: 50px;
-  background-color:#003844;
+  background-color:#545863;
   color:#FFFFFF;
 }
 
@@ -95,8 +127,8 @@ footer{;
   margin-left: 60px;
 }
 
-#certificated{
-  max-width: 20;
+#copyright{
+  max-width: 17px;
 }
 
 #terminosycond{
