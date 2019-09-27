@@ -111,6 +111,55 @@ article{
   position: sticky;
 }
 
+h1{
+  margin-top: 50px;
+  margin-left: 220px;
+  font-size: 40px;
+  font-family: cursive;
+}
+
+#ayuda{
+  margin-top: 10px;
+  margin-left: 120px;
+}
+
+#enviar{
+  margin-left: 500px;
+  margin-top: 20px;
+}
+
+#gracias{
+  margin-top: -270px;
+  margin-right: 130px;
+  float: right;
+  max-width: 200px;
+}
+
+#registro{
+  margin-top: 50px;
+  margin-left: 200px;
+  margin-right: 280px;
+}
+
+.cuadradito{
+  float: right;
+  margin-left: 50px;
+  margin-right: 200px;
+}
+
+#enviar_datos{
+  margin-top: 30px;
+  float: right;
+  margin-right: 200px;
+}
+
+#bienvenida{
+  margin-top: 0px;
+  margin-right: 130px;
+  float: right;
+  max-width: 200px;
+}
+
 footer{;
   position: fixed;
   margin-top: 0px;
