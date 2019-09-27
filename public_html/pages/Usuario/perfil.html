@@ -2,26 +2,26 @@
 
   <head>
     <title>muuuvie</title>
-    <link rel="stylesheet" type="text/css" href= "../css/styles.css" />
+    <link rel="stylesheet" type="text/css" href= "../../css/styles.css" />
     <meta charset="utf-8">
   </head>
 
   <body>
 
     <header>
-  		<a href = "https://google.es"><img id="vaquita_cabeza" src="../images/diseño/vaca.PNG"></a>
-      <a href = "https://google.es"><img id="logo" src="../images/diseño/muuuvie.png"></a>
+  		<a href = "https://google.es"><img id="vaquita_cabeza" src="../../images/diseño/vaca.PNG"></a>
+      <a href = "https://google.es"><img id="logo" src="../../images/diseño/muuuvie.png"></a>
 
       <select id="menu_usuario" onchange="location = this.value;" >
-        <option>Nombre usuario</option>
-        <option value="https://google.es">Perfil</option>
-        <option value="https://google.es">Historial</option>
-        <option value="https://google.es">¡Ayuda!</option>
+        <option>martagm</option>
+        <option value="perfil.html">Perfil</option>
+        <option value="historial.html">Historial</option>
+        <option value="ayuda.html">¡Ayuda!</option>
         <option value="https://google.es">Cerrar sesión</option>
       </select>
 
-  		<a href = "https://google.es"><img id="usuario" src="../images/diseño/usuario.PNG"></a>
-  		<a href = "https://google.es"><img id="carrito" src="../images/diseño/carrito.PNG"></a>
+  		<a href = "https://google.es"><img id="usuario" src="../../images/diseño/usuario.PNG"></a>
+  		<a href = "https://google.es"><img id="carrito" src="../../images/diseño/carrito.PNG"></a>
     </header>
 
 
@@ -44,14 +44,31 @@
   	</nav>
 
     <article>
-      <p>INICIO</p>
-      <p>lo del medio</p>
-      <p>lo del medio</p>
-      <p>lo del medio</p>
-      <p>lo del medio</p>
-      <p>lo del CCCCCCCCCCCCCCCC</p>
-      <p>FIN</p>
-      <p>A</p>
+      <h1>Mi perfil</h1>
+      <div id="perfil">
+        <b>Nombre: </b> Marta
+        <br><br/>
+        <b>Apellidos: </b> Garcia Marin
+        <br><br/>
+        <b>Usuario: </b> martagm
+        <br><br/>
+        <b>Fecha de nacimiento: </b> 28/07/1997
+        <br><br/>
+        <b>Fecha de ingreso: </b> 27/09/2019
+        <br><br/>
+        <b>Email: </b> marta.garciamarin@estudiante.uam.es
+        <br><br/>
+        &nbsp;&nbsp;&nbsp;<u>Cambiar contraseña</u>
+        <br><br/>
+        <b>Contraseña actual: </b> <input type="password" class="cuadradito">
+        <br><br/>
+        <b>Nueva contraseña: </b> <input type="password" class="cuadradito">
+        <br><br/>
+        <b>Repetir contraseña: </b> <input type="password" class="cuadradito">
+        <br><br/>
+        <button id="actualizar" >Actualizar</button>
+       </div>
+      
     </article>
 
     <footer>

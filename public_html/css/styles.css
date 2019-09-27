@@ -145,8 +145,9 @@ h1{
 
 .cuadradito{
   float: right;
-  margin-left: 50px;
-  margin-right: 200px;
+  margin-left: 90px;
+  margin-right: 160px;
+  margin-top: -5px
 }
 
 #enviar_datos{
@@ -163,25 +164,38 @@ h1{
 }
 
 /*html de login_registro*/
-
 #login{
   float: left;
   margin-top: 30px;
   margin-left: 100px;
 }
+
 #registrar{
   float: right;
   margin-left: -50px;
 }
+
 #registro_foto{
   max-width: 200px;
   margin-top: -70px;
   float: left;
 }
+
 #registrate{
   margin-top: 100px;
   margin-right: 50px;
   float: right;
+}
+
+/*html de perfil*/
+#perfil{
+  margin-left: 150px;
+  margin-bottom: 100px;
+}
+
+#actualizar{
+  float: right;
+  margin-right: 180px;
 }
 
 footer{
