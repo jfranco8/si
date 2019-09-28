@@ -282,13 +282,13 @@ input[type="radio"]:checked ~ label {
 }
 
 .fila_peli{
-  margin-top: 50px;;
+  margin-top: 10px;;
   display: inline-flex;
   width: 620px;
 }
 
 .basic_peli{
-  height: 290px;
+  height: 330px;
   width: 180px;
   margin-left: 55px;
 }
