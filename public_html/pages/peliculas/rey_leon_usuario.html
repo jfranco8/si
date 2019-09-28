@@ -1,0 +1,90 @@
+<html>
+
+  <head>
+    <title>muuuvie</title>
+    <link rel="stylesheet" type="text/css" href= "../../css/styles.css" />
+    <meta charset="utf-8">
+  </head>
+
+  <body>
+
+    <header>
+  		<a href = "https://google.es"><img id="vaquita_cabeza" src="../../images/diseño/vaca.PNG"></a>
+      <a href = "https://google.es"><img id="logo" src="../../images/diseño/muuuvie.png"></a>
+
+      <select id="menu_usuario" onchange="location = this.value;" >
+        <option>Nombre usuario</option>
+       <option value="perfil.html">Perfil</option>
+        <option value="historial.html">Historial</option>
+        <option value="ayuda.html">¡Ayuda!</option>
+        <option value="https://google.es">Cerrar sesión</option>
+      </select>
+
+  		<a href = "https://google.es"><img id="usuario" src="../../images/diseño/usuario.PNG"></a>
+  		<a href = "https://google.es"><img id="carrito" src="../../images/diseño/carrito.PNG"></a>
+    </header>
+
+
+    <nav>
+  		<input id="buscador" type="search" placeholder="Introduce una muuuvie..."> <!--autocomplete="" -->
+  		<button id="buscar">Buscar</button>
+  		<a href = "https://google.es"><button id="novedades">Novedades</button></a>
+  		<a href = "https://google.es"><button id="mas_visto">Muuuvies + vistas</button></a>
+  		<a href = "https://google.es"><button id="mas_visto">Todas</button></a>
+  		<br><br/>
+
+      <select id="categorias" onchange="location = this.value;">
+        <option>Elegir categoría</option>
+        <option value="base_usuario.html">Animación</option>
+        <option value="base_usuario.html">Aventuras</option>
+        <option value="base_usuario.html">Comedia</option>
+        <option value="base_usuario.html">Drama</option>
+        <option value="base_usuario.html">Miedo</option>
+      </select>
+  	</nav>
+
+    <article class="info_peli">
+      <div>
+        <h1>El Rey León</h1>
+        <div class="info_peli" id="info_sin_foto">
+          <p class="elem_info_peli">Puntuación:</p>
+          <label class="elem_info_peli" id="cheked_star">★★★★★</label>
+          <p class="elem_info_peli">2019</p>
+          <p class="elem_info_peli">Drama/Aventura</p>
+          <p class="elem_info_peli">|</p>
+          <p class="elem_info_peli">Tu puntuación:</p>
+          <form class="elem_info_peli">
+            <p class="clasificacion">
+              <input id="radio1" type="radio" name="estrellas" value="5"><!--
+              --><label for="radio1">★</label><!--
+              --><input id="radio2" type="radio" name="estrellas" value="4"><!--
+              --><label for="radio2">★</label><!--
+              --><input id="radio3" type="radio" name="estrellas" value="3"><!--
+              --><label for="radio3">★</label><!--
+              --><input id="radio4" type="radio" name="estrellas" value="2"><!--
+              --><label for="radio4">★</label><!--
+              --><input id="radio5" type="radio" name="estrellas" value="1"><!--
+              --><label for="radio5">★</label>
+            </p>
+          </form>
+        </div>
+        <p class="elem_info_peli" id="sinopsis_title">Sinopsis:</p>
+        <p class="elem_info_peli"> Tras el asesinato de su padre, Simba, un joven león es apartado su reino y tendrá que descubrir con ayuda de amigos de la sabana africana el significado de la responsabilidad y la valentía. Más tarde volverá para recuperar el control de su reino.</p>
+        <a href = "https://www.youtube.com/watch?v=mb79ctR-E-c" class="elem_info_peli" id="trailer_link">
+          Ver trailer</a>
+      </div>
+      <div class="foto_compra">
+        <img class="foto_info_peli" src="../../images/pelis/rey_leon.JPG">
+        <a href = "https://google.es"><button id="compra">Comprar</button></a>
+      </div>
+    </article>
+
+    <footer>
+      <div id="cert">
+        <img id="copyright" src="../../images/diseño/copyright.png">
+        2019, muuuvie
+        <a id="terminosycond" href="../../files/terms_and_cond.md">Términos y condiciones</a>
+      </div>
+    </footer>
+  </body>
+<html>

@@ -106,9 +106,10 @@ nav {
 
 article{
   margin-top: 80px;
-  margin-bottom: 50px;
+  margin-bottom: 100px;
   margin-left: 15px;
   position: sticky;
+  max-width: 620px;
 }
 
 h1{
@@ -196,6 +197,126 @@ h1{
 #actualizar{
   float: right;
   margin-right: 180px;
+}
+
+.info_peli{
+  display: inline-flex;
+}
+
+.elem_info_peli{
+  margin-left: 20px;
+  max-width: 700px;
+}
+
+#form {
+  width: 250px;
+  margin: 0 auto;
+  height: 50px;
+}
+
+#form p {
+  text-align: center;
+}
+
+#form label {
+  font-size: 20px;
+}
+
+input[type="radio"] {
+  display: none;
+}
+
+label {
+  color: grey;
+}
+
+.clasificacion {
+  direction: rtl;
+  unicode-bidi: bidi-override;
+}
+
+label:hover,
+label:hover ~ label {
+  color: orange;
+}
+
+input[type="radio"]:checked ~ label {
+  color: orange;
+}
+
+#cheked_star{
+  color: orange;
+}
+
+.foto_info_peli{
+  height: 170px;
+  margin-top: 30px;
+  margin-bottom: 50px;
+}
+
+#sinopsis_title{
+  font-weight: bold;
+}
+
+#info_sin_foto{
+  width: 700px;
+}
+
+#trailer_link{
+  color: orange;
+}
+
+#compra {
+  font-weight: bold;
+  color: #FFFFFF;
+  width: 126px;;
+  background-color: #f8c630;
+  border-color: #f8c630;
+}
+
+.foto_compra{
+  align-items: center;
+  display: block;
+  width: 126px;
+  margin-left: 120px;
+}
+
+.fila_peli{
+  margin-top: 50px;;
+  display: inline-flex;
+  width: 620px;
+}
+
+.basic_peli{
+  height: 290px;
+  width: 180px;
+  margin-left: 55px;
+}
+
+.basic_foto{
+  height: 245px;
+  width: 180px;
+}
+
+.punt_año{
+  display: inline-flex;
+  background-color: grey;
+  width: 180px;
+  height: 35px;
+}
+
+#punt{
+  color: white;
+  margin-left: 10px;
+}
+
+#año{
+  color: white;
+  margin-left: 100px;
+}
+
+#titulo_peli{
+  margin-top: 10px;
 }
 
 footer{
