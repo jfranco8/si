@@ -109,6 +109,9 @@ article{
   margin-bottom: 100px;
   margin-left: 15px;
   position: sticky;
+}
+
+#int_article{
   max-width: 620px;
 }
 
