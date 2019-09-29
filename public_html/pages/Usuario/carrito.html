@@ -2,36 +2,36 @@
 
   <head>
     <title>muuuvie</title>
-    <link rel="stylesheet" type="text/css" href= "../css/styles.css" />
+    <link rel="stylesheet" type="text/css" href= "../../css/styles.css" />
     <meta charset="utf-8">
   </head>
 
   <body>
 
     <header>
-  		<a href = "https://google.es"><img id="vaquita_cabeza" src="../images/diseño/vaca.PNG"></a>
-      <a href = "https://google.es"><img id="logo" src="../images/diseño/muuuvie.png"></a>
+      <a href = "https://google.es"><img id="vaquita_cabeza" src="../../images/diseño/vaca.PNG"></a>
+      <a href = "https://google.es"><img id="logo" src="../../images/diseño/muuuvie.png"></a>
 
       <select id="menu_usuario" onchange="location = this.value;" >
-        <option>Nombre usuario</option>
-        <option value="https://google.es">Perfil</option>
-        <option value="https://google.es">Historial</option>
-        <option value="https://google.es">¡Ayuda!</option>
-        <option value="https://google.es">Cerrar sesión</option>
+        <option>martagm</option>
+        <option value="perfil.html">Perfil</option>
+        <option value="historial.html">Historial</option>
+        <option value="ayuda.html">¡Ayuda!</option>
+        <option value="../../pages/visualizacion/novedades_login.html">Cerrar sesión</option>
       </select>
 
-  		<a href = "https://google.es"><img id="usuario" src="../images/diseño/usuario.PNG"></a>
-  		<a href = "https://google.es"><img id="carrito" src="../images/diseño/carrito.PNG"></a>
+      <a href = "https://google.es"><img id="usuario" src="../../images/diseño/usuario.PNG"></a>
+      <a href = "carrito.html"><img id="carrito" src="../../images/diseño/carrito.PNG"></a>
     </header>
 
 
     <nav>
-  		<input id="buscador" type="search" placeholder="Introduce una muuuvie..."> <!--autocomplete="" -->
-  		<button id="buscar">Buscar</button>
-  		<a href = "https://google.es"><button id="novedades">Novedades</button></a>
-  		<a href = "https://google.es"><button id="mas_visto">Muuuvies + vistas</button></a>
-  		<a href = "https://google.es"><button id="mas_visto">Todas</button></a>
-  		<br><br/>
+      <input id="buscador" type="search" placeholder="Introduce una muuuvie..."> <!--autocomplete="" -->
+      <button id="buscar">Buscar</button>
+      <a href = "https://google.es"><button id="novedades">Novedades</button></a>
+      <a href = "https://google.es"><button id="mas_visto">Muuuvies + vistas</button></a>
+      <a href = "https://google.es"><button id="mas_visto">Todas</button></a>
+      <br><br/>
 
       <select id="categorias" onchange="location = this.value;">
         <option>Elegir categoría</option>
@@ -42,17 +42,33 @@
         <option value="base_usuario.html">Miedo</option>
         <option value="base_usuario.html">Ciencia ficción</option>
       </select>
-  	</nav>
+    </nav>
 
     <article>
-      <p>INICIO</p>
-      <p>lo del medio</p>
-      <p>lo del medio</p>
-      <p>lo del medio</p>
-      <p>lo del medio</p>
-      <p>lo del CCCCCCCCCCCCCCCC</p>
-      <p>FIN</p>
-      <p>A</p>
+      <h1>Mi carrito</h1>
+      <table id="tabla">
+        <tr>
+          <th>Película</th>
+          <th>Precio</th>
+          <th>Mantener?</th>
+        </tr>
+        <tr>
+          <td class="titulos">El rey León</td>
+          <td>15,50</td>
+          <td> <button>eliminar</button> </td>
+        </tr>
+        <tr>
+          <td class="titulos">Las cŕonicas de Narnia: el principe caspian</td>
+          <td>5,50</td>
+          <td> <button>eliminar</button> </td>
+        </tr>
+        <tr>
+          <td class="titulos">El rey León</td>
+          <td>15,50</td>
+          <td> <button>eliminar</button> </td>
+        </tr>
+      </table>
+        <button id="finalizar">Finalizar compra</button>
     </article>
 
     <footer>

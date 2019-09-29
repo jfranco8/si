@@ -323,6 +323,34 @@ input[type="radio"]:checked ~ label {
   margin-top: 10px;
 }
 
+/*html de historial y carrito*/
+#tabla{
+  margin-left: 120px;
+  width: 100%;
+  border: 2px solid #ffb100;
+  border-color: #ffb100;
+  border-spacing: 0;
+}
+
+.titulos{
+  width: 70%;
+  text-align: left;
+}
+
+th, td{
+  height: 40px;
+  border: 2px solid #ffb100;
+  text-align: center;
+}
+
+#finalizar{
+  float: right;
+  margin-right: -100px;
+  margin-top: 20px;
+}
+
+
+/*Pie de pagina*/
 footer{
   position: fixed;
   margin-top: 0px;
