@@ -9,29 +9,29 @@
   <body>
 
     <header>
-      <a href = "https://google.es"><img id="vaquita_cabeza" src="../../images/diseño/vaca.PNG"></a>
-      <a href = "https://google.es"><img id="logo" src="../../images/diseño/muuuvie.png"></a>
+      <a href = "../visualizacion/todas_usuario.html"><img id="vaquita_cabeza" src="../../images/diseño/vaca.PNG"></a>
+      <a href = "../visualizacion/novedades_usuario.html"><img id="logo" src="../../images/diseño/muuuvie.png"></a>
     </header>
 
 
     <nav>
-      <input id="buscador" type="search" placeholder="Introduce una muuuvie..."> <!--autocomplete="" -->
-      <button id="buscar">Buscar</button>
-      <a href = "https://google.es"><button id="novedades">Novedades</button></a>
-      <a href = "https://google.es"><button id="mas_visto">Muuuvies + vistas</button></a>
-      <a href = "https://google.es"><button id="mas_visto">Todas</button></a>
-      <br><br/>
+  		<input id="buscador" type="search" placeholder="Introduce una muuuvie..."> <!--autocomplete="" -->
+  		<button id="buscar">Buscar</button>
+  		<a href = "../visualizacion/novedades_usuario.html"><button id="novedades">Novedades</button></a>
+  		<a href = "../visualizacion/mas_vistas_usuario.html"><button id="mas_visto">Muuuvies + vistas</button></a>
+  		<a href = "../visualizacion/todas_usuario.html"><button id="mas_visto">Todas</button></a>
+  		<br><br/>
 
       <select id="categorias" onchange="location = this.value;">
         <option>Elegir categoría</option>
-        <option value="base_usuario.html">Animación</option>
-        <option value="base_usuario.html">Aventuras</option>
-        <option value="base_usuario.html">Comedia</option>
-        <option value="base_usuario.html">Drama</option>
-        <option value="base_usuario.html">Miedo</option>
-        <option value="base_usuario.html">Ciencia ficción</option>
+        <option value="../categorias/animacion_usuario.html">Animación</option>
+        <option value="../categorias/aventura_usuario.html">Aventuras</option>
+        <option value="../categorias/comedia_usuario.html">Comedia</option>
+        <option value="../categorias/drama_usuario.html">Drama</option>
+        <option value="../categorias/miedo_usuario.html">Miedo</option>
+        <option value="../categorias/ciencia_ficcion_usuario.html">Ciencia ficción</option>
       </select>
-    </nav>
+  	</nav>
 
     <article>
       <h1>Crear nuevo usuario</h1>
@@ -51,7 +51,7 @@
         <br><br/>
         Repetir contraseña: <input style="margin-top: -25px" type="password" class="cuadradito">
         <br><br/>
-        <button id="enviar_datos">Enviar datos</button>
+        <a href = "../visualizacion/novedades_usuario.html"><button id="enviar_datos">Enviar datos</button>
       </div>
     </article>
 
