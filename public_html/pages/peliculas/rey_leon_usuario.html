@@ -1,4 +1,6 @@
-<html>
+<!DOCTYPE html>
+
+<html lang="es">
 
   <head>
     <title>muuuvie</title>
@@ -9,8 +11,8 @@
   <body>
 
     <header>
-      <a href = "../visualizacion/todas_usuario.html"><img id="vaquita_cabeza" src="../../images/diseño/vaca.PNG"></a>
-      <a href = "../visualizacion/novedades_usuario.html"><img id="logo" src="../../images/diseño/muuuvie.png"></a>
+      <a href = "../visualizacion/todas_usuario.html"><img id="vaquita_cabeza" alt="Error" src="../../images/diseño/vaca.PNG"></a>
+      <a href = "../visualizacion/novedades_usuario.html"><img id="logo" alt="Error" src="../../images/diseño/muuuvie.png"></a>
 
       <select id="menu_usuario" onchange="location = this.value;" >
         <option>Nombre usuario</option>
@@ -20,18 +22,18 @@
         <option value="../visualizacion/novedades_login.html">Cerrar sesión</option>
       </select>
 
-      <a href = "../Usuario/perfil.html"><img id="usuario" src="../../images/diseño/usuario.PNG"></a>
-      <a href = "../Usuario/carrito.html"><img id="carrito" src="../../images/diseño/carrito.PNG"></a>
+      <a href = "../Usuario/perfil.html"><img id="usuario" alt="Error" src="../../images/diseño/usuario.PNG"></a>
+      <a href = "../Usuario/carrito.html"><img id="carrito" alt="Error" src="../../images/diseño/carrito.PNG"></a>
     </header>
 
 
     <nav>
-  		<input id="buscador" type="search" placeholder="Introduce una muuuvie..."> <!--autocomplete="" -->
-  		<button id="buscar">Buscar</button>
-  		<a href = "../visualizacion/novedades_usuario.html"><button id="novedades">Novedades</button></a>
-  		<a href = "../visualizacion/mas_vistas_usuario.html"><button id="mas_visto">Muuuvies + vistas</button></a>
-  		<a href = "../visualizacion/todas_usuario.html"><button id="mas_visto">Todas</button></a>
-  		<br><br/>
+      <input id="buscador" type="search" placeholder="Introduce una muuuvie..."> <!--autocomplete="" -->
+      <button id="buscar">Buscar</button>
+      <a href = "../visualizacion/novedades_usuario.html"><button id="novedades">Novedades</button></a>
+      <a href = "../visualizacion/mas_vistas_usuario.html"><button class="mas_visto">Muuuvies + vistas</button></a>
+      <a href = "../visualizacion/todas_usuario.html"><button class="mas_visto">Todas</button></a>
+      <br><br/>
 
       <select id="categorias" onchange="location = this.value;">
         <option>Elegir categoría</option>
@@ -42,14 +44,14 @@
         <option value="../categorias/miedo_usuario.html">Miedo</option>
         <option value="../categorias/ciencia_ficcion_usuario.html">Ciencia ficción</option>
       </select>
-  	</nav>
+    </nav>
 
     <article class="info_peli">
       <div>
         <h1>El Rey León</h1>
         <div class="info_peli" id="info_sin_foto">
           <p class="elem_info_peli">Puntuación:</p>
-          <label class="elem_info_peli" id="cheked_star">★★★★★</label>
+          <label class="elem_info_peli" id="cheked_star_peli">★★★★★</label>
           <p class="elem_info_peli">2019</p>
           <p class="elem_info_peli">Drama/Aventura</p>
           <p class="elem_info_peli">|</p>
@@ -75,17 +77,17 @@
           Ver trailer</a>
       </div>
       <div class="foto_compra">
-        <img class="foto_info_peli" src="../../images/pelis/rey_leon.JPG">
+        <img class="foto_info_peli" alt="Error" src="../../images/pelis/rey_leon.JPG">
         <a href = "https://google.es"><button id="compra">Comprar</button></a>
       </div>
     </article>
 
     <footer>
       <div id="cert">
-        <img id="copyright" src="../../images/diseño/copyright.png">
+        <img id="copyright" alt="Error" src="../../images/diseño/copyright.png">
         2019, muuuvie
         <a id="terminosycond" href="../../files/terms_and_cond.md">Términos y condiciones</a>
       </div>
     </footer>
   </body>
-<html>
+</html>

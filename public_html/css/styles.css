@@ -253,6 +253,11 @@ input[type="radio"]:checked ~ label {
   color: orange;
 }
 
+#cheked_star_peli{
+  margin-top: 15px;
+  color: orange;
+}
+
 .foto_info_peli{
   max-height: 170px;
   margin-top: 30px;
