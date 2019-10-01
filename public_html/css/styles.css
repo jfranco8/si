@@ -249,6 +249,7 @@ input[type="radio"]:checked ~ label {
 }
 
 #cheked_star{
+  margin-top: 15px;
   color: orange;
 }
 
