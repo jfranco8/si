@@ -91,7 +91,7 @@ nav {
   border-color: #f8c630;
 }
 
-#mas_visto {
+.mas_visto {
   font-weight: bold;
 	margin-top: 20px;
 	width: 200px;
@@ -248,7 +248,7 @@ input[type="radio"]:checked ~ label {
   color: orange;
 }
 
-#cheked_star{
+.cheked_star{
   margin-top: 15px;
   color: orange;
 }
@@ -310,17 +310,17 @@ input[type="radio"]:checked ~ label {
   height: 35px;
 }
 
-#punt{
+.punt{
   color: white;
   margin-left: 10px;
 }
 
-#año{
+.año{
   color: white;
   margin-left: 100px;
 }
 
-#titulo_peli{
+.titulo_peli{
   margin-top: 10px;
 }
 
