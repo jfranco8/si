@@ -124,35 +124,40 @@ h1{
 }
 
 /*html de ayuda*/
+#ayudita{
+  margin-top: 10px;
+  margin-left: 50px;
+}
+
 #ayuda{
   margin-top: 10px;
-  margin-left: 120px;
+  margin-left: 50px;
 }
 
 #enviar{
-  margin-left: 500px;
+  margin-left: 400px;
   margin-top: 20px;
 }
 
 #gracias{
-  margin-top: -270px;
-  margin-right: 130px;
+  margin-top: 50px;
+  margin-right: 100px;
   float: right;
   max-width: 200px;
 }
 
 /*html de registro*/
 #registro{
-  margin-top: 30px;
-  margin-left: 200px;
-  margin-right: 280px;
+  float: left;
+  margin-top: 10px;
+  margin-left: 150px; 
 }
 
 .cuadradito{
   float: right;
   margin-left: 90px;
   margin-right: 160px;
-  margin-top: -5px
+  margin-top: 5px
 }
 
 #enviar_datos{
