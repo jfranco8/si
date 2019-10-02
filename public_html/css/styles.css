@@ -55,7 +55,7 @@ header {
 nav {
 	background-color: #ffebc6;
   position: sticky;
-	font-size: 10px;
+	font-size: 15px;;
 	font-family: cursive;
 	text-align: center;
 	width: 300px;
@@ -86,18 +86,14 @@ nav {
   font-weight: bold;
 	margin-top: 20px;
 	width: 200px;
-  color: #FFFFFF;
-  background-color: #f8c630;
-  border-color: #f8c630;
+  color: #f8c630;
 }
 
 .mas_visto {
   font-weight: bold;
 	margin-top: 20px;
 	width: 200px;
-  color: #FFFFFF;
-  background-color: #f8c630;
-  border-color: #f8c630;
+  color: #f8c630;
 }
 
 #categorias {
@@ -116,6 +112,10 @@ article{
   max-width: 700px;
 }
 
+#texto_y_vaquita{
+  display: inline-flex;
+}
+
 h1{
   margin-top: 70px;
   margin-left: 220px;
@@ -132,6 +132,7 @@ h1{
 #ayuda{
   margin-top: 10px;
   margin-left: 50px;
+  resize: none;
 }
 
 #enviar{
@@ -141,16 +142,16 @@ h1{
 
 #gracias{
   margin-top: 50px;
-  margin-right: 100px;
+  margin-left: 60px;
   float: right;
-  max-width: 200px;
+  max-width: 170px;
 }
 
 /*html de registro*/
 #registro{
   float: left;
   margin-top: 10px;
-  margin-left: 150px; 
+  margin-left: 150px;
 }
 
 .cuadradito{
@@ -164,6 +165,8 @@ h1{
   margin-top: 30px;
   float: right;
   margin-right: 200px;
+  color: orange;
+  font-weight: bold;
 }
 
 #bienvenida{
@@ -192,9 +195,11 @@ h1{
 }
 
 #registrate{
-  margin-top: 100px;
+  margin-top: 30px;
   margin-right: 50px;
   float: right;
+  color: orange;
+  font-weight: bold;
 }
 
 /*html de perfil*/
@@ -283,10 +288,8 @@ input[type="radio"]:checked ~ label {
 
 #compra {
   font-weight: bold;
-  color: #FFFFFF;
-  width: 126px;;
-  background-color: #f8c630;
-  border-color: #f8c630;
+  color: #f8c630;
+  width: 126px;
 }
 
 .foto_compra{
@@ -309,11 +312,13 @@ input[type="radio"]:checked ~ label {
 }
 
 .basic_foto{
+  margin-bottom: 0px;
   height: 245px;
   width: 180px;
 }
 
 .punt_año{
+  margin-top: -5px;
   display: inline-flex;
   background-color: grey;
   width: 180px;

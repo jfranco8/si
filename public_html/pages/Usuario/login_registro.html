@@ -11,27 +11,33 @@
   <body>
 
     <header>
-      <a href = "../visualizacion/todas_usuario.html"><img id="vaquita_cabeza" alt ="Error" src="../../images/diseño/vaca.PNG"></a>
-      <a href = "../visualizacion/novedades_usuario.html"><img id="logo" alt="Error" src="../../images/diseño/muuuvie.png"></a>
+      <a href = "../visualizacion/todas_login.html"><img id="vaquita_cabeza" alt ="Error" src="../../images/diseño/vaca.PNG"></a>
+      <a href = "../visualizacion/novedades_login.html"><img id="logo" alt="Error" src="../../images/diseño/muuuvie.png"></a>
     </header>
 
 
     <nav>
       <input id="buscador" type="search" placeholder="Introduce una muuuvie..."> <!--autocomplete="" -->
       <button id="buscar">Buscar</button>
-      <a href = "../visualizacion/novedades_usuario.html"><button id="novedades">Novedades</button></a>
-      <a href = "../visualizacion/mas_vistas_usuario.html"><button class="mas_visto">Muuuvies + vistas</button></a>
-      <a href = "../visualizacion/todas_usuario.html"><button class="mas_visto">Todas</button></a>
+      <br></br>
+      <div>
+        <br></br>
+        <a href = "../visualizacion/novedades_login.html" id = "novedades">Novedades</a>
+        <br></br>
+        <a href = "../visualizacion/mas_vistas_login.html" class="mas_visto">Muuuvies + vistas</a>
+        <br></br>
+        <a href = "../visualizacion/todas_login.html" class="mas_visto">Todas</a>
+      </div>
       <br><br/>
 
       <select id="categorias" onchange="location = this.value;">
         <option>Elegir categoría</option>
-        <option value="../categorias/animacion_usuario.html">Animación</option>
-        <option value="../categorias/aventura_usuario.html">Aventuras</option>
-        <option value="../categorias/comedia_usuario.html">Comedia</option>
-        <option value="../categorias/drama_usuario.html">Drama</option>
-        <option value="../categorias/miedo_usuario.html">Miedo</option>
-        <option value="../categorias/ciencia_ficcion_usuario.html">Ciencia ficción</option>
+        <option value="../categorias/animacion_login.html">Animación</option>
+        <option value="../categorias/aventura_login.html">Aventuras</option>
+        <option value="../categorias/comedia_login.html">Comedia</option>
+        <option value="../categorias/drama_login.html">Drama</option>
+        <option value="../categorias/miedo_login.html">Miedo</option>
+        <option value="../categorias/ciencia_ficcion_login.html">Ciencia ficción</option>
       </select>
     </nav>
 
@@ -42,11 +48,12 @@
         <br><br/>
         Contraseña: <input type="password" class="cuadradito">
         <br><br/>
-        <button id="enviar_datos">Enviar datos</button>
+        <a href = "../visualizacion/novedades_usuario.html" id="enviar_datos">Enviar datos</a>
       </div>
       <div id="registrar">
         <img id="registro_foto" alt="Error" src="../../images/diseño/registro.png">
-        <a href = "registro.html"><button id="registrate">Registrate!!</button></a>
+        <br></br>
+        <a href = "registro.html"  id="registrate">Regístrate!!</a>
       </div>
     </article>
 

@@ -28,12 +28,18 @@
 
 
     <nav>
-  		<input id="buscador" type="search" placeholder="Introduce una muuuvie..."> <!--autocomplete="" -->
-  		<button id="buscar">Buscar</button>
-  		<a href = "../visualizacion/novedades_usuario.html"><button id="novedades">Novedades</button></a>
-  		<a href = "../visualizacion/mas_vistas_usuario.html"><button class="mas_visto">Muuuvies + vistas</button></a>
-  		<a href = "../visualizacion/todas_usuario.html"><button class="mas_visto">Todas</button></a>
-  		<br><br/>
+      <input id="buscador" type="search" placeholder="Introduce una muuuvie..."> <!--autocomplete="" -->
+      <button id="buscar">Buscar</button>
+      <br></br>
+      <div>
+        <br></br>
+        <a href = "../visualizacion/novedades_usuario.html" id = "novedades">Novedades</a>
+        <br></br>
+        <a href = "../visualizacion/mas_vistas_usuario.html" class="mas_visto">Muuuvies + vistas</a>
+        <br></br>
+        <a href = "../visualizacion/todas_usuario.html" class="mas_visto">Todas</a>
+      </div>
+      <br><br/>
 
       <select id="categorias" onchange="location = this.value;">
         <option>Elegir categoría</option>
@@ -44,7 +50,7 @@
         <option value="../categorias/miedo_usuario.html">Miedo</option>
         <option value="../categorias/ciencia_ficcion_usuario.html">Ciencia ficción</option>
       </select>
-  	</nav>
+    </nav>
 
     <article>
       <div id="int_article">
