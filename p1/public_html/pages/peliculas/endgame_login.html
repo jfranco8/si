@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+
+<html lang="es">
+
+  <head>
+    <title>muuuvie</title>
+    <link rel="stylesheet" type="text/css" href= "../../css/styles.css" />
+    <meta charset="utf-8">
+  </head>
+
+  <body>
+
+    <header>
+      <a href = "../visualizacion/todas_login.html"><img id="vaquita_cabeza" alt="Error" src="../../images/diseño/vaca.PNG"></a>
+      <a href = "../visualizacion/novedades_login.html"><img id="logo" alt="Error" src="../../images/diseño/muuuvie.png"></a>
+      <a href = "../Usuario/login_registro.html"><img id="usuario" alt="Error" src="../../images/diseño/login.png"></a>
+    </header>
+
+
+    <nav>
+      <input id="buscador" type="search" placeholder="Introduce una muuuvie..."> <!--autocomplete="" -->
+      <button id="buscar">Buscar</button>
+      <br> <br>
+      <div>
+        <br> <br>
+        <a href = "../visualizacion/novedades_login.html" id = "novedades">Novedades</a>
+        <br> <br>
+        <a href = "../visualizacion/mas_vistas_login.html" class="mas_visto">Muuuvies + vistas</a>
+        <br> <br>
+        <a href = "../visualizacion/todas_login.html" class="mas_visto">Todas</a>
+      </div>
+      <br><br/>
+
+      <select id="categorias" onchange="location = this.value;">
+        <option>Elegir categoría</option>
+        <option value="../categorias/animacion_login.html">Animación</option>
+        <option value="../categorias/aventura_login.html">Aventuras</option>
+        <option value="../categorias/comedia_login.html">Comedia</option>
+        <option value="../categorias/drama_login.html">Drama</option>
+        <option value="../categorias/miedo_login.html">Miedo</option>
+        <option value="../categorias/ciencia_ficcion_login.html">Ciencia ficción</option>
+      </select>
+    </nav>
+
+    <article class="info_peli">
+      <div>
+        <h1>Avengers: Endgame</h1>
+        <div class="info_peli" id="info_sin_foto">
+          <p class="elem_info_peli">Puntuación:</p>
+          <label class="elem_info_peli" id="cheked_star_peli">★★★★★</label>
+          <p class="elem_info_peli">2019</p>
+          <p class="elem_info_peli">Ciencia ficción</p>
+          <p class="elem_info_peli">|</p>
+          <p class="elem_info_peli">Tu puntuación:</p>
+          <form class="elem_info_peli">
+            <p class="clasificacion">
+              <input id="radio1" type="radio" name="estrellas" value="5"><!--
+              --><label for="radio1">★</label><!--
+              --><input id="radio2" type="radio" name="estrellas" value="4"><!--
+              --><label for="radio2">★</label><!--
+              --><input id="radio3" type="radio" name="estrellas" value="3"><!--
+              --><label for="radio3">★</label><!--
+              --><input id="radio4" type="radio" name="estrellas" value="2"><!--
+              --><label for="radio4">★</label><!--
+              --><input id="radio5" type="radio" name="estrellas" value="1"><!--
+              --><label for="radio5">★</label>
+            </p>
+          </form>
+        </div>
+        <p class="elem_info_peli" id="sinopsis_title">Sinopsis:</p>
+        <p class="elem_info_peli">Después de los eventos devastadores de Avengers: Infinity War, el universo está en ruinas debido a las acciones de Thanos, el Titán Loco. Con la ayuda de los aliados que quedaron, los Vengadores deben reunirse una vez más para deshacer sus acciones y restaurar el orden en el universo de una vez por todas, si importar cuáles son las consecuencias.</p>
+        <a href = "https://www.youtube.com/watch?v=1XrrTJpA3yM" class="elem_info_peli" id="trailer_link">
+          Ver trailer</a>
+      </div>
+      <div>
+        <img class="foto_info_peli" alt="Error" src="../../images/pelis/endgame.JPG">
+      </div>
+    </article>
+
+    <footer>
+      <div id="cert">
+        <img id="copyright" alt="Error" src="../../images/diseño/copyright.png">
+        2019, muuuvie
+        <a id="terminosycond" href="../../files/terms_and_cond.md">Términos y condiciones</a>
+      </div>
+    </footer>
+  </body>
+</html>
