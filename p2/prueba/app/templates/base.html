@@ -4,19 +4,69 @@
     <meta charset="UTF-8">
     <title>{% block title %} {% endblock %}- VideoClub</title>
     <!-- Uso de url_for para obtener la ruta de elementos de la página -->
-    <link rel="stylesheet" type="text/css" href={{ url_for('static', filename='estilo.css') }}/>
+    <link rel="stylesheet" type="text/css" href={{ url_for('static', filename='styles.css') }}/>
 </head>
+
 <body>
-    <div>VideoClub:
-        <a href="{{ url_for('index') }}">Home</a>
-        {% if not session['usuario'] %}
-        <a href="{{ url_for('login') }}">Sign In</a></div>
-        <span>Usuario: An&oacutenimo</span>
-        {% else %}
-        <a href="{{ url_for('logout') }}">Log out</a></div>
-        <span>Usuario: {{ session['usuario'] }}</span>
-        {% endif%}
-    </div>
-    {% block content%} {% endblock %}
+
+  <header>
+    {% if not session['usuario'] %}
+      <a href = "../visualizacion/todas_login.html"><img id="vaquita_cabeza" alt="Error" src="../static/images/diseño/vaca.PNG"></a>
+      <a href = "../visualizacion/novedades_login.html"><img id="logo" alt="Error" src="../static/images/diseño/muuuvie.png"></a>
+      <a href = "../Usuario/login_registro.html"><img id="usuario" alt="Error" src="../static/images/diseño/login.png"></a>
+    {% else %}
+      <a href = "../visualizacion/todas_usuario.html"><img id="vaquita_cabeza" alt="Error" src="../static/images/diseño/vaca.PNG"></a>
+      <a href = "../visualizacion/novedades_usuario.html"><img id="logo" alt="Error" src="../static/images/diseño/muuuvie.png"></a>
+
+      <select id="menu_usuario" onchange="location = this.value;" >
+        <option>Nombre usuario</option>
+        <option value="../Usuario/perfil.html">Perfil</option>
+        <option value="../Usuario/historial.html">Historial</option>
+        <option value="../Usuario/ayuda.html">¡Ayuda!</option>
+        <option value="../visualizacion/novedades_login.html">Cerrar sesión</option>
+      </select>
+
+      <a href = "../Usuario/perfil.html"><img id="usuario" alt="Error" src="../static/images/diseño/usuario.PNG"></a>
+      <a href = "../Usuario/carrito.html"><img id="carrito" alt="Error" src="../static/images/diseño/carrito.PNG"></a>
+    {% endif %}
+  </header>
+
+  <nav>
+      <input id="buscador" type="search" placeholder="Introduce una muuuvie..."> <!--autocomplete="" -->
+      <button id="buscar">Buscar</button>
+      <br><br>
+      <div>
+        <br><br>
+        <a href = "../visualizacion/novedades_usuario.html" id = "novedades">Novedades</a>
+        <br><br>
+        <a href = "../visualizacion/mas_vistas_usuario.html" class="mas_visto">Muuuvies + vistas</a>
+        <br><br>
+        <a href = "../visualizacion/todas_usuario.html" class="mas_visto">Todas</a>
+      </div>
+      <br><br>
+
+      <select id="categorias" onchange="location = this.value;">
+        <option>Elegir categoría</option>
+        <option value="../categorias/animacion_usuario.html">Animación</option>
+        <option value="../categorias/aventura_usuario.html">Aventuras</option>
+        <option value="../categorias/comedia_usuario.html">Comedia</option>
+        <option value="../categorias/drama_usuario.html">Drama</option>
+        <option value="../categorias/miedo_usuario.html">Miedo</option>
+        <option value="../categorias/ciencia_ficcion_usuario.html">Ciencia ficción</option>
+      </select>
+    </nav>
+
+    <article>
+          {% block content%} {% endblock %}
+    </article>
+
+
+    <footer>
+        <div id="cert">
+          <img id="copyright" alt="Error" src="../static/images/diseño/copyright.png">
+          2019, muuuvie
+          <a id="terminosycond" href="../../files/terms_and_cond.md">Términos y condiciones</a>
+        </div>
+    </footer>
 </body>
 </html>

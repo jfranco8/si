@@ -7,7 +7,7 @@
 {% block content %}
     <ul>
     {% for item in movies %}
-    <li>{{ item.titulo }}</li>
+    <a href="/pelicula/{{ item.id }}">{{ item.titulo }}</a>
     {% endfor %}
     <ul>
 {% endblock %}

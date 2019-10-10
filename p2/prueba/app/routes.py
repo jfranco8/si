@@ -11,9 +11,19 @@ import sys
 @app.route('/index')
 def index():
     print (url_for('static', filename='estilo.css'), file=sys.stderr)
-    catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json'), encoding="utf-8").read()
+    catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json')).read()
     catalogue = json.loads(catalogue_data)
     return render_template('index.html', title = "Home", movies=catalogue['peliculas'])
+
+@app.route('/pelicula/<valor>/')
+def pelicula(valor):
+    print (url_for('static', filename='estilo.css'), file=sys.stderr)
+    catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json')).read()
+    catalogue = json.loads(catalogue_data)
+    for p in catalogue['peliculas']:
+        if p['id'] == valor:
+            return render_template('pelicula.html', title = p['titulo'], pelicula=p)
+    return redirect(url_for('index'))
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -29,9 +39,9 @@ def login():
             # aqui se le puede pasar como argumento un mensaje de login invalido
             return render_template('login.html', title = "Sign In")
     else:
-        # se puede guardar la pagina desde la que se invoca 
+        # se puede guardar la pagina desde la que se invoca
         session['url_origen']=request.referrer
-        session.modified=True        
+        session.modified=True
         # print a error.log de Apache si se ejecuta bajo mod_wsgi
         print (request.referrer, file=sys.stderr)
         return render_template('login.html', title = "Sign In")

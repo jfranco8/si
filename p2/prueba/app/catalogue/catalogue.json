@@ -1,19 +1,55 @@
-{ "peliculas": 
-  [ 
-    { 
-			"id": 1,
-			"titulo": "La guerra de las galaxias: Episodio 1-La amenaza fantasma",
-      "poster": "imagenes/guerraepisodio1.jpg",
-      "director": "George Lucas",
-      "precio": 18.99,
+{
+  "peliculas": [
+    {
+      "id": "1",
+      "titulo": "Avengers: Endgame",
+      "sinopsis": "Después de los eventos devastadores de Avengers: Infinity War, el universo está en ruinas debido a las acciones de Thanos, el Titán Loco. Con la ayuda de los aliados que quedaron, los Vengadores deben reunirse una vez más para deshacer sus acciones y restaurar el orden en el universo de una vez por todas, si importar cuáles son las consecuencias.",
+      "trailer": "https://www.youtube.com/watch?v=1XrrTJpA3yM",
+      "poster": "endgame.jpg",
+      "director": "Russo Brothers",
+      "precio": 15.50,
+      "categoria": "Ciencia ficcion",
+      "anno": 2019,
+      "puntuacion": 5,
+      "novedades": true,
+      "mas_vistas": false,
+      "actores": [
+          {
+            "nombre": "Chris Evans",
+            "personaje": "Capitan America",
+            "foto": "images/actores/chris_evans.jpg"
+          },
+          {
+            "nombre": "Zoe Saldana",
+            "personaje": "Gamora",
+            "foto": "images/actores/zoe_saldana.jpg"
+          }
+      ]
+    },
+    {
+      "id": "2",
+      "titulo": "El Rey León 2019",
+      "sinopsis": "Tras el asesinato de su padre, Simba, un joven león es apartado su reino y tendrá que descubrir con ayuda de amigos de la sabana africana el significado de la responsabilidad y la valentía. Más tarde volverá para recuperar el control de su reino.",
+      "trailer": "https://www.youtube.com/watch?v=mb79ctR-E-c",
+      "poster": "images/pelis/rey_leon.jpg",
+      "director": "Jon Favreau",
+      "precio": 12,
       "categoria": "Aventura",
-      "año": 1999,
-      "actores": 
-      [
-        { "nombre": "Jake Lloyd",
-          "personaje": "Anakin Skywalker",
-          "foto": "imagenes/anakin.jpg"
-        }
+      "anno": 2019,
+      "puntuacion": 5,
+      "novedades": false,
+      "mas_vistas": true,
+      "actores": [
+          {
+            "nombre": "Beyonce",
+            "personaje": "Nala",
+            "foto": "images/actores/beyonce.jpg"
+          },
+          {
+            "nombre": "Donald Glover",
+            "personaje": "Simba",
+            "foto": "images/actores/donald_glover.jpg"
+          }
       ]
     }
   ]
