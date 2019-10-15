@@ -13,22 +13,9 @@
           <p class="elem_info_peli">Puntuación:</p>
           <label class="elem_info_peli" id="cheked_star_peli">{{ pelicula.puntuacion }}★</label>
           <p class="elem_info_peli">{{ pelicula.anno }}</p>
-          <p class="elem_info_peli">{{ pelicula.categoria }}</p>
-          <p class="elem_info_peli">|</p>
-          <p class="elem_info_peli">Tu puntuación:</p>
-          <form class="elem_info_peli">
-            <p class="clasificacion">
-              <input id="radio1" type="radio" name="estrellas" value="5"><!--
-              --><label for="radio1">★</label><!--
-              --><input id="radio2" type="radio" name="estrellas" value="4"><!--
-              --><label for="radio2">★</label><!--
-              --><input id="radio3" type="radio" name="estrellas" value="3"><!--
-              --><label for="radio3">★</label><!--
-              --><input id="radio4" type="radio" name="estrellas" value="2"><!--
-              --><label for="radio4">★</label><!--
-              --><input id="radio5" type="radio" name="estrellas" value="1"><!--
-              --><label for="radio5">★</label>
-            </p>
+          {% for c in pelicula.categorias %}
+            <p class="elem_info_peli">{{ c.cat }}</p>
+          {% endfor %}
           </form>
         </div>
         <p class="sinopsis_title">Director</p>
@@ -40,7 +27,7 @@
         <p class="sinopsis_title">Reparto</p>
         <ul>
         {% for a in pelicula.actores %}
-          <li>  {{ a.personaje }} interpretado por {{ a. nombre }}</li>
+          <li>  {{ a.personaje }} interpretado por {{ a.nombre }}</li>
         {% endfor %}
         </ul>
       </div>

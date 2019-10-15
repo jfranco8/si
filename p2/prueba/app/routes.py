@@ -21,7 +21,7 @@ def pelicula(valor):
     catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json')).read()
     catalogue = json.loads(catalogue_data)
     for p in catalogue['peliculas']:
-        if p['id'] == valor:
+        if p['id'] == int(valor):
             return render_template('pelicula.html', title = p['titulo'], pelicula=p)
     return redirect(url_for('index'))
 
