@@ -31,11 +31,13 @@
             </p>
           </form>
         </div>
-        <p class="elem_info_peli" id="sinopsis_title">Sinopsis:</p>
+        <p class="sinopsis_title">Director</p>
+        <p class = "elem_info_peli">{{ pelicula.director }}</p>
+        <p class="sinopsis_title">Sinopsis</p>
         <p class="elem_info_peli">{{ pelicula.sinopsis }}</p>
         <a href = {{pelicula.trailer}} class="elem_info_peli" id="trailer_link">
           Ver trailer</a>
-        <p class="elem_info_peli" id="sinopsis_title">Reparto</p>
+        <p class="sinopsis_title">Reparto</p>
         <ul>
         {% for a in pelicula.actores %}
           <li>  {{ a.personaje }} interpretado por {{ a. nombre }}</li>
@@ -43,7 +45,7 @@
         </ul>
       </div>
       <div>
-        <img class="foto_info_peli" alt="Error" src="{{ url_for('static', filename ='images/pelis/') }}{{ pelicula.poster}}">
+        <img class="foto_info_peli" alt="Error" src="{{ url_for('static', filename ='images/pelis/' + pelicula.poster) }}">
         {% if session['usuario'] %}
         <a href = "https://google.es" id="compra">Comprar</a>
         {% endif %}

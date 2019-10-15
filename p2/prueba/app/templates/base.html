@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %} {% endblock %}- VideoClub</title>
+    <title>{% block title %} {% endblock %}- muuuvies</title>
     <!-- Uso de url_for para obtener la ruta de elementos de la página -->
     <link rel="stylesheet" type="text/css" href={{ url_for('static', filename='styles.css') }}/>
 </head>
@@ -11,12 +11,12 @@
 
   <header>
     {% if not session['usuario'] %}
-      <a href = "../visualizacion/todas_login.html"><img id="vaquita_cabeza" alt="Error" src="../static/images/diseño/vaca.PNG"></a>
-      <a href = "../visualizacion/novedades_login.html"><img id="logo" alt="Error" src="../static/images/diseño/muuuvie.png"></a>
-      <a href = "../Usuario/login_registro.html"><img id="usuario" alt="Error" src="../static/images/diseño/login.png"></a>
+      <a href = "../visualizacion/todas_login.html"><img id="vaquita_cabeza" alt="Error" src="{{ url_for ('static', filename='images/diseño/vaca.PNG')}}"></a>
+      <a href = "../visualizacion/novedades_login.html"><img id="logo" alt="Error" src="{{ url_for ('static', filename='images/diseño/muuuvie.png')}}"></a>
+      <a href = "../Usuario/login_registro.html"><img id="usuario" alt="Error" src="{{ url_for ('static', filename='images/diseño/login.png')}}"></a>
     {% else %}
-      <a href = "../visualizacion/todas_usuario.html"><img id="vaquita_cabeza" alt="Error" src="../static/images/diseño/vaca.PNG"></a>
-      <a href = "../visualizacion/novedades_usuario.html"><img id="logo" alt="Error" src="../static/images/diseño/muuuvie.png"></a>
+      <a href = "../visualizacion/todas_usuario.html"><img id="vaquita_cabeza" alt="Error" src="{{ url_for ('static', filename='images/diseño/vaca.PNG')}}"></a>
+      <a href = "../visualizacion/novedades_usuario.html"><img id="logo" alt="Error" src="{{ url_for ('static', filename='images/diseño/muuuvie.png')}}"></a>
 
       <select id="menu_usuario" onchange="location = this.value;" >
         <option>Nombre usuario</option>
@@ -26,8 +26,8 @@
         <option value="../visualizacion/novedades_login.html">Cerrar sesión</option>
       </select>
 
-      <a href = "../Usuario/perfil.html"><img id="usuario" alt="Error" src="../static/images/diseño/usuario.PNG"></a>
-      <a href = "../Usuario/carrito.html"><img id="carrito" alt="Error" src="../static/images/diseño/carrito.PNG"></a>
+      <a href = "../Usuario/perfil.html"><img id="usuario" alt="Error" src="{{ url_for ('static', filename='images/diseño/usuario.PNG')}}"></a>
+      <a href = "../Usuario/carrito.html"><img id="carrito" alt="Error" src="{{ url_for ('static', filename='images/diseño/carrito.PNG')}}"></a>
     {% endif %}
   </header>
 
