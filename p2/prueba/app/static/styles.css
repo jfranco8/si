@@ -2,6 +2,7 @@ body {
   min-height: 100vh;
   margin: 0px;
   display: inline-flex;
+  width: 100%;
 }
 
 header {
@@ -54,15 +55,22 @@ header {
 
 nav {
 	background-color: #ffebc6;
-  position: sticky;
 	font-size: 15px;;
 	font-family: cursive;
 	text-align: center;
-	width: 20%;
 	margin-top: 80px;
-	right: 0px;
-  bottom: 0px;
-	margin-bottom: 50px;
+  width: 20%;
+}
+
+article{
+  margin-top: 80px;
+  margin-bottom: 100px;
+  width: 80%;
+}
+
+#int_article{
+  display: inline-flex;
+  flex-wrap: wrap;
 }
 
 #buscador{
@@ -99,23 +107,6 @@ nav {
 #categorias {
   color: grey;
   background-color: #ffffff;
-}
-
-article{
-  margin-top: 80px;
-  margin-bottom: 100px;
-  margin-left: 15px;
-  position: sticky;
-  width: 80%;
-  padding: 0;
-  padding-right: 0;
-}
-
-#int_article{
-  padding-right: 0;
-  display: inline-flex;
-  flex-wrap: wrap;
-  padding: 0;
 }
 
 #texto_y_vaquita{
