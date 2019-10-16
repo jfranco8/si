@@ -1,0 +1,393 @@
+body {
+  min-height: 100vh;
+  margin: 0px;
+  display: inline-flex;
+  width: 100%;
+}
+
+header {
+	background-color: #ffb100;
+  position: absolute;
+	font-size: 10px;
+	font-family: cursive;
+	height: 80px;
+	top:0px;
+	right: 0px;
+	left: 0px;
+}
+
+#vaquita_cabeza {
+  margin-top: 5px;
+	margin-left: 100px;
+	max-height: 70px;
+}
+
+#logo{
+  max-height: 65px;
+  margin-top: 7px;
+  margin-left: 25%;
+  margin-right: 10%;
+}
+
+#carrito {
+	margin-right: 40px;
+  margin-top: 20px;
+	float: right;
+	max-height: 40px;
+}
+
+#usuario {
+	margin-right: 40px;
+  margin-top: 20px;
+	float: right;
+	max-height: 40px;
+}
+
+#menu_usuario {
+	margin-right: 20px;
+  margin-top: 30px;
+	float: right;
+	max-height: 40px;
+  color: black;
+  background-color: white;
+  border-color: white;
+}
+
+nav {
+	background-color: #ffebc6;
+	font-size: 15px;;
+	font-family: cursive;
+	text-align: center;
+	margin-top: 80px;
+  width: 20%;
+}
+
+article{
+  margin-top: 80px;
+  margin-bottom: 100px;
+  width: 80%;
+}
+
+#int_article{
+  display: inline-flex;
+  flex-wrap: wrap;
+}
+
+#buscador{
+	margin-top: 40px;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+#buscar {
+  font-weight: bold;
+	margin-top: 10px;
+	margin-right: 50px;
+	width: 100px;
+	float: right;
+  color: #FFFFFF;
+  background-color: #f8c630;
+  border-color: #f8c630;
+}
+
+#novedades {
+  font-weight: bold;
+	margin-top: 20px;
+	width: 200px;
+  color: #f8c630;
+}
+
+.mas_visto {
+  font-weight: bold;
+	margin-top: 20px;
+	width: 200px;
+  color: #f8c630;
+}
+
+#categorias {
+  color: grey;
+  background-color: #ffffff;
+}
+
+#texto_y_vaquita{
+  display: inline-flex;
+}
+
+h1{
+  margin-top: 70px;
+  margin-left: 220px;
+  font-size: 40px;
+  font-family: cursive;
+}
+
+/*html de ayuda*/
+#ayudita{
+  margin-top: 10px;
+  margin-left: 50px;
+}
+
+#ayuda{
+  margin-top: 10px;
+  margin-left: 50px;
+  resize: none;
+}
+
+#enviar{
+  margin-left: 400px;
+  margin-top: 20px;
+}
+
+#gracias{
+  margin-top: 50px;
+  margin-left: 60px;
+  float: right;
+  max-width: 170px;
+}
+
+/*html de registro*/
+#registro{
+  float: left;
+  margin-top: 10px;
+  margin-left: 150px;
+}
+
+.cuadradito{
+  float: right;
+  margin-left: 90px;
+  margin-right: 160px;
+  margin-top: 5px
+}
+
+#enviar_datos{
+  margin-top: 30px;
+  float: right;
+  margin-right: 200px;
+  color: orange;
+  font-weight: bold;
+}
+
+#bienvenida{
+  margin-top: 0px;
+  margin-right: 130px;
+  float: right;
+  max-width: 200px;
+}
+
+/*html de login_registro*/
+#login{
+  float: left;
+  margin-top: 30px;
+  margin-left: 100px;
+}
+
+#registrar{
+  float: right;
+  margin-left: -50px;
+}
+
+#registro_foto{
+  max-width: 200px;
+  margin-top: -70px;
+  float: left;
+}
+
+#registrate{
+  margin-top: 30px;
+  margin-right: 50px;
+  float: right;
+  color: orange;
+  font-weight: bold;
+}
+
+/*html de perfil*/
+#perfil{
+  margin-left: 150px;
+  margin-bottom: 100px;
+}
+
+#actualizar{
+  float: right;
+  margin-right: 180px;
+}
+
+.info_peli{
+  display: inline-flex;
+  padding: 0;
+}
+
+.elem_info_peli{
+  margin-left: 20px;
+  max-width: 700px;
+}
+
+#form {
+  width: 250px;
+  margin: 0 auto;
+  height: 50px;
+}
+
+#form p {
+  text-align: center;
+}
+
+#form label {
+  font-size: 20px;
+}
+
+input[type="radio"] {
+  display: none;
+}
+
+label {
+  color: grey;
+}
+
+.clasificacion {
+  direction: rtl;
+  unicode-bidi: bidi-override;
+}
+
+label:hover,
+label:hover ~ label {
+  color: orange;
+}
+
+input[type="radio"]:checked ~ label {
+  color: orange;
+}
+
+.cheked_star{
+  margin-top: 15px;
+  color: orange;
+}
+
+#cheked_star_peli{
+  margin-top: 15px;
+  color: orange;
+}
+
+.foto_info_peli{
+  max-height: 170px;
+  margin-top: 30px;
+  margin-bottom: 50px;
+}
+
+.sinopsis_title{
+  margin-left: 20px;
+  max-width: 700px;
+  font-weight: bold;
+}
+
+#info_sin_foto{
+  max-width: 700px;
+}
+
+#trailer_link{
+  color: orange;
+}
+
+#compra {
+  font-weight: bold;
+  color: #f8c630;
+  width: 126px;
+}
+
+.foto_compra{
+  align-items: center;
+  display: block;
+  width: 126px;
+  margin-left: 120px;
+}
+
+.fila_peli{
+  margin-top: 10px;
+  display: inline-flex;
+  width: 620px;
+}
+
+.basic_peli{
+  height: 330px;
+  width: 180px;
+  margin-left: 55px;
+}
+
+.basic_foto{
+  margin-bottom: 0px;
+  height: 245px;
+  width: 180px;
+}
+
+.punt_año{
+  margin-top: -5px;
+  display: inline-flex;
+  background-color: grey;
+  width: 180px;
+  height: 35px;
+}
+
+.punt{
+  color: white;
+  margin-left: 10px;
+}
+
+.año{
+  color: white;
+  margin-left: 100px;
+}
+
+.titulo_peli{
+  margin-top: 10px;
+}
+
+/*html de historial y carrito*/
+#tabla{
+  margin-left: 120px;
+  width: 100%;
+  border: 2px solid #ffb100;
+  border-color: #ffb100;
+  border-spacing: 0;
+}
+
+.titulos{
+  width: 70%;
+  text-align: left;
+}
+
+th, td{
+  height: 40px;
+  border: 2px solid #ffb100;
+  text-align: center;
+}
+
+#finalizar{
+  float: right;
+  margin-right: -100px;
+  margin-top: 20px;
+}
+
+
+/*Pie de pagina*/
+footer{
+  position: fixed;
+  margin-top: 0px;
+  bottom: 0px;
+  right: 0px;
+  left: 0px;
+  height: 50px;
+  background-color:#545863;
+  color:#FFFFFF;
+}
+
+#cert{
+  margin-top: 10px;
+  margin-left: 60px;
+}
+
+#copyright{
+  max-width: 17px;
+}
+
+#terminosycond{
+  margin-left: 30px;
+  color: #FFFFFF;
+}
