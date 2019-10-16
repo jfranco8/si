@@ -6,6 +6,7 @@ from flask import render_template, request, url_for, redirect, session
 import json
 import os
 import sys
+from os.path import isdir
 
 @app.route('/')
 
@@ -114,8 +115,17 @@ def login():
 
 @app.route('/registro', methods=['GET', 'POST'])
 def signin():
-    session.modified = True
-    return render_template('registro.html', title = "Sign")
+    if 'username' in request.form:
+        path = os.path.dirname(__file__)
+        if not isdir(path+ "/usuarios/"+request.form['username']):
+            os.mkdir(path+ "/usuarios/"+request.form['username'])
+            session['usuario'] = request.form['username']
+            session.modified = True
+            return redirect(url_for('index'))
+        else:
+            return render_template('registro.html', title = "Sign", existe=True)
+    else:
+        return render_template('registro.html', title = "Sign", existe=False)
 
 
 @app.route('/logout', methods=['GET', 'POST'])

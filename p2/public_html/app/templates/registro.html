@@ -6,8 +6,8 @@
 
 {% block content %}
     <h1>Crear nuevo usuario</h1>
-    <img id="bienvenida" alt="Error" src="../../images/diseño/bienvenida.png">
-    <form id="registro" >
+    <img id="bienvenida" alt="Error" src="{{ url_for ('static', filename='images/diseño/bienvenida.png')}}">
+    <form id="registro"  action="" method="post" novalidate>
       <input name="nombre" type="text" class="cuadradito" placeholder="Nombre y apellidos">
       <br><br/>
       <input name="tarjeta" type="text" class="cuadradito" placeholder="Tarjeta de credito">
@@ -16,12 +16,15 @@
       <br><br/>
       <input name="fecha" type="text" class="cuadradito" placeholder="Fecha nacimiento">
       <br><br/>
-      <input name="usuario" type="text" class="cuadradito" placeholder="Usuario">
+      {% if existe %}
+        <p class="erroruser">Usuario ya existente</p>
+      {% endif %}
+      <input name="username" type="text" class="cuadradito" placeholder="Usuario">
       <br><br/>
       <input name="password" type="password" class="cuadradito" placeholder="Contraseña">
       <br><br/>
       <input name="password2" type="password" class="cuadradito" placeholder="Repetir contraseña">
       <br><br/>
-      <a href = "/index" id="enviar_datos">Enviar datos</a>
+      <input type="submit" value="Registro" id="buscar">
     </form>
 {% endblock %}

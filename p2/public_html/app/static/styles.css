@@ -196,6 +196,10 @@ h1{
   font-weight: bold;
 }
 
+.erroruser{
+  color: red;
+}
+
 /*html de perfil*/
 #perfil{
   margin-left: 150px;

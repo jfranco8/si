@@ -19,7 +19,7 @@
       <a href = "../visualizacion/novedades_usuario.html"><img id="logo" alt="Error" src="{{ url_for ('static', filename='images/diseño/muuuvie.png')}}"></a>
 
       <select id="menu_usuario" onchange="location = this.value;" >
-        <option>Nombre usuario</option>
+        <option>{{ session['usuario'] }}</option>
         <option value="../Usuario/perfil.html">Perfil</option>
         <option value="../Usuario/historial.html">Historial</option>
         <option value="../Usuario/ayuda.html">¡Ayuda!</option>
