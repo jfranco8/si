@@ -181,20 +181,17 @@ h1{
 }
 
 #registrar{
-  float: right;
-  margin-left: -50px;
+  margin-left: 55%;
+  display: block;
 }
 
 #registro_foto{
   max-width: 200px;
-  margin-top: -70px;
-  float: left;
+  align-self: center;
 }
 
 #registrate{
-  margin-top: 30px;
-  margin-right: 50px;
-  float: right;
+  align-self: center;
   color: orange;
   font-weight: bold;
 }
@@ -363,6 +360,10 @@ th, td{
   float: right;
   margin-right: -100px;
   margin-top: 20px;
+}
+
+.mensaje_error{
+  margin-left: 10%;
 }
 
 

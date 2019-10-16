@@ -15,7 +15,7 @@ def index():
     print (url_for('static', filename='estilo.css'), file=sys.stderr)
     catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json')).read()
     catalogue = json.loads(catalogue_data)
-    return render_template('index.html', title = "Home", movies=catalogue['peliculas'])
+    return render_template('index.html', title = "Todas las muuuvies", movies=catalogue['peliculas'])
 
 #tipos de pelis
 @app.route('/<tipo>')
@@ -50,7 +50,7 @@ def categorias(cat):
     if cat=="animacion":
         titulo="Animación"
     elif cat=="aventura":
-        titulo="Aventuras"
+        titulo="Aventura"
     elif cat=="comedia":
         titulo="Comedia"
     elif cat=="drama":
@@ -85,7 +85,7 @@ def busqueda():
     pelis = []
     if 'busqueda' in request.form:
         for p in catalogue['peliculas']:
-            if request.form['busqueda'] == 'pp':
+            if request.form['busqueda'].lower() in p['titulo'].lower():
                 pelis.append(p)
         return render_template('index.html', title = request.form['busqueda'], movies=pelis)
     else:
@@ -103,14 +103,20 @@ def login():
             return redirect(url_for('index'))
         else:
             # aqui se le puede pasar como argumento un mensaje de login invalido
-            return render_template('login.html', title = "Sign In")
+            return render_template('login_registro.html', title = "Log In")
     else:
         # se puede guardar la pagina desde la que se invoca
         session['url_origen']=request.referrer
         session.modified=True
         # print a error.log de Apache si se ejecuta bajo mod_wsgi
         print (request.referrer, file=sys.stderr)
-        return render_template('login.html', title = "Sign In")
+        return render_template('login_registro.html', title = "Log In")
+
+@app.route('/registro', methods=['GET', 'POST'])
+def signin():
+    session.modified = True
+    return render_template('registro.html', title = "Sign")
+
 
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():

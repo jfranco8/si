@@ -12,8 +12,8 @@
   <header>
     {% if not session['usuario'] %}
       <a href = "/index"><img id="vaquita_cabeza" alt="Error" src="{{ url_for ('static', filename='images/diseño/vaca.PNG')}}"></a>
-      <a href = "/index"><img id="logo" alt="Error" src="{{ url_for ('static', filename='images/diseño/muuuvie.png')}}"></a>
-      <a href = "../Usuario/login_registro.html"><img id="usuario" alt="Error" src="{{ url_for ('static', filename='images/diseño/login.png')}}"></a>
+      <a href = "/novedades"><img id="logo" alt="Error" src="{{ url_for ('static', filename='images/diseño/muuuvie.png')}}"></a>
+      <a href = "/login"><img id="usuario" alt="Error" src="{{ url_for ('static', filename='images/diseño/login.png')}}"></a>
     {% else %}
       <a href = "../visualizacion/todas_usuario.html"><img id="vaquita_cabeza" alt="Error" src="{{ url_for ('static', filename='images/diseño/vaca.PNG')}}"></a>
       <a href = "../visualizacion/novedades_usuario.html"><img id="logo" alt="Error" src="{{ url_for ('static', filename='images/diseño/muuuvie.png')}}"></a>
@@ -23,7 +23,7 @@
         <option value="../Usuario/perfil.html">Perfil</option>
         <option value="../Usuario/historial.html">Historial</option>
         <option value="../Usuario/ayuda.html">¡Ayuda!</option>
-        <option value="../visualizacion/novedades_login.html">Cerrar sesión</option>
+        <option value="/logout">Cerrar sesión</option>
       </select>
 
       <a href = "../Usuario/perfil.html"><img id="usuario" alt="Error" src="{{ url_for ('static', filename='images/diseño/usuario.PNG')}}"></a>
@@ -32,7 +32,7 @@
   </header>
 
   <nav>
-    <form action="buscar" method="post" novalidate>
+    <form action="busqueda" method="post" novalidate>
       <input name="busqueda" id="buscador" type="search" placeholder="Introduce una muuuvie..."> <!--autocomplete="" -->
       <input type="submit" id="buscar" value="Buscar">
     </form>
@@ -43,7 +43,7 @@
         <br><br>
         <a href = "/masvistas" class="mas_visto">Muuuvies + vistas</a>
         <br><br>
-        <a href = "/todas" class="mas_visto">Todas</a>
+        <a href = "/index" class="mas_visto">Todas</a>
       </div>
       <br><br>
 
@@ -65,9 +65,9 @@
 
     <footer>
         <div id="cert">
-          <img id="copyright" alt="Error" src="../static/images/diseño/copyright.png">
+          <img id="copyright" alt="Error" src="{{ url_for ('static', filename='images/diseño/copyright.png')}}">
           2019, muuuvie
-          <a id="terminosycond" href="../../files/terms_and_cond.md">Términos y condiciones</a>
+          <a id="terminosycond" href="{{ url_for ('static', filename='files/terms_and_cond.md')}}">Términos y condiciones</a>
         </div>
     </footer>
 </body>

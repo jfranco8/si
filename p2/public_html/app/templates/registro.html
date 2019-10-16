@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block content %}
+    <h1>Crear nuevo usuario</h1>
+    <img id="bienvenida" alt="Error" src="../../images/diseño/bienvenida.png">
+    <form id="registro" >
+      <input name="nombre" type="text" class="cuadradito" placeholder="Nombre y apellidos">
+      <br><br/>
+      <input name="tarjeta" type="text" class="cuadradito" placeholder="Tarjeta de credito">
+      <br><br/>
+      <input name="mail" type="text" class="cuadradito" placeholder="Email">
+      <br><br/>
+      <input name="fecha" type="text" class="cuadradito" placeholder="Fecha nacimiento">
+      <br><br/>
+      <input name="usuario" type="text" class="cuadradito" placeholder="Usuario">
+      <br><br/>
+      <input name="password" type="password" class="cuadradito" placeholder="Contraseña">
+      <br><br/>
+      <input name="password2" type="password" class="cuadradito" placeholder="Repetir contraseña">
+      <br><br/>
+      <a href = "/index" id="enviar_datos">Enviar datos</a>
+    </form>
+{% endblock %}

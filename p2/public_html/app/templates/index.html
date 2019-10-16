@@ -6,6 +6,9 @@
 
 {% block content %}
   <h1>{{ title }}</h1>
+  {% if not movies %}
+    <p class="mensaje_error">&nbsp No existen películas que mostrar
+  {% endif %}
   <div id="int_article">
     {% for item in movies %}
     <div class="basic_peli">

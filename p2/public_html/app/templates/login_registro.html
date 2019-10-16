@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block content %}
+  <h1>{{ title }}</h1>
+  <form id="login" action="" method="post" novalidate>
+      <label><b>Username</b></label>
+      <input name="username" type="text" placeholder="Enter username">
+      <br></br>
+      <label><b>Password</b></label>
+      <input name="password" type="password" placeholder="Enter password">
+      <br></br>
+      <input type="submit" value="Login" id="buscar">
+  </form>
+  <div id="registrar">
+    <img id="registro_foto" alt="Error" src="{{ url_for ('static', filename='images/diseño/registro.png')}}">
+    <br><br>
+    <a href = "registro"  id="registrate">Regístrate!!</a>
+  </div>
+{% endblock %}
