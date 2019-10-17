@@ -7,6 +7,9 @@
 {% block content %}
   <h1>{{ title }}</h1>
   <form id="login" action="" method="post" novalidate>
+      {% if existe %}
+        <p class="erroruser">No existe ese usuario</p>
+      {% endif %}
       <label><b>Username</b></label>
       <input name="username" type="text" placeholder="Enter username">
       <br></br>

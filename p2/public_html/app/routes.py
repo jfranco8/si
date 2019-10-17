@@ -92,40 +92,74 @@ def busqueda():
     else:
         return redirect(url_for('index'))
 
+@app.route('/ayuda')
+def ayuda():
+    return render_template('ayuda.html')
+
+@app.route('/perfil')
+def perfil():
+    return render_template('perfil.html')
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     # doc sobre request object en http://flask.pocoo.org/docs/1.0/api/#incoming-request-data
     if 'username' in request.form:
-        # aqui se deberia validar con fichero .dat del usuario
-        if request.form['username'] == 'pp':
-            session['usuario'] = request.form['username']
-            session.modified=True
-            # se puede usar request.referrer para volver a la pagina desde la que se hizo login
-            return redirect(url_for('index'))
+        path = os.path.dirname(__file__)
+        path += "/usuarios/"+request.form['username']
+        if not isdir(path):
+            return render_template('login_registro.html', title = "Log In", existe=True)
         else:
-            # aqui se le puede pasar como argumento un mensaje de login invalido
-            return render_template('login_registro.html', title = "Log In")
+            path += "/"
+            datos = open(path+request.form['username']+".dat", "r")
+            nombre_usuario=datos.readline().rstrip('\n')
+            passw=datos.readline().rstrip('\n')
+            print(nombre_usuario+passw)
+            # aqui se deberia validar con fichero .dat del usuario
+            cond = request.form['username'] == nombre_usuario and request.form['password'] == passw
+            print(cond)
+            if cond:
+                session['usuario'] = request.form['username']
+                session.modified = True
+                # se puede usar request.referrer para volver a la pagina desde la que se hizo login
+                datos.close()
+                return redirect(url_for('index'))
+            else:
+                # aqui se le puede pasar como argumento un mensaje de login invalido
+                datos.close()
+                return render_template('login_registro.html', title = "Log In", existe=False)
     else:
         # se puede guardar la pagina desde la que se invoca
         session['url_origen']=request.referrer
         session.modified=True
         # print a error.log de Apache si se ejecuta bajo mod_wsgi
         print (request.referrer, file=sys.stderr)
-        return render_template('login_registro.html', title = "Log In")
+        return render_template('login_registro.html', title = "Log In", existe=False)
 
 @app.route('/registro', methods=['GET', 'POST'])
 def signin():
     if 'username' in request.form:
-        path = os.path.dirname(__file__)
-        if not isdir(path+ "/usuarios/"+request.form['username']):
-            os.mkdir(path+ "/usuarios/"+request.form['username'])
-            session['usuario'] = request.form['username']
-            session.modified = True
-            return redirect(url_for('index'))
+        if request.form['password']  == request.form['password2']:
+            path = os.path.dirname(__file__)
+            path += "/usuarios/"+request.form['username']
+            if not isdir(path):
+                os.mkdir(path)
+                path += "/"
+                datos = open(path+request.form['username']+".dat", "w")
+                datos.write(request.form['username']+"\n")
+                datos.write(request.form['password']+"\n")
+                datos.write(request.form['nombre']+"\n")
+                datos.write(request.form['tarjeta']+"\n")
+                datos.write(request.form['mail']+"\n")
+                datos.write(request.form['fecha']+"\n")
+                session['usuario'] = request.form['username']
+                session.modified = True
+                datos.close()
+                return redirect(url_for('index'))
+            else:
+                return render_template('registro.html', title = "Sign", existe=True, passw_mal=False)
         else:
-            return render_template('registro.html', title = "Sign", existe=True)
-    else:
-        return render_template('registro.html', title = "Sign", existe=False)
+            return render_template('registro.html', title = "Sign", existe=False, passw_mal=True)
+    return render_template('registro.html', title = "Sign", existe=False, passw_mal=False)
 
 
 @app.route('/logout', methods=['GET', 'POST'])

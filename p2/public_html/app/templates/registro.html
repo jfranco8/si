@@ -20,7 +20,10 @@
         <p class="erroruser">Usuario ya existente</p>
       {% endif %}
       <input name="username" type="text" class="cuadradito" placeholder="Usuario">
-      <br><br/>
+      <br><br/>      
+      {% if passw_mal %}
+        <p class="erroruser">Las contraseñas no coinciden</p>
+      {% endif %}
       <input name="password" type="password" class="cuadradito" placeholder="Contraseña">
       <br><br/>
       <input name="password2" type="password" class="cuadradito" placeholder="Repetir contraseña">

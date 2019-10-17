@@ -15,19 +15,19 @@
       <a href = "/novedades"><img id="logo" alt="Error" src="{{ url_for ('static', filename='images/diseño/muuuvie.png')}}"></a>
       <a href = "/login"><img id="usuario" alt="Error" src="{{ url_for ('static', filename='images/diseño/login.png')}}"></a>
     {% else %}
-      <a href = "../visualizacion/todas_usuario.html"><img id="vaquita_cabeza" alt="Error" src="{{ url_for ('static', filename='images/diseño/vaca.PNG')}}"></a>
-      <a href = "../visualizacion/novedades_usuario.html"><img id="logo" alt="Error" src="{{ url_for ('static', filename='images/diseño/muuuvie.png')}}"></a>
+      <a href = "/index"><img id="vaquita_cabeza" alt="Error" src="{{ url_for ('static', filename='images/diseño/vaca.PNG')}}"></a>
+      <a href = "/novedades"><img id="logo" alt="Error" src="{{ url_for ('static', filename='images/diseño/muuuvie.png')}}"></a>
 
       <select id="menu_usuario" onchange="location = this.value;" >
         <option>{{ session['usuario'] }}</option>
-        <option value="../Usuario/perfil.html">Perfil</option>
-        <option value="../Usuario/historial.html">Historial</option>
-        <option value="../Usuario/ayuda.html">¡Ayuda!</option>
+        <option value="/perfil">Perfil</option>
+        <option value="/historial">Historial</option>
+        <option value="/ayuda">¡Ayuda!</option>
         <option value="/logout">Cerrar sesión</option>
       </select>
 
-      <a href = "../Usuario/perfil.html"><img id="usuario" alt="Error" src="{{ url_for ('static', filename='images/diseño/usuario.PNG')}}"></a>
-      <a href = "../Usuario/carrito.html"><img id="carrito" alt="Error" src="{{ url_for ('static', filename='images/diseño/carrito.PNG')}}"></a>
+      <a href = "/perfil"><img id="usuario" alt="Error" src="{{ url_for ('static', filename='images/diseño/usuario.PNG')}}"></a>
+      <a href = "/carrito"><img id="carrito" alt="Error" src="{{ url_for ('static', filename='images/diseño/carrito.PNG')}}"></a>
     {% endif %}
   </header>
 

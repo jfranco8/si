@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {{ title }}
+{% endblock%}
+
+{% block content %}
+<h1>Mi perfil</h1>
+<div id="perfil">
+  <b>Nombre y apellidos: </b> Marta García Marín
+  <br><br/>
+  <b>Tarjeta de crédito: </b> ****************98
+  <br><br/>
+  <b>Usuario: </b> martagm
+  <br><br/>
+  <b>Fecha de nacimiento: </b> 28/07/1997
+  <br><br/>
+  <b>Fecha de ingreso: </b> 27/09/2019
+  <br><br/>
+  <b>Email: </b> marta.garciamarin@estudiante.uam.es
+  <br><br/>
+  &nbsp;&nbsp;&nbsp;<u>Cambiar contraseña</u>
+  <br><br/>
+  <b>Contraseña actual: </b> <input type="password" class="cuadradito">
+  <br><br/>
+  <b>Nueva contraseña: </b> <input type="password" class="cuadradito">
+  <br><br/>
+  <b>Repetir contraseña: </b> <input type="password" class="cuadradito">
+  <br><br/>
+  <button id="actualizar" >Actualizar</button>
+ </div>
+{% endblock %}
