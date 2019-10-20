@@ -4,10 +4,14 @@
     {{ title }}
 {% endblock %}
 
+{% block scripts %}
+	<script src="{{ url_for('static', filename = 'scripts/validar_registro.js') }}"></script>
+{% endblock %}
+
 {% block content %}
     <h1>Crear nuevo usuario</h1>
     <img id="bienvenida" alt="Error" src="{{ url_for ('static', filename='images/diseño/bienvenida.png')}}">
-    <form id="registro"  action="" method="post" novalidate>
+    <form id="registro" name="formulario"  action="" method="post" onSubmit="return validar();">
       <input name="nombre" type="text" class="cuadradito" placeholder="Nombre y apellidos">
       <br><br/>
       <input name="tarjeta" type="text" class="cuadradito" placeholder="Tarjeta de credito">
@@ -20,7 +24,7 @@
         <p class="erroruser">Usuario ya existente</p>
       {% endif %}
       <input name="username" type="text" class="cuadradito" placeholder="Usuario">
-      <br><br/>      
+      <br><br/>
       {% if passw_mal %}
         <p class="erroruser">Las contraseñas no coinciden</p>
       {% endif %}
