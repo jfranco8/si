@@ -148,9 +148,9 @@ def signin():
                 datos.write(request.form['username']+"\n")
                 datos.write(request.form['password']+"\n")
                 datos.write(request.form['nombre']+"\n")
-                datos.write(request.form['tarjeta']+"\n")
                 datos.write(request.form['mail']+"\n")
-                datos.write(request.form['fecha']+"\n")
+                datos.write(request.form['tarjeta']+"\n")
+                datos.write(request.form['cvc']+"\n")
                 session['usuario'] = request.form['username']
                 session.modified = True
                 datos.close()

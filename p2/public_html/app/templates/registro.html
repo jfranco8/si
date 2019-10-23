@@ -4,34 +4,36 @@
     {{ title }}
 {% endblock %}
 
-{% block scripts %}
-	<script src="{{ url_for('static', filename = 'scripts/validar_registro.js') }}"></script>
-{% endblock %}
-
 {% block content %}
+
+    {% block javascripts %}
+      <script src="{{ url_for('static', filename='scripts/validar_registro.js')}}"></script>
+    {% endblock %}
+
     <h1>Crear nuevo usuario</h1>
     <img id="bienvenida" alt="Error" src="{{ url_for ('static', filename='images/diseño/bienvenida.png')}}">
-    <form id="registro" name="formulario"  action="" method="post" onSubmit="return validar();">
-      <input name="nombre" type="text" class="cuadradito" placeholder="Nombre y apellidos">
+    <form id="registro" name="formulario" action="" method="post" onSubmit="return validar()">
+      <input name="nombre" type="text" class="cuadradito" placeholder="Nombre y apellidos" required>
       <br><br/>
-      <input name="tarjeta" type="text" class="cuadradito" placeholder="Tarjeta de credito">
+      <input name="tarjeta" type="text" class="cuadradito" placeholder="Tarjeta de credito" required>
       <br><br/>
-      <input name="mail" type="text" class="cuadradito" placeholder="Email">
+      <input name="cvc" type="password" class="cuadradito" placeholder="CVC" required>
       <br><br/>
-      <input name="fecha" type="text" class="cuadradito" placeholder="Fecha nacimiento">
+      <input name="mail" type="text" class="cuadradito" placeholder="Email" required>
       <br><br/>
       {% if existe %}
         <p class="erroruser">Usuario ya existente</p>
       {% endif %}
-      <input name="username" type="text" class="cuadradito" placeholder="Usuario">
+      <input name="username" type="text" class="cuadradito" placeholder="Usuario" required>
       <br><br/>
       {% if passw_mal %}
         <p class="erroruser">Las contraseñas no coinciden</p>
       {% endif %}
-      <input name="password" type="password" class="cuadradito" placeholder="Contraseña">
+      <input name="password" type="password" class="cuadradito" placeholder="Contraseña" required>
       <br><br/>
-      <input name="password2" type="password" class="cuadradito" placeholder="Repetir contraseña">
+      <input name="password2" type="password" class="cuadradito" placeholder="Repetir contraseña" required>
       <br><br/>
-      <input type="submit" value="Registro" id="buscar">
+      <INPUT TYPE="RESET" VALUE="Borrar" id="buscar">
+      <input type="submit" value="Enviar datos" id="buscar">
     </form>
 {% endblock %}
