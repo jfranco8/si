@@ -12,7 +12,15 @@ function validar(){
     alert("Hay campos sin rellenar");
   }else{
     //Usuario
-    if (username.length<2){
+    if (username.charAt(0) == " "){
+      valido=false;
+      alert("Usuario no puede comenzar con espacio");
+    }
+    else if (username.charAt(username.length - 1) == " "){
+      valido=false;
+      alert("Usuario no puede terminar con espacio");
+    }
+    else if (username.length<2){
       valido=false;
       alert("Usuario con menos de 2 caracteres");
     }

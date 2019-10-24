@@ -6,6 +6,8 @@ from flask import render_template, request, url_for, redirect, session
 import json
 import os
 import sys
+from hashlib import md5
+import random
 from os.path import isdir
 
 @app.route('/')
@@ -146,11 +148,14 @@ def signin():
                 path += "/"
                 datos = open(path+request.form['username']+".dat", "w")
                 datos.write(request.form['username']+"\n")
-                datos.write(request.form['password']+"\n")
+                password_cif = md5(request.form['password'].encode()).hexdigest()
+                datos.write(password_cif+"\n")
+                #datos.write(request.form['password']+"\n")
                 datos.write(request.form['nombre']+"\n")
                 datos.write(request.form['mail']+"\n")
                 datos.write(request.form['tarjeta']+"\n")
                 datos.write(request.form['cvc']+"\n")
+                datos.write(str(random.randrange(100))) #saldo
                 session['usuario'] = request.form['username']
                 session.modified = True
                 datos.close()
