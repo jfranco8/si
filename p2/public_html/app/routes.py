@@ -114,10 +114,11 @@ def login():
             path += "/"
             datos = open(path+request.form['username']+".dat", "r")
             nombre_usuario=datos.readline().rstrip('\n')
-            passw=datos.readline().rstrip('\n')
+            passw_cif=datos.readline().rstrip('\n')
+            passw = md5(request.form['password'].encode()).hexdigest()
             print(nombre_usuario+passw)
             # aqui se deberia validar con fichero .dat del usuario
-            cond = request.form['username'] == nombre_usuario and request.form['password'] == passw
+            cond = request.form['username'] == nombre_usuario and passw_cif == passw
             print(cond)
             if cond:
                 session['usuario'] = request.form['username']
@@ -138,7 +139,7 @@ def login():
         return render_template('login_registro.html', title = "Log In", existe=False)
 
 @app.route('/registro', methods=['GET', 'POST'])
-def signin():
+def signup():
     if 'username' in request.form:
         if request.form['password']  == request.form['password2']:
             path = os.path.dirname(__file__)
@@ -161,10 +162,10 @@ def signin():
                 datos.close()
                 return redirect(url_for('index'))
             else:
-                return render_template('registro.html', title = "Sign", existe=True, passw_mal=False)
+                return render_template('registro.html', title = "Sign", existe=True)
         else:
-            return render_template('registro.html', title = "Sign", existe=False, passw_mal=True)
-    return render_template('registro.html', title = "Sign", existe=False, passw_mal=False)
+            return render_template('registro.html', title = "Sign", existe=False)
+    return render_template('registro.html', title = "Sign", existe=False)
 
 
 @app.route('/logout', methods=['GET', 'POST'])
