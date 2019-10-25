@@ -5,28 +5,23 @@
 {% endblock%}
 
 {% block content %}
+
 <h1>Mi perfil</h1>
 <div id="perfil">
-  <b>Nombre y apellidos: </b> Marta García Marín
+  <b>Nombre y apellidos: </b> {{ name }}
   <br><br/>
-  <b>Tarjeta de crédito: </b> ****************98
+  <b>Tarjeta de crédito: </b> {{ card }}
   <br><br/>
-  <b>Usuario: </b> martagm
+  <b>Usuario: </b> {{ username }}
   <br><br/>
-  <b>Fecha de nacimiento: </b> 28/07/1997
+  <!-- <b>Fecha de nacimiento: </b> 28/07/1997
   <br><br/>
   <b>Fecha de ingreso: </b> 27/09/2019
+  <br><br/> -->
+  <b>Email: </b> {{ mail }}
   <br><br/>
-  <b>Email: </b> marta.garciamarin@estudiante.uam.es
+  <b>Saldo: </b> {{ saldo }} ubres
   <br><br/>
-  &nbsp;&nbsp;&nbsp;<u>Cambiar contraseña</u>
-  <br><br/>
-  <b>Contraseña actual: </b> <input type="password" class="cuadradito">
-  <br><br/>
-  <b>Nueva contraseña: </b> <input type="password" class="cuadradito">
-  <br><br/>
-  <b>Repetir contraseña: </b> <input type="password" class="cuadradito">
-  <br><br/>
-  <button id="actualizar" >Actualizar</button>
- </div>
+  <a href = "/cambiar_contrasena/{{ username }}"><p>Cambiar contraseña</p></a>
+  </div>
 {% endblock %}

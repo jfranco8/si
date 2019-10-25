@@ -1,4 +1,4 @@
-var letras="abcdefghyjklmnñopqrstuvwxyz";
+var letras="abcdefghijklmnñopqrstuvwxyz";
 
 function tiene_caracteres_raros(cadena  ){
    texto = cadena.toLowerCase();

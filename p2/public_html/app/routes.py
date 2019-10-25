@@ -94,27 +94,67 @@ def busqueda():
     else:
         return redirect(url_for('index'))
 
+
 @app.route('/ayuda')
 def ayuda():
     return render_template('ayuda.html')
 
-@app.route('/perfil/<usuario>', methods=['GET', 'POST'])
+
+@app.route('/cambiar_contrasena/<usuario>/', methods=['GET', 'POST'])
+def cambiar_contrasena(usuario):
+    path = os.path.dirname(__file__)
+    path += "/usuarios/"+usuario+"/"
+    datos = open(path+usuario+".dat", "r")
+    dat = []
+    username=datos.readline().rstrip('\n') #nombre de usuario
+    passw=datos.readline().rstrip('\n') #ps
+    name=datos.readline().rstrip('\n') #nombre
+    mail=datos.readline().rstrip('\n') #mail
+    card=datos.readline().rstrip('\n') #tarjeta
+    cvc=datos.readline().rstrip('\n') #cvc
+    saldo=datos.readline().rstrip('\n') #saldo
+    datos.close()
+    if request.method == 'POST':
+        old_contr = request.form['old']
+        new_contr1 = request.form['new1']
+        new_contr2 = request.form['new2']
+
+        if md5(old_contr.encode()).hexdigest() != passw:
+            return render_template('cambiar_contrasena.html', title = "Cambiar contraseña", mal=True)
+
+        datos = open(path+usuario+".dat", "w")
+        datos.write(username+"\n")
+        password_cif = md5(new_contr1.encode()).hexdigest()
+        datos.write(password_cif+"\n")
+        #datos.write(request.form['password']+"\n")
+        datos.write(name+"\n")
+        datos.write(mail+"\n")
+        datos.write(card+"\n")
+        datos.write(cvc+"\n")
+        datos.write(saldo) #saldo
+        return redirect(url_for('index'))
+    return render_template('cambiar_contrasena.html', title = "Cambiar contraseña", mal=False)
+
+
+@app.route('/perfil/<usuario>/', methods=['GET', 'POST'])
 def perfil(usuario):
-    if "user" in session:
-        if user != usuario:
-            return redirect(url_for('index'))
-        path = os.path.dirname(__file__)
-        path += "/usuarios/"+request.form[usuario]+"/"
-        datos = open(path+request.form['username']+".dat", "r")
-        dat[0]=datos.readline().rstrip('\n') #id
-        passw_cif=datos.readline().rstrip('\n') #ps
-        dat[1]=datos.readline().rstrip('\n') #nombre
-        dat[2]=datos.readline().rstrip('\n') #mail
-        dat[3]=datos.readline().rstrip('\n') #tarjeta
-        cvc=datos.readline().rstrip('\n') #cvc
-        dat[4]=datos.readline().rstrip('\n') #saldo
-    return render_template('perfil.html', valores=dat)
-    return render_template('perfil.html')
+    # if "user" in session:
+    # if user != usuario:
+    #     return redirect(url_for('index'))
+    path = os.path.dirname(__file__)
+    path += "/usuarios/"+usuario+"/"
+    datos = open(path+usuario+".dat", "r")
+    dat = []
+    username=datos.readline().rstrip('\n') #nombre de usuario
+    passw=datos.readline().rstrip('\n') #ps
+    name=datos.readline().rstrip('\n') #nombre
+    mail=datos.readline().rstrip('\n') #mail
+    card=datos.readline().rstrip('\n') #tarjeta
+    cvc=datos.readline().rstrip('\n') #cvc
+    saldo=datos.readline().rstrip('\n') #saldo
+    return render_template('perfil.html', name=name, passw=passw, username=username,
+        mail=mail, card=card, saldo=saldo)
+    # return redirect(url_for('index'))
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
