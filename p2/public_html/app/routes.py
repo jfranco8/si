@@ -98,8 +98,22 @@ def busqueda():
 def ayuda():
     return render_template('ayuda.html')
 
-@app.route('/perfil')
-def perfil():
+@app.route('/perfil/<usuario>', methods=['GET', 'POST'])
+def perfil(usuario):
+    if "user" in session:
+        if user != usuario:
+            return redirect(url_for('index'))
+        path = os.path.dirname(__file__)
+        path += "/usuarios/"+request.form[usuario]+"/"
+        datos = open(path+request.form['username']+".dat", "r")
+        dat[0]=datos.readline().rstrip('\n') #id
+        passw_cif=datos.readline().rstrip('\n') #ps
+        dat[1]=datos.readline().rstrip('\n') #nombre
+        dat[2]=datos.readline().rstrip('\n') #mail
+        dat[3]=datos.readline().rstrip('\n') #tarjeta
+        cvc=datos.readline().rstrip('\n') #cvc
+        dat[4]=datos.readline().rstrip('\n') #saldo
+    return render_template('perfil.html', valores=dat)
     return render_template('perfil.html')
 
 @app.route('/login', methods=['GET', 'POST'])

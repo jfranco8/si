@@ -1,3 +1,17 @@
+var letras="abcdefghyjklmnñopqrstuvwxyz";
+
+function tiene_caracteres_raros(cadena  ){
+   texto = cadena.toLowerCase();
+   for(i=0; i<texto.length; i++){
+     console.log(i);
+      if (letras.indexOf(texto.charAt(i)) == -1 && isNaN(texto.charAt(i)) == true){
+        console.log(texto.charAt(i));
+        return true;
+      }
+   }
+   return false;
+}
+
 function validar(){
   var valido = true;
   var nombre = document.formulario.nombre.value;
@@ -23,6 +37,10 @@ function validar(){
     }
     if (username.length<2){
       if(valido == true) alert("Usuario con menos de 2 caracteres");
+      valido = false;
+    }
+    if (tiene_caracteres_raros(username) == true){
+      if(valido == true) alert("Usuario con caracteres NO alfanuméricos.");
       valido = false;
     }
     //Contraseñas
