@@ -213,6 +213,7 @@ h1{
 .info_peli{
   display: inline-flex;
   padding: 0;
+  margin-left: 5%;
 }
 
 .elem_info_peli{
@@ -232,6 +233,10 @@ h1{
 
 #form label {
   font-size: 20px;
+}
+
+.right_side_film{
+  margin-left: 5%;
 }
 
 input[type="radio"] {
@@ -288,8 +293,11 @@ input[type="radio"]:checked ~ label {
 
 #compra {
   font-weight: bold;
-  color: #f8c630;
+  background-color: #f8c630;
+  color: white;
   width: 126px;
+  margin-top: 2%;
+  /* margin-right: 10px; */
 }
 
 .foto_compra{
@@ -342,7 +350,7 @@ input[type="radio"]:checked ~ label {
 /*html de historial y carrito*/
 #tabla{
   margin-left: 120px;
-  width: 100%;
+  width: 80%;
   border: 2px solid #ffb100;
   border-color: #ffb100;
   border-spacing: 0;
@@ -361,7 +369,7 @@ th, td{
 
 #finalizar{
   float: right;
-  margin-right: -100px;
+  margin-right: 5%;
   margin-top: 20px;
 }
 

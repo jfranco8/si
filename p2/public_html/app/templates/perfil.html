@@ -22,6 +22,18 @@
   <br><br/>
   <b>Saldo: </b> {{ saldo }} ubres
   <br><br/>
+  <b>Incrementar saldo: </b>
+  <br><br/>
+  {% if error %}
+    <p class="erroruser">Debe ingresar una cantidad positiva</p>
+  {% endif %}
+  <form name="formulario" action="" method="post" onSubmit="return cambiarContrasena()" >
+    <p>Cantidad a añadir </p>
+    <input name="saldo_nuevo" type="number">
+    <br><br/>
+    <button type=submit >Incrementar</button>
+  </form>
+  <br><br/>
   <a href = "/cambiar_contrasena/{{ username }}"><p>Cambiar contraseña</p></a>
   </div>
 {% endblock %}

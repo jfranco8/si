@@ -69,13 +69,15 @@ def categorias(cat):
     return render_template('index.html', title = titulo, movies=pelis)
 
 #peli concreta
-@app.route('/pelicula/<valor>/')
+@app.route('/pelicula/<valor>/', methods=['GET', 'POST'])
 def pelicula(valor):
     print (url_for('static', filename='estilo.css'), file=sys.stderr)
     catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json')).read()
     catalogue = json.loads(catalogue_data)
     for p in catalogue['peliculas']:
         if p['id'] == int(valor):
+            if request.method == 'POST':
+                session["carrito"].append(p)
             return render_template('pelicula.html', title = p['titulo'], pelicula=p)
     return redirect(url_for('index'))
 
@@ -126,7 +128,6 @@ def cambiar_contrasena(usuario):
         datos.write(username+"\n")
         password_cif = md5(new_contr1.encode()).hexdigest()
         datos.write(password_cif+"\n")
-        #datos.write(request.form['password']+"\n")
         datos.write(name+"\n")
         datos.write(mail+"\n")
         datos.write(card+"\n")
@@ -138,9 +139,6 @@ def cambiar_contrasena(usuario):
 
 @app.route('/perfil/<usuario>/', methods=['GET', 'POST'])
 def perfil(usuario):
-    # if "user" in session:
-    # if user != usuario:
-    #     return redirect(url_for('index'))
     path = os.path.dirname(__file__)
     path += "/usuarios/"+usuario+"/"
     datos = open(path+usuario+".dat", "r")
@@ -152,9 +150,37 @@ def perfil(usuario):
     card=datos.readline().rstrip('\n') #tarjeta
     cvc=datos.readline().rstrip('\n') #cvc
     saldo=datos.readline().rstrip('\n') #saldo
+    error = False
+    datos.close()
+
+    if request.method == 'POST':
+        saldo_new = request.form['saldo_nuevo']
+        if int(saldo_new) < 0:
+            error = True
+        else:
+            saldo = int(saldo) + int(saldo_new)
+        datos = open(path+usuario+".dat", "w")
+        datos.write(username+"\n")
+        datos.write(passw+"\n")
+        datos.write(name+"\n")
+        datos.write(mail+"\n")
+        datos.write(card+"\n")
+        datos.write(cvc+"\n")
+        datos.write(str(saldo)) #saldo
+
     return render_template('perfil.html', name=name, passw=passw, username=username,
-        mail=mail, card=card, saldo=saldo)
-    # return redirect(url_for('index'))
+        mail=mail, card=card, saldo=saldo, error=error)
+
+
+@app.route('/carrito', methods=['GET', 'POST'])
+def carrito():
+    if not "carrito" in session:
+        session["carrito"] = []
+    catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json')).read()
+    catalogue = json.loads(catalogue_data)
+    return render_template('carrito.html', title = "Carrito", peliculas=session["carrito"])
+
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -177,6 +203,8 @@ def login():
             if cond:
                 session['usuario'] = request.form['username']
                 session.modified = True
+                if not "carrito" in session:
+                    session["carrito"] = []
                 # se puede usar request.referrer para volver a la pagina desde la que se hizo login
                 datos.close()
                 return redirect(url_for('index'))
@@ -225,4 +253,5 @@ def signup():
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():
     session.pop('usuario', None)
+    # session.pop('carrito', None)
     return redirect(url_for('index'))

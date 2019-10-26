@@ -10,6 +10,9 @@
   <script src="{{ url_for('static', filename='scripts/cambiar_contrasena.js')}}"></script>
 {% endblock %}
 
+<br><br/>
+<br><br/>
+
 <form id="registro" name="formulario" action="" method="post" onSubmit="return cambiarContrasena()" >
   {% if mal %}
     <p class="erroruser">Contraseña actual errónea</p>
@@ -19,6 +22,7 @@
   <b>Nueva contraseña: </b> <input name="new1" type="password" class="cuadradito">
   <br><br/>
   <b>Repetir contraseña: </b> <input name="new2" type="password" class="cuadradito">
+  <br><br/>
   <br><br/>
   <button id="actualizar" type=submit >Actualizar</button>
 </form>

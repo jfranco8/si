@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {{ title }}
+{% endblock%}
+
+{% block content %}
+
+<h1>Mi carrito</h1>
+      <table id="tabla">
+        <tr>
+          <th>Película</th>
+          <th>Precio</th>
+          <th>Mantener?</th>
+        </tr>
+
+        {% for p in peliculas %}
+        <tr>
+          <td class="titulos"><a href="/pelicula/{{ p.id }}">{{ p.titulo }}</a></td>
+          <td>{{ p.precio }}</td>
+          <td> <button>eliminar</button> </td>
+        </tr>
+        {% endfor %}
+
+      </table>
+      <br><br/>
+      <button id="finalizar">Finalizar compra</button>
+
+{% endblock %}

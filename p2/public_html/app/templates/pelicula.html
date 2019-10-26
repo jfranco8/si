@@ -31,11 +31,13 @@
         {% endfor %}
         </ul>
       </div>
-      <div>
+      <div class="right_side_film">
+      <br><br/>
         <img class="foto_info_peli" alt="Error" src="{{ url_for('static', filename ='images/pelis/' + pelicula.poster) }}">
-        {% if session['usuario'] %}
-        <a href = "https://google.es" id="compra">Comprar</a>
-        {% endif %}
+        <br><br/>
+        <form name="formulario" action="" method="post">
+          <button type="submit" id="compra">Añadir al carrito</button>
+        </form>
       </div>
     </div>
 
