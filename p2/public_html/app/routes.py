@@ -155,10 +155,10 @@ def perfil(usuario):
 
     if request.method == 'POST':
         saldo_new = request.form['saldo_nuevo']
-        if int(saldo_new) < 0:
+        if float(saldo_new) < 0:
             error = True
         else:
-            saldo = int(saldo) + int(saldo_new)
+            saldo = float(saldo) + float(saldo_new)
         datos = open(path+usuario+".dat", "w")
         datos.write(username+"\n")
         datos.write(passw+"\n")
@@ -174,12 +174,70 @@ def perfil(usuario):
 
 @app.route('/carrito', methods=['GET', 'POST'])
 def carrito():
+
+    no_saldo = False
+    no_registrado = False
+    compra = False
+
     if not "carrito" in session:
         session["carrito"] = []
-    catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json')).read()
-    catalogue = json.loads(catalogue_data)
-    return render_template('carrito.html', title = "Carrito", peliculas=session["carrito"])
 
+
+    if request.method == 'POST':
+
+        if session["carrito"] != []:
+
+            if 'usuario' in session:
+
+                path = os.path.dirname(__file__)
+                path += "/usuarios/"+session['usuario']+"/"
+                datos = open(path+session['usuario']+".dat", "r")
+                dat = []
+                username=datos.readline().rstrip('\n') #nombre de usuario
+                passw=datos.readline().rstrip('\n') #ps
+                name=datos.readline().rstrip('\n') #nombre
+                mail=datos.readline().rstrip('\n') #mail
+                card=datos.readline().rstrip('\n') #tarjeta
+                cvc=datos.readline().rstrip('\n') #cvc
+                saldo=float(datos.readline().rstrip('\n')) #saldo
+                datos.close()
+                coste = 0
+
+                for p in session["carrito"]:
+                    coste += float(p['precio'])
+
+                if float(coste) <= float(saldo):
+                    saldo -= coste
+                    session["carrito"] = []
+                    datos = open(path+session['usuario']+".dat", "w")
+                    datos.write(username+"\n")
+                    datos.write(passw+"\n")
+                    datos.write(name+"\n")
+                    datos.write(mail+"\n")
+                    datos.write(card+"\n")
+                    datos.write(cvc+"\n")
+                    datos.write(str(saldo)) #saldo
+
+                    compra = True
+
+                else:
+                    no_saldo = True
+
+            else:
+                no_registrado = True
+
+    return render_template('carrito.html', title = "Carrito", peliculas=session["carrito"],compra=compra, no_saldo=no_saldo, no_registrado=no_registrado)
+
+
+@app.route('/carrito/borrar/<valor>')
+def carrito_borrar(valor):
+
+    for p in session["carrito"]:
+        if p['id'] == int(valor):
+            session["carrito"].remove(p)
+            break
+
+    return redirect('/carrito')
 
 
 @app.route('/login', methods=['GET', 'POST'])

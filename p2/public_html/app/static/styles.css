@@ -369,8 +369,11 @@ th, td{
 
 #finalizar{
   float: right;
-  margin-right: 5%;
+  margin-right: 10%;
   margin-top: 20px;
+  font-weight: bold;
+  background-color: #ffb100;
+  color: white;
 }
 
 .mensaje_error{

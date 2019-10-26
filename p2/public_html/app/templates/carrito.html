@@ -18,12 +18,27 @@
         <tr>
           <td class="titulos"><a href="/pelicula/{{ p.id }}">{{ p.titulo }}</a></td>
           <td>{{ p.precio }}</td>
-          <td> <button>eliminar</button> </td>
+          <td> <a href="carrito/borrar/{{ p.id }}"=>eliminar</a> </td>
         </tr>
         {% endfor %}
 
       </table>
       <br><br/>
-      <button id="finalizar">Finalizar compra</button>
+
+      {% if compra %}
+        <p class="erroruser">&nbsp;&nbsp;&nbsp;&nbsp;Compra realizada con éxito</p>
+      {% endif %}
+
+      {% if no_registrado %}
+        <p class="erroruser">&nbsp;&nbsp;&nbsp;&nbsp;Identifíquese para seguir con su compra</p>
+      {% endif %}
+
+      {% if no_saldo %}
+        <p class="erroruser">&nbsp;&nbsp;&nbsp;&nbsp;Saldo insuficiente</p>
+      {% endif %}
+
+      <form name="formulario" action="" method="post">
+        <button id="finalizar">Finalizar compra</button>
+      </form>
 
 {% endblock %}
