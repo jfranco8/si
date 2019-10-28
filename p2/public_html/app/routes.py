@@ -246,7 +246,7 @@ def carrito():
                     for p in session["carrito"]:
                         peli = {
                             'pelicula' : p,
-                            'fecha'   :  time.strftime("%d.%d.%Y")
+                            'fecha'   :  time.strftime("%d.%m.%Y")
                         }
                         data['peliculas'].append(peli)
 
