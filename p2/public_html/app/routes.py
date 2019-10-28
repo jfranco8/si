@@ -9,6 +9,7 @@ import sys
 from hashlib import md5
 import random
 from os.path import isdir
+import time
 
 @app.route('/')
 
@@ -60,6 +61,10 @@ def categorias(cat):
         titulo="Drama"
     elif cat=="miedo":
         titulo="Miedo"
+    elif cat=="musical":
+        titulo="Musical"
+    elif cat=="romantica":
+        titulo="Romántica"
     else:
         titulo="Ciencia ficcion"
     for p in catalogue['peliculas']:
@@ -77,6 +82,8 @@ def pelicula(valor):
     for p in catalogue['peliculas']:
         if p['id'] == int(valor):
             if request.method == 'POST':
+                if not "carrito" in session:
+                    session["carrito"] = []
                 session["carrito"].append(p)
             return render_template('pelicula.html', title = p['titulo'], pelicula=p)
     return redirect(url_for('index'))
@@ -172,6 +179,13 @@ def perfil(usuario):
         mail=mail, card=card, saldo=saldo, error=error)
 
 
+@app.route('/historial',methods=['GET', 'POST'])
+def historial():
+    path = os.path.dirname(__file__)
+    path += "/usuarios/"+session['usuario']+"/historial.json"
+    historial = json.load(open(path))['peliculas']
+    return render_template('historial.html', title = "Historial", peliculas=historial, username=session['usuario'])
+
 @app.route('/carrito', methods=['GET', 'POST'])
 def carrito():
 
@@ -208,6 +222,18 @@ def carrito():
 
                 if float(coste) <= float(saldo):
                     saldo -= coste
+
+                    data = json.load(open(path+'historial.json'))
+                    for p in session["carrito"]:
+                        peli = {
+                            'pelicula' : p,
+                            'fecha'   :  time.strftime("%x")
+                        }
+                        data['peliculas'].append(peli)
+
+                    with open(path+'historial.json', 'w') as file:
+                        json.dump(data, file)
+
                     session["carrito"] = []
                     datos = open(path+session['usuario']+".dat", "w")
                     datos.write(username+"\n")
@@ -288,6 +314,10 @@ def signup():
                 os.mkdir(path)
                 path += "/"
                 datos = open(path+request.form['username']+".dat", "w")
+                data = {}
+                data['peliculas'] = []
+                historial =  open(path+"historial.json", "w")
+                json.dump(data, historial)
                 datos.write(request.form['username']+"\n")
                 password_cif = md5(request.form['password'].encode()).hexdigest()
                 datos.write(password_cif+"\n")
@@ -300,6 +330,7 @@ def signup():
                 session['usuario'] = request.form['username']
                 session.modified = True
                 datos.close()
+                historial.close()
                 return redirect(url_for('index'))
             else:
                 return render_template('registro.html', title = "Sign", existe=True)

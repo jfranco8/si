@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {{ title }}
+{% endblock%}
+
+{% block content %}
+
+<h1>Historial de compra</h1>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <a href="/perfil/{{ username }}">Consultar saldo</a>
+    <br></br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <a>Seleccionar por fechas: </a>
+    <select>
+      <option>Seleccionar fecha</option>
+      {% for p in peliculas %}
+        <option value="">{{ p.fecha }}</option>
+      {% endfor %}
+
+    </select>
+    <br></br>
+      <table id="tabla">
+        <tr>
+          <th>Película</th>
+          <th>Precio</th>
+          <th>Fecha</th>
+        </tr>
+
+        {% for p in peliculas %}
+        <tr>
+          <td class="titulos"><a href="/pelicula/{{ p.pelicula.id }}">{{ p.pelicula.titulo }}</a></td>
+          <td>{{ p.pelicula.precio }}</td>
+          <td>{{ p.fecha }}</td>
+        </tr>
+        {% endfor %}
+
+      </table>
+
+{% endblock %}

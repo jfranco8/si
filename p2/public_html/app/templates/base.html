@@ -29,7 +29,7 @@
         <option value="/logout">Cerrar sesión</option>
       </select>
 
-      <a href = "/perfil"><img id="usuario" alt="Error" src="{{ url_for ('static', filename='images/diseño/usuario.PNG')}}"></a>
+      <a href = "/perfil/{{  session['usuario'] }}"><img id="usuario" alt="Error" src="{{ url_for ('static', filename='images/diseño/usuario.PNG')}}"></a>
       <a href = "/carrito"><img id="carrito" alt="Error" src="{{ url_for ('static', filename='images/diseño/carrito.PNG')}}"></a>
     {% endif %}
   </header>
@@ -58,6 +58,8 @@
         <option value="/categorias/drama">Drama</option>
         <option value="/categorias/miedo">Miedo</option>
         <option value="/categorias/ciencia_ficcion">Ciencia ficción</option>
+        <option value="/categorias/musical">Musical</option>
+        <option value="/categorias/romantica">Romanticas</option>
       </select>
     </nav>
 
