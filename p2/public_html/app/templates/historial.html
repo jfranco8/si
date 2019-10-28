@@ -12,12 +12,11 @@
     <br></br>
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <a>Seleccionar por fechas: </a>
-    <select>
+    <select onchange="location = this.value;">
       <option>Seleccionar fecha</option>
-      {% for p in peliculas %}
-        <option value="">{{ p.fecha }}</option>
+      {% for f in fechas %}
+        <option value="/historial/{{ f }}">{{ f }}</option>
       {% endfor %}
-
     </select>
     <br></br>
       <table id="tabla">

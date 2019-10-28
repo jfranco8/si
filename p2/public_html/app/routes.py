@@ -184,7 +184,26 @@ def historial():
     path = os.path.dirname(__file__)
     path += "/usuarios/"+session['usuario']+"/historial.json"
     historial = json.load(open(path))['peliculas']
-    return render_template('historial.html', title = "Historial", peliculas=historial, username=session['usuario'])
+    fechas = []
+    for p in historial:
+        if not p['fecha'] in fechas:
+            fechas.append(p['fecha'])
+    return render_template('historial.html', title = "Historial", peliculas=historial, username=session['usuario'], fechas=fechas)
+
+@app.route('/historial/<valor>',methods=['GET', 'POST'])
+def historial_fecha(valor):
+    path = os.path.dirname(__file__)
+    path += "/usuarios/"+session['usuario']+"/historial.json"
+    historial = json.load(open(path))['peliculas']
+    fechas = []
+    peliculas = []
+    for p in historial:
+        if not p['fecha'] in fechas:
+            fechas.append(p['fecha'])
+        if p['fecha'] == valor:
+            peliculas.append(p)
+    return render_template('historial.html', title = "Historial", peliculas=peliculas, username=session['usuario'], fechas=fechas)
+
 
 @app.route('/carrito', methods=['GET', 'POST'])
 def carrito():
@@ -227,7 +246,7 @@ def carrito():
                     for p in session["carrito"]:
                         peli = {
                             'pelicula' : p,
-                            'fecha'   :  time.strftime("%x")
+                            'fecha'   :  time.strftime("%d.%d.%Y")
                         }
                         data['peliculas'].append(peli)
 
