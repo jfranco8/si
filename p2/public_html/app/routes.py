@@ -3,6 +3,8 @@
 
 from app import app
 from flask import render_template, request, url_for, redirect, session
+from flask import Flask, make_response
+from flask import Flask, request
 import json
 import os
 import sys
@@ -113,16 +115,9 @@ def ayuda():
 def cambiar_contrasena(usuario):
     path = os.path.dirname(__file__)
     path += "/usuarios/"+usuario+"/"
-    datos = open(path+usuario+".dat", "r")
-    dat = []
-    username=datos.readline().rstrip('\n') #nombre de usuario
-    passw=datos.readline().rstrip('\n') #ps
-    name=datos.readline().rstrip('\n') #nombre
-    mail=datos.readline().rstrip('\n') #mail
-    card=datos.readline().rstrip('\n') #tarjeta
-    cvc=datos.readline().rstrip('\n') #cvc
-    saldo=datos.readline().rstrip('\n') #saldo
-    datos.close()
+    datos = json.load(open(path+"datos.json"))
+    passw=datos['psw']
+
     if request.method == 'POST':
         old_contr = request.form['old']
         new_contr1 = request.form['new1']
@@ -131,15 +126,12 @@ def cambiar_contrasena(usuario):
         if md5(old_contr.encode()).hexdigest() != passw:
             return render_template('cambiar_contrasena.html', title = "Cambiar contraseña", mal=True)
 
-        datos = open(path+usuario+".dat", "w")
-        datos.write(username+"\n")
-        password_cif = md5(new_contr1.encode()).hexdigest()
-        datos.write(password_cif+"\n")
-        datos.write(name+"\n")
-        datos.write(mail+"\n")
-        datos.write(card+"\n")
-        datos.write(cvc+"\n")
-        datos.write(saldo) #saldo
+        datos = json.load(open(path+"datos.json"))
+        datos['psw'] = md5(new_contr1.encode()).hexdigest()
+
+        with open(path+"datos.json", 'w') as f:
+            f.write(json.dumps(datos))
+
         return redirect(url_for('index'))
     return render_template('cambiar_contrasena.html', title = "Cambiar contraseña", mal=False)
 
@@ -148,17 +140,15 @@ def cambiar_contrasena(usuario):
 def perfil(usuario):
     path = os.path.dirname(__file__)
     path += "/usuarios/"+usuario+"/"
-    datos = open(path+usuario+".dat", "r")
-    dat = []
-    username=datos.readline().rstrip('\n') #nombre de usuario
-    passw=datos.readline().rstrip('\n') #ps
-    name=datos.readline().rstrip('\n') #nombre
-    mail=datos.readline().rstrip('\n') #mail
-    card=datos.readline().rstrip('\n') #tarjeta
-    cvc=datos.readline().rstrip('\n') #cvc
-    saldo=datos.readline().rstrip('\n') #saldo
+    datos = json.load(open(path+"datos.json"))
+    username=datos['username'] #nombre de usuario
+    passw=datos['psw'] #ps
+    name=datos['nombre'] #nombre
+    mail=datos['mail'] #mail
+    card=datos['tarjeta'] #tarjeta
+    cvc=datos['cvc'] #cvc
+    saldo=datos['saldo'] #saldo
     error = False
-    datos.close()
 
     if request.method == 'POST':
         saldo_new = request.form['saldo_nuevo']
@@ -166,15 +156,10 @@ def perfil(usuario):
             error = True
         else:
             saldo = float(saldo) + float(saldo_new)
-        datos = open(path+usuario+".dat", "w")
-        datos.write(username+"\n")
-        datos.write(passw+"\n")
-        datos.write(name+"\n")
-        datos.write(mail+"\n")
-        datos.write(card+"\n")
-        datos.write(cvc+"\n")
-        datos.write(str(saldo)) #saldo
-
+        datos = json.load(open(path+"datos.json"))
+        datos['saldo']=saldo
+        with open(path+"datos.json", 'w') as f:
+            f.write(json.dumps(datos))
     return render_template('perfil.html', name=name, passw=passw, username=username,
         mail=mail, card=card, saldo=saldo, error=error)
 
@@ -182,24 +167,11 @@ def perfil(usuario):
 @app.route('/historial',methods=['GET', 'POST'])
 def historial():
     path = os.path.dirname(__file__)
-    path += "/usuarios/"+session['usuario']+"/historial.json"
-    historial = json.load(open(path))['pedidos']
-    return render_template('historial.html', title = "Historial", pedidos=historial, username=session['usuario'])
+    path += "/usuarios/"+session['usuario']
+    historial = json.load(open(path+"/historial.json"))['pedidos']
+    datos = json.load(open(path+"/datos.json"))
+    return render_template('historial.html', title = "Historial", pedidos=historial, datos=datos)
 
-# @app.route('/historial/<valor>',methods=['GET', 'POST'])
-# def historial_fecha(valor):
-#     path = os.path.dirname(__file__)
-#     path += "/usuarios/"+session['usuario']+"/historial.json"
-#     historial = json.load(open(path))['peliculas']
-#     fechas = []
-#     peliculas = []
-#     for p in historial:
-#         if not p['fecha'] in fechas:
-#             fechas.append(p['fecha'])
-#         if p['fecha'] == valor:
-#             peliculas.append(p)
-#     return render_template('historial.html', title = "Historial", peliculas=peliculas, username=session['usuario'], fechas=fechas)
-#
 
 @app.route('/carrito', methods=['GET', 'POST'])
 def carrito():
@@ -220,16 +192,9 @@ def carrito():
 
                 path = os.path.dirname(__file__)
                 path += "/usuarios/"+session['usuario']+"/"
-                datos = open(path+session['usuario']+".dat", "r")
-                dat = []
-                username=datos.readline().rstrip('\n') #nombre de usuario
-                passw=datos.readline().rstrip('\n') #ps
-                name=datos.readline().rstrip('\n') #nombre
-                mail=datos.readline().rstrip('\n') #mail
-                card=datos.readline().rstrip('\n') #tarjeta
-                cvc=datos.readline().rstrip('\n') #cvc
-                saldo=float(datos.readline().rstrip('\n')) #saldo
-                datos.close()
+                datos = json.load(open(path+"datos.json"))
+                saldo=datos['saldo']
+
                 coste = 0
 
                 for p in session["carrito"]:
@@ -252,14 +217,9 @@ def carrito():
                         json.dump(data, file)
 
                     session["carrito"] = []
-                    datos = open(path+session['usuario']+".dat", "w")
-                    datos.write(username+"\n")
-                    datos.write(passw+"\n")
-                    datos.write(name+"\n")
-                    datos.write(mail+"\n")
-                    datos.write(card+"\n")
-                    datos.write(cvc+"\n")
-                    datos.write(str(saldo)) #saldo
+                    datos['saldo']=saldo
+                    with open(path+"datos.json", 'w') as f:
+                        f.write(json.dumps(datos))
 
                     compra = True
 
@@ -293,25 +253,23 @@ def login():
             return render_template('login_registro.html', title = "Log In", existe=True)
         else:
             path += "/"
-            datos = open(path+request.form['username']+".dat", "r")
-            nombre_usuario=datos.readline().rstrip('\n')
-            passw_cif=datos.readline().rstrip('\n')
+            datos = json.load(open(path+"datos.json"))
+            nombre_usuario=datos['username']
+            passw_cif=datos['psw']
             passw = md5(request.form['password'].encode()).hexdigest()
-            print(nombre_usuario+passw)
             # aqui se deberia validar con fichero .dat del usuario
             cond = request.form['username'] == nombre_usuario and passw_cif == passw
-            print(cond)
             if cond:
                 session['usuario'] = request.form['username']
                 session.modified = True
                 if not "carrito" in session:
                     session["carrito"] = []
                 # se puede usar request.referrer para volver a la pagina desde la que se hizo login
-                datos.close()
+
                 return redirect(url_for('index'))
             else:
                 # aqui se le puede pasar como argumento un mensaje de login invalido
-                datos.close()
+
                 return render_template('login_registro.html', title = "Log In", existe=False)
     else:
         # se puede guardar la pagina desde la que se invoca
@@ -330,23 +288,28 @@ def signup():
             if not isdir(path):
                 os.mkdir(path)
                 path += "/"
-                datos = open(path+request.form['username']+".dat", "w")
+                #historial
                 data = {}
                 data['pedidos'] = []
                 historial =  open(path+"historial.json", "w")
                 json.dump(data, historial)
-                datos.write(request.form['username']+"\n")
+                #datos
+                datos = open(path+"datos.json", "w")
                 password_cif = md5(request.form['password'].encode()).hexdigest()
-                datos.write(password_cif+"\n")
-                #datos.write(request.form['password']+"\n")
-                datos.write(request.form['nombre']+"\n")
-                datos.write(request.form['mail']+"\n")
-                datos.write(request.form['tarjeta']+"\n")
-                datos.write(request.form['cvc']+"\n")
-                datos.write(str(random.randrange(100))) #saldo
+                data={}
+                data = {
+                    'username': request.form['username'],
+                    'psw': password_cif,
+                    'nombre': request.form['nombre'],
+                    'mail': request.form['mail'],
+                    'tarjeta': request.form['tarjeta'],
+                    'cvc': request.form['cvc'],
+                    'saldo': random.randrange(100)
+                }
+                json.dump(data, datos)
                 session['usuario'] = request.form['username']
                 session.modified = True
-                datos.close()
+
                 historial.close()
                 return redirect(url_for('index'))
             else:

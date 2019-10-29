@@ -8,8 +8,6 @@
 
   {% block javascripts %}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script src="{{ url_for('static', filename = 'scripts/historial.js') }}"></script>
-
     <script>
 		$(document).ready(function(){
 		    $(".desplegable").click(function(){
@@ -22,21 +20,21 @@
 
 <h1>Historial de compra</h1>
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <a href="/perfil/{{ username }}">Consultar saldo</a>
+    Su saldo actual es de {{ datos.saldo }}. Si desea incrementarlo <a href="/perfil/{{ datos.username }}">accede al perfil</a>
     <br></br>
-    <table class="desplegable" id="tabla">
+    <table id="tabla">
         <tr>
           <th>Pedido</th>
           <th>Precio</th>
         </tr>
         {% for p in pedidos %}
-          <tr>
-            <td class="deplegar"><b> {{ p.fecha }}</b></td>
+          <tr class="desplegable">
+            <td><b> {{ p.fecha }}</b></td>
             <td><b> {{ p.total }}</b></td>
           </tr>
           {% for peli in p.peliculas %}
           <tr class="pelicula">
-            <td class="desplegable"><a href="/pelicula/{{ peli.id }}">{{ peli.titulo }}</a></td>
+            <td><a href="/pelicula/{{ peli.id }}">{{ peli.titulo }}</a></td>
             <td>{{ peli.precio }}</td>
           </tr>
           {% endfor %}
