@@ -6,27 +6,32 @@
 
 {% block content %}
 
+  {% block javascripts %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="{{ url_for('static', filename = 'scripts/historial.js') }}"></script>
+  {% endblock %}
+
 <h1>Historial de compra</h1>
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <a href="/perfil/{{ username }}">Consultar saldo</a>
     <br></br>
-      <table id="tabla">
+    <table id="tabla">
         <tr>
           <th>Pedido</th>
           <th>Precio</th>
         </tr>
         {% for p in pedidos %}
         <tr>
-          <td><b> {{ p.fecha }}</b></td>
+          <td class="deplegar"><b> {{ p.fecha }}</b></td>
           <td><b> {{ p.total }}</b></td>
         </tr>
         {% for peli in p.peliculas %}
-        <tr>
+        <tr class="desplegable">
           <td class="titulos"><a href="/pelicula/{{ peli.id }}">{{ peli.titulo }}</a></td>
           <td>{{ peli.precio }}</td>
         </tr>
         {% endfor %}
         {% endfor %}
-      </table>
+    </table>
 
 {% endblock %}
