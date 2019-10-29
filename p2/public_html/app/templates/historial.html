@@ -10,30 +10,23 @@
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <a href="/perfil/{{ username }}">Consultar saldo</a>
     <br></br>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <a>Seleccionar por fechas: </a>
-    <select onchange="location = this.value;">
-      <option>Seleccionar fecha</option>
-      {% for f in fechas %}
-        <option value="/historial/{{ f }}">{{ f }}</option>
-      {% endfor %}
-    </select>
-    <br></br>
       <table id="tabla">
         <tr>
-          <th>Película</th>
+          <th>Pedido</th>
           <th>Precio</th>
-          <th>Fecha</th>
         </tr>
-
-        {% for p in peliculas %}
+        {% for p in pedidos %}
         <tr>
-          <td class="titulos"><a href="/pelicula/{{ p.pelicula.id }}">{{ p.pelicula.titulo }}</a></td>
-          <td>{{ p.pelicula.precio }}</td>
-          <td>{{ p.fecha }}</td>
+          <td><b> {{ p.fecha }}</b></td>
+          <td><b> {{ p.total }}</b></td>
+        </tr>
+        {% for peli in p.peliculas %}
+        <tr>
+          <td class="titulos"><a href="/pelicula/{{ peli.id }}">{{ peli.titulo }}</a></td>
+          <td>{{ peli.precio }}</td>
         </tr>
         {% endfor %}
-
+        {% endfor %}
       </table>
 
 {% endblock %}

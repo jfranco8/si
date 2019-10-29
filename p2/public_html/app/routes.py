@@ -183,27 +183,23 @@ def perfil(usuario):
 def historial():
     path = os.path.dirname(__file__)
     path += "/usuarios/"+session['usuario']+"/historial.json"
-    historial = json.load(open(path))['peliculas']
-    fechas = []
-    for p in historial:
-        if not p['fecha'] in fechas:
-            fechas.append(p['fecha'])
-    return render_template('historial.html', title = "Historial", peliculas=historial, username=session['usuario'], fechas=fechas)
+    historial = json.load(open(path))['pedidos']
+    return render_template('historial.html', title = "Historial", pedidos=historial, username=session['usuario'])
 
-@app.route('/historial/<valor>',methods=['GET', 'POST'])
-def historial_fecha(valor):
-    path = os.path.dirname(__file__)
-    path += "/usuarios/"+session['usuario']+"/historial.json"
-    historial = json.load(open(path))['peliculas']
-    fechas = []
-    peliculas = []
-    for p in historial:
-        if not p['fecha'] in fechas:
-            fechas.append(p['fecha'])
-        if p['fecha'] == valor:
-            peliculas.append(p)
-    return render_template('historial.html', title = "Historial", peliculas=peliculas, username=session['usuario'], fechas=fechas)
-
+# @app.route('/historial/<valor>',methods=['GET', 'POST'])
+# def historial_fecha(valor):
+#     path = os.path.dirname(__file__)
+#     path += "/usuarios/"+session['usuario']+"/historial.json"
+#     historial = json.load(open(path))['peliculas']
+#     fechas = []
+#     peliculas = []
+#     for p in historial:
+#         if not p['fecha'] in fechas:
+#             fechas.append(p['fecha'])
+#         if p['fecha'] == valor:
+#             peliculas.append(p)
+#     return render_template('historial.html', title = "Historial", peliculas=peliculas, username=session['usuario'], fechas=fechas)
+#
 
 @app.route('/carrito', methods=['GET', 'POST'])
 def carrito():
@@ -243,12 +239,14 @@ def carrito():
                     saldo -= coste
 
                     data = json.load(open(path+'historial.json'))
+                    pedido = {
+                        'fecha' : time.strftime("%d.%m.%Y"),
+                        'total' : coste,
+                        'peliculas' : []
+                    }
                     for p in session["carrito"]:
-                        peli = {
-                            'pelicula' : p,
-                            'fecha'   :  time.strftime("%d.%m.%Y")
-                        }
-                        data['peliculas'].append(peli)
+                        pedido['peliculas'].append(p)
+                    data['pedidos'].append(pedido)
 
                     with open(path+'historial.json', 'w') as file:
                         json.dump(data, file)
@@ -334,7 +332,7 @@ def signup():
                 path += "/"
                 datos = open(path+request.form['username']+".dat", "w")
                 data = {}
-                data['peliculas'] = []
+                data['pedidos'] = []
                 historial =  open(path+"historial.json", "w")
                 json.dump(data, historial)
                 datos.write(request.form['username']+"\n")
