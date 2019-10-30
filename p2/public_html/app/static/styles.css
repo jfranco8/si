@@ -79,7 +79,7 @@ article{
 	margin-right: 10px;
 }
 
-#buscar {
+.buscar {
   font-weight: bold;
 	margin-top: 10px;
 	margin-right: 50px;
@@ -87,7 +87,14 @@ article{
 	float: right;
   color: #FFFFFF;
   background-color: #f8c630;
-  border-color: #f8c630;
+  border-color: grey;
+  border-radius: 20px;
+
+  padding: 5px 10px 5px 10px;
+  border-top: 1px solid #CCCCCC;
+  border-right: 1px solid #333333;
+  border-bottom: 1px solid #333333;
+  border-left: 1px solid #CCCCCC;
 }
 
 #novedades {
@@ -148,6 +155,7 @@ h1{
   float: left;
   margin-top: 10px;
   margin-left: 150px;
+  position: sticky;
 }
 
 .cuadradito{
@@ -405,4 +413,82 @@ footer{
 #terminosycond{
   margin-left: 30px;
   color: #FFFFFF;
+}
+
+
+
+
+.flex-column {
+	display: flex;
+	flex-direction: column;
+}
+
+.flex-row {
+	display: flex;
+	flex-direction: row;
+}
+
+.max_ancho{
+  width: 70%;
+  max-width: 70%;
+}
+
+.margin_left_min{
+  margin-left: 10%;
+}
+
+.desplegable {
+	align-self: right;
+	display: none;
+	background-color: grey;
+  	color: white;
+  	flex-basis: 80%;
+  	width: 70%;
+}
+
+.historial {
+	flex-basis: 20%;
+}
+
+.black-border{
+	border: 1px solid black;
+}
+
+.grey {
+	background-color: grey;
+  	color: white;
+}
+
+.orange_guay {
+	color: #6a994e;
+  font-weight: bold;
+}
+
+.pedidos-img{
+    width: 90px;
+    height: 120px;
+}
+
+.button1 {
+  	text-decoration: none;
+  	background-color: #ffb100;
+  	color: white;
+  	padding: 5px 10px 5px 10px;
+  	border-top: 1px solid #CCCCCC;
+  	border-right: 1px solid #333333;
+  	border-bottom: 1px solid #333333;
+  	border-left: 1px solid #CCCCCC;
+  	border-radius: 20px;
+}
+
+.hov:hover{
+  	background-color: #df2935;
+}
+
+.white{
+  color: white;
+}
+
+.orangeee{
+  color: #ffb100;
 }

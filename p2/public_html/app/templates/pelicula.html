@@ -10,6 +10,7 @@
       <div>
         <h1>{{ title }}</h1>
         <div class="info_peli" id="info_sin_foto">
+          <p class="elem_info_peli orange_guay">Precio: {{ pelicula.precio }} ubres</p>
           <p class="elem_info_peli">Puntuación:</p>
           <label class="elem_info_peli" id="cheked_star_peli">{{ pelicula.puntuacion }}★</label>
           <p class="elem_info_peli">{{ pelicula.anno }}</p>
@@ -36,7 +37,7 @@
         <img class="foto_info_peli" alt="Error" src="{{ url_for('static', filename ='images/pelis/' + pelicula.poster) }}">
         <br><br/>
         <form name="formulario" action="" method="post">
-          <button type="submit" id="compra">Añadir al carrito</button>
+          <button type="submit" class="button1 hov">Añadir al carrito</button>
         </form>
       </div>
     </div>

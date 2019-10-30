@@ -19,7 +19,8 @@
   <b>Fecha de ingreso: </b> 27/09/2019
   <br><br/> -->
   <b>Email: </b> {{ mail }}
-  <br><br/>
+  <a href = "/cambiar_contrasena/{{ username }}" class="orangeee"><p>Cambiar contraseña</p></a>
+  <!-- <br><br/> -->
   <b>Saldo: </b> {{ saldo }} ubres
   <br><br/>
   <b>Incrementar saldo: </b>
@@ -31,9 +32,9 @@
     <p>Cantidad a añadir </p>
     <input name="saldo_nuevo" type="number">
     <br><br/>
-    <button type=submit >Incrementar</button>
+    <button type=submit class="button1 hov">Incrementar</button>
   </form>
   <br><br/>
-  <a href = "/cambiar_contrasena/{{ username }}"><p>Cambiar contraseña</p></a>
+  <!-- <a href = "/cambiar_contrasena/{{ username }}" class="orangeee"><p>Cambiar contraseña</p></a> -->
   </div>
 {% endblock %}

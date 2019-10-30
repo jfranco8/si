@@ -170,6 +170,7 @@ def historial():
     path += "/usuarios/"+session['usuario']
     historial = json.load(open(path+"/historial.json"))['pedidos']
     datos = json.load(open(path+"/datos.json"))
+    historial.reverse()
     return render_template('historial.html', title = "Historial", pedidos=historial, datos=datos)
 
 

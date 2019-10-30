@@ -5,28 +5,30 @@
     <title>{% block title %} {% endblock %}- muuuvies</title>
     <!-- Uso de url_for para obtener la ruta de elementos de la página -->
     <link rel="stylesheet" type="text/css" href={{ url_for('static', filename='styles.css') }}/>
+
+    <script src="{{ url_for('static', filename='scripts/cookies.js')}}"></script>
 </head>
 
 <body>
 
   <header>
     {% if not session['usuario'] %}
-      <a href = "/index"><img id="vaquita_cabeza" alt="Error" src="{{ url_for ('static', filename='images/diseño/vaca.PNG')}}"></a>
-      <a href = "/novedades"><img id="logo" alt="Error" src="{{ url_for ('static', filename='images/diseño/muuuvie.png')}}"></a>
+      <a href = "/novedades"><img id="vaquita_cabeza" alt="Error" src="{{ url_for ('static', filename='images/diseño/vaca.PNG')}}"></a>
+      <a href = "/index"><img id="logo" alt="Error" src="{{ url_for ('static', filename='images/diseño/muuuvie.png')}}"></a>
       <a href = "/login"><img id="usuario" alt="Error" src="{{ url_for ('static', filename='images/diseño/login.png')}}"></a>
 
 
       <a href = "/carrito"><img id="carrito" alt="Error" src="{{ url_for ('static', filename='images/diseño/carrito.PNG')}}"></a>
     {% else %}
-      <a href = "/index"><img id="vaquita_cabeza" alt="Error" src="{{ url_for ('static', filename='images/diseño/vaca.PNG')}}"></a>
-      <a href = "/novedades"><img id="logo" alt="Error" src="{{ url_for ('static', filename='images/diseño/muuuvie.png')}}"></a>
+      <a href = "/novedades"><img id="vaquita_cabeza" alt="Error" src="{{ url_for ('static', filename='images/diseño/vaca.PNG')}}"></a>
+      <a href = "/index"><img id="logo" alt="Error" src="{{ url_for ('static', filename='images/diseño/muuuvie.png')}}"></a>
 
       <select id="menu_usuario" onchange="location = this.value;" >
         <option>{{ session['usuario'] }}</option>
         <option value="/perfil/{{  session['usuario'] }}">Perfil</option>
         <option value="/historial">Historial</option>
         <option value="/ayuda">¡Ayuda!</option>
-        <option value="/logout">Cerrar sesión</option>
+        <option value="/logout" onclick="return createCookie(cookie, {{ session['usuario'] }})">Cerrar sesión</option>
       </select>
 
       <a href = "/perfil/{{  session['usuario'] }}"><img id="usuario" alt="Error" src="{{ url_for ('static', filename='images/diseño/usuario.PNG')}}"></a>
@@ -35,9 +37,9 @@
   </header>
 
   <nav>
-    <form action="busqueda" method="post" novalidate>
+    <form action="/busqueda" method="post" novalidate>
       <input name="busqueda" id="buscador" type="search" placeholder="Introduce una muuuvie..."> <!--autocomplete="" -->
-      <input type="submit" id="buscar" value="Buscar">
+      <input type="submit" class="buscar hov" value="Buscar">
     </form>
       <br><br>
       <div>
