@@ -8,6 +8,7 @@ from flask import Flask, request
 import json
 import os
 import sys
+import datetime
 from hashlib import md5
 import random
 from os.path import isdir
@@ -246,12 +247,21 @@ def carrito_borrar(valor):
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    cookie_name = request.cookies.get('userID')
+    print(cookie_name)
+    if not cookie_name:
+        cookie_name=" "
     # doc sobre request object en http://flask.pocoo.org/docs/1.0/api/#incoming-request-data
     if 'username' in request.form:
         path = os.path.dirname(__file__)
         path += "/usuarios/"+request.form['username']
+        #cookies
+        if request.method == 'POST':
+            user = request.form['username']
+            resp = make_response(redirect(url_for('index')))
+            resp.set_cookie('userID', user)
         if not isdir(path):
-            return render_template('login_registro.html', title = "Log In", existe=True)
+            return render_template('login_registro.html', title = "Log In", existe=True, cookie_name=cookie_name)
         else:
             path += "/"
             datos = json.load(open(path+"datos.json"))
@@ -267,11 +277,11 @@ def login():
                     session["carrito"] = []
                 # se puede usar request.referrer para volver a la pagina desde la que se hizo login
 
-                return redirect(url_for('index'))
+                return resp
             else:
                 # aqui se le puede pasar como argumento un mensaje de login invalido
 
-                return render_template('login_registro.html', title = "Log In", existe=False)
+                return render_template('login_registro.html', title = "Log In", existe=False, cookie_name=cookie_name)
     else:
         # se puede guardar la pagina desde la que se invoca
         session['url_origen']=request.referrer
