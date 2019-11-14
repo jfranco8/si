@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {{ title }}
+{% endblock%}
+
+{% block content %}
+  <div id="int_article">
+    <h1>Ayuda y Sugerencias</h1>
+    <div id="texto_y_vaquita">
+      <div id="ayudita">
+        <textarea id="ayuda" rows="15" cols="65"></textarea>
+        <a href="{{ url_for('index') }}" class="button1 hov enviar">Enviar sugerencia</a>
+      </div>
+      <img id="gracias" alt="Error" src="{{ url_for ('static', filename='images/diseno/muchas_gracias.png')}}">
+    </div>
+  </div>
+{% endblock %}
