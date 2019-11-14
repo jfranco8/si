@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {{ title }}
+{% endblock%}
+
+{% block content %}
+
+  {% block javascripts %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script>
+		$(document).ready(function(){
+		    $(".boton_despl").click(function(){
+		        // $(this).parents(".historial").parents(".peliculas").children(".desplegable").fadeToggle();
+            $(this).parents(".padre").children(".pelis_desplegar").fadeToggle();
+		    });
+		});
+	</script>
+
+  {% endblock %}
+
+<h1>Historial de compra</h1>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    Su saldo actual es de {{ datos.saldo }} ubres. Si desea incrementarlo <a href="{{ url_for('perfil', usuario = datos.username )}}">accede al perfil</a>
+    <br></br>
+
+    {% for a in pedidos %}
+				<div class="padre black-border flex-row max_ancho margin_left_min">
+					<div class="historial">
+						<button class="boton_despl detalles button1 hov max_ancho">{{a.fecha}}</button>
+						<h4> Importe: {{a.total}} ubres</h4>
+					</div>
+					<div class="pelis_desplegar desplegable black-border flex-column">
+						{% for e in a.peliculas %}
+						<div class="flex-row grey">
+							<img alt="{{ e.titulo }}" src="{{ url_for('static', filename ='images/pelis/' + e.poster) }}" class="pedidos-img">
+							<div class="grey margin_left_min">
+								<h2><a href="{{ url_for('pelicula', valor = e.id )}}" class="white">{{ e.titulo }}</a></h2>
+								<h4><b>Precio: {{ e.precio }} ubres</b></h4>
+							</div>
+						</div>
+						{% endfor %}
+					</div>
+				</div>
+			{% endfor %}
+
+    <!-- <table id="tabla">
+      <div class="historial">
+        <tr>
+          <th>Pedido</th>
+          <th>Precio</th>
+        </tr>
+        {% for p in pedidos %}
+            <tr>
+              <td><b> {{ p.fecha }}</b></td>
+              <td><b> {{ p.total }}</b></td>
+            </tr>
+          <div class="desplegable">
+            {% for peli in p.peliculas %}
+            <tr class="peliculas">
+              <td><a href="/pelicula/{{ peli.id }}">{{ peli.titulo }}</a></td>
+              <td>{{ peli.precio }}</td>
+            </tr>
+            {% endfor %}
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </table> -->
+
+{% endblock %}

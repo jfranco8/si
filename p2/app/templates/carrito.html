@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {{ title }}
+{% endblock%}
+
+{% block content %}
+
+<h1>Mi carrito</h1>
+      <table id="tabla">
+        <tr>
+          <th>Película</th>
+          <th>Precio</th>
+          <th>Mantener?</th>
+        </tr>
+
+        {% for p in peliculas %}
+        <tr>
+          <td class="titulos"><a href="{{ url_for('pelicula', valor =  p.id ) }}">{{ p.titulo }}</a></td>
+          <td>{{ p.precio }} ubres</td>
+          <td> <a href="{{ url_for('carrito_borrar', valor =  p.id ) }}">eliminar</a> </td>
+        </tr>
+        {% endfor %}
+
+      </table>
+      <br><br/>
+
+      {% if compra %}
+        <p class="erroruser">&nbsp;&nbsp;&nbsp;&nbsp;Compra realizada con éxito</p>
+      {% endif %}
+
+      {% if no_registrado %}
+        <p class="erroruser">&nbsp;&nbsp;&nbsp;&nbsp;Identifíquese para seguir con su compra</p>
+      {% endif %}
+
+      {% if no_saldo %}
+        <p class="erroruser">&nbsp;&nbsp;&nbsp;&nbsp;Saldo insuficiente</p>
+      {% endif %}
+
+      <form name="formulario" action="" method="post">
+        <button class="finalizar hov">Finalizar compra</button>
+      </form>
+
+{% endblock %}

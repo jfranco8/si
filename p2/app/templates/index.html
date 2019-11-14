@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block content %}
+  <h1>{{ title }}</h1>
+  {% if not movies %}
+    <p class="mensaje_error">&nbsp No existen películas que mostrar
+  {% endif %}
+  <div id="int_article">
+    {% for item in movies %}
+    <div class="basic_peli">
+      <a href = "{{ url_for('pelicula', valor =  item.id ) }}"><img class="basic_foto" alt="Error" src="{{ url_for('static', filename ='images/pelis/' + item.poster) }}"></a>
+      <div class="punt_año">
+        <p class="punt">{{ item.puntuacion }}</p>
+        <label class="cheked_star">★</label>
+        <p class="año">{{ item.anno }}</p>
+      </div>
+      <a href = "{{ url_for('pelicula', valor =  item.id ) }}"><p class="titulo_peli">{{ item.titulo }}</p></a>
+    </div>
+    {% endfor %}
+  </div>
+{% endblock %}
