@@ -1,4 +1,24 @@
 -- --------------------
+-- BORRAR DB ANTERIOR
+-- --------------------
+
+DROP TABLE
+  ACTOR,
+  ACTOR_PELICULA,
+  PELICULA,
+  DIRECTOR,
+  DIRECTOR_PELICULA,
+  GENERO_PELICULA,
+  IDIOMA_PELICULA,
+  PAIS_PELICULA,
+  PRODUCTO,
+  PRODUCTO_PELICULA,
+  PEDIDO,
+  PEDIDO_PRODUCTO,
+  CLIENTE,
+  CLIENTE_PEDIDO;
+
+-- --------------------
 -- TABLA ACTOR
 -- --------------------
 
@@ -25,9 +45,9 @@ ALTER SEQUENCE ACTOR_SEQ OWNED BY ACTOR.actorID;
 -- --------------------
 
 CREATE TABLE ACTOR_PELICULA (
-  actor integer FOREIGN KEY NOT NULL REFERENCES ACTOR.actorID,
-  pelicula integer FOREIGN KEY NOT NULL REFERENCES PELICULA.peliculaID,
-  personaje char(70)
+  actorID integer NOT NULL,
+  peliculaID integer NOT NULL,
+  personaje char(500)
 );
 
 ALTER TABLE ACTOR_PELICULA OWNER TO alumnodb;
@@ -39,12 +59,9 @@ ALTER TABLE ACTOR_PELICULA OWNER TO alumnodb;
 CREATE TABLE PELICULA (
   peliculaID integer PRIMARY KEY NOT NULL,
   titulo char(100),
-  trailer char(100),
-  sinopsis char(10000),
   puntuacion integer,
-  anno integer,
-  is_mas_vistas boolean,
-  is_novedades boolean
+  anno char(50),
+  sinopsis char(500)
 );
 
 ALTER TABLE PELICULA OWNER TO alumnodb;
@@ -66,7 +83,7 @@ ALTER SEQUENCE PELICULA_SEQ OWNED BY PELICULA.peliculaID;
 
 CREATE TABLE DIRECTOR (
   directorID integer PRIMARY KEY NOT NULL,
-  nombre char(70)
+  nombre char(500)
 );
 
 ALTER TABLE DIRECTOR OWNER TO alumnodb;
@@ -87,8 +104,8 @@ ALTER SEQUENCE DIRECTOR_SEQ OWNED BY DIRECTOR.directorID;
 -- --------------------
 
 CREATE TABLE DIRECTOR_PELICULA (
-  director integer FOREIGN KEY NOT NULL REFERENCES DIRECTOR.directorID,
-  pelicula integer FOREIGN KEY NOT NULL REFERENCES PELICULA.peliculaID
+  directorID integer NOT NULL,
+  peliculaID integer NOT NULL
 );
 
 ALTER TABLE DIRECTOR_PELICULA OWNER TO alumnodb;
@@ -98,8 +115,8 @@ ALTER TABLE DIRECTOR_PELICULA OWNER TO alumnodb;
 -- --------------------
 
 CREATE TABLE GENERO_PELICULA (
-  genero char(70),
-  pelicula integer FOREIGN KEY NOT NULL REFERENCES PELICULA.peliculaID
+  genero char(500),
+  peliculaID integer
 );
 
 ALTER TABLE GENERO_PELICULA OWNER TO alumnodb;
@@ -109,8 +126,8 @@ ALTER TABLE GENERO_PELICULA OWNER TO alumnodb;
 -- --------------------
 
 CREATE TABLE IDIOMA_PELICULA (
-  idioma char(70),
-  pelicula integer FOREIGN KEY NOT NULL REFERENCES PELICULA.peliculaID
+  idioma char(500),
+  peliculaID integer
 );
 
 ALTER TABLE IDIOMA_PELICULA OWNER TO alumnodb;
@@ -120,8 +137,8 @@ ALTER TABLE IDIOMA_PELICULA OWNER TO alumnodb;
 -- --------------------
 
 CREATE TABLE PAIS_PELICULA (
-  pais char(70),
-  pelicula integer FOREIGN KEY NOT NULL REFERENCES PELICULA.peliculaID
+  pais char(500),
+  peliculaID integer
 );
 
 ALTER TABLE PAIS_PELICULA OWNER TO alumnodb;
@@ -132,9 +149,10 @@ ALTER TABLE PAIS_PELICULA OWNER TO alumnodb;
 
 CREATE TABLE PRODUCTO (
   productoID integer PRIMARY KEY NOT NULL,
-  precio float,
+  precio float CHECK (precio > 0),
   stock integer,
-  ventas integer
+  ventas integer,
+  peliculaID integer NOT NULL
 );
 
 ALTER TABLE PRODUCTO OWNER TO alumnodb;
@@ -155,8 +173,8 @@ ALTER SEQUENCE PRODUCTO_SEQ OWNED BY PRODUCTO.productoID;
 -- --------------------
 
 CREATE TABLE PRODUCTO_PELICULA (
-  producto integer FOREIGN KEY NOT NULL REFERENCES PRODUCTO.productoID,
-  pelicula integer FOREIGN KEY NOT NULL REFERENCES PELICULA.peliculaID
+  productoID integer,
+  peliculaID integer
 );
 
 ALTER TABLE PRODUCTO_PELICULA OWNER TO alumnodb;
@@ -168,8 +186,9 @@ ALTER TABLE PRODUCTO_PELICULA OWNER TO alumnodb;
 CREATE TABLE PEDIDO (
   pedidoID integer PRIMARY KEY NOT NULL,
   fecha date,
-  total float,
-  estado boolean
+  total float CHECK (total > 0),
+  estado char(15),
+  clienteID integer NOT NULL
 );
 
 ALTER TABLE PEDIDO OWNER TO alumnodb;
@@ -186,17 +205,17 @@ ALTER TABLE PEDIDO_SEQ OWNER TO alumnodb;
 ALTER SEQUENCE PEDIDO_SEQ OWNED BY PEDIDO.pedidoID;
 
 -- --------------------
--- RELACION PEDIDO - PELICULA
+-- RELACION PEDIDO - PRODUCTO
 -- --------------------
 
-CREATE TABLE PEDIDO_PELICULA (
-  pedido integer FOREIGN KEY NOT NULL REFERENCES PEDIDO.pedidoID,
-  pelicula integer FOREIGN KEY NOT NULL REFERENCES PELICULA.peliculaID,
-  precio float,
+CREATE TABLE PEDIDO_PRODUCTO (
+  pedidoID integer,
+  productoID integer,
+  precio float CHECK (precio > 0),
   cantidad integer
 );
 
-ALTER TABLE PEDIDO_PELICULA OWNER TO alumnodb;
+ALTER TABLE PEDIDO_PRODUCTO OWNER TO alumnodb;
 
 -- --------------------
 --  TABLA CLIENTE
@@ -210,7 +229,7 @@ CREATE TABLE CLIENTE (
   mail char(150),
   tarjeta char(16),
   cvc char(3),
-  saldo float
+  saldo float CHECK (saldo > 0)
 );
 
 ALTER TABLE CLIENTE OWNER TO alumnodb;
@@ -231,10 +250,52 @@ ALTER SEQUENCE CLIENTE_SEQ OWNED BY CLIENTE.clienteID;
 -- --------------------
 
 CREATE TABLE CLIENTE_PEDIDO (
-  pedido integer FOREIGN KEY NOT NULL REFERENCES PEDIDO.pedidoID,
-  cliente integer FOREIGN KEY NOT NULL REFERENCES CLIENTE.clienteID
+  pedidoID integer,
+  clienteID integer
 );
 
 ALTER TABLE CLIENTE_PEDIDO OWNER TO alumnodb;
 
--- FALTA POBLAR LA BASE DE DATOS
+-- --------------------
+-- POBLAMOS LA BASE DE DATOS
+-- --------------------
+
+INSERT INTO ACTOR (actorID, nombre)
+SELECT actorid, actorname
+FROM public.imdb_actors;
+
+INSERT INTO ACTOR_PELICULA(actorID, peliculaID, personaje)
+SELECT actorid, movieid, "character"
+FROM public.imdb_actormovies;
+
+INSERT INTO DIRECTOR (directorID, nombre)
+SELECT directorid, directorname
+FROM public.imdb_directors;
+
+INSERT INTO DIRECTOR_PELICULA (directorID, peliculaID)
+SELECT directorid, movieid
+FROM public.imdb_directormovies;
+
+INSERT INTO PELICULA (peliculaID, titulo, anno, puntuacion, sinopsis)
+SELECT movieid, movietitle, movierelease, 5,
+  'Debajo un botón, ton, ton
+  que encontró Martín, tin, tin
+  había un ratón, ton, ton,
+  ¡ay! que chiquitín, tin, tin.
+  ¡Ay! que chiquitín, tin, tin,
+  era aquel ratón, ton, ton,
+  que encontró Martín, tin, tin,
+  debajo un botón, ton, ton.'
+FROM public.imdb_movies;
+
+INSERT INTO GENERO_PELICULA (peliculaID, genero)
+SELECT movieid, genre
+FROM public.imdb_moviegenres;
+
+INSERT INTO IDIOMA_PELICULA (peliculaID, idioma)
+SELECT movieid, language
+FROM public.imdb_movielanguages;
+
+INSERT INTO PAIS_PELICULA (peliculaID, pais)
+SELECT movieid, country
+FROM public.imdb_moviecountries;
