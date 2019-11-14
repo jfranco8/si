@@ -25,7 +25,7 @@ import time
 @app.route('/index')
 def index():
     print(url_for('static', filename='styles.css'))
-    catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json')).read()
+    catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json'), encoding="utf-8").read()
     catalogue = json.loads(catalogue_data)
     return render_template('index.html', title = "Todas las muuuvies", movies=catalogue['peliculas'])
 
@@ -34,7 +34,7 @@ def index():
 @app.route('/novedades')
 def novedades():
     print(url_for('static', filename='styles.css'))
-    catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json')).read()
+    catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json'), encoding="utf-8").read()
     catalogue = json.loads(catalogue_data)
     pelis = []
     for p in catalogue['peliculas']:
@@ -47,7 +47,7 @@ def novedades():
 @app.route('/masvistas')
 def masvistas():
     print(url_for('static', filename='styles.css'))
-    catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json')).read()
+    catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json'), encoding="utf-8").read()
     catalogue = json.loads(catalogue_data)
     pelis = []
     titulo="Muuuvies mas vistas"
@@ -60,7 +60,7 @@ def masvistas():
 @app.route('/categorias/<cat>')
 def categorias(cat):
     print(url_for('static', filename='styles.css'))
-    catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json')).read()
+    catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json'), encoding="utf-8").read()
     catalogue = json.loads(catalogue_data)
     pelis = []
     if cat=="animacion":
@@ -89,7 +89,7 @@ def categorias(cat):
 @app.route('/pelicula/<valor>/', methods=['GET', 'POST'])
 def pelicula(valor):
     print(url_for('static', filename='styles.css'))
-    catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json')).read()
+    catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json'), encoding="utf-8").read()
     catalogue = json.loads(catalogue_data)
     for p in catalogue['peliculas']:
         if p['id'] == int(valor):
