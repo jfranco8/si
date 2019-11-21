@@ -15,8 +15,7 @@ DROP TABLE
   PRODUCTO_PELICULA,
   PEDIDO,
   PEDIDO_PRODUCTO,
-  CLIENTE,
-  CLIENTE_PEDIDO;
+  CLIENTE;
 
 -- --------------------
 -- TABLA ACTOR
@@ -152,7 +151,8 @@ CREATE TABLE PRODUCTO (
   precio float CHECK (precio > 0),
   stock integer,
   ventas integer,
-  peliculaID integer NOT NULL
+  peliculaID integer NOT NULL,
+  descripcion char(30)
 );
 
 ALTER TABLE PRODUCTO OWNER TO alumnodb;
@@ -246,17 +246,6 @@ ALTER TABLE CLIENTE_SEQ OWNER TO alumnodb;
 ALTER SEQUENCE CLIENTE_SEQ OWNED BY CLIENTE.clienteID;
 
 -- --------------------
--- RELACION CLIENTE - PEDIDO
--- --------------------
-
-CREATE TABLE CLIENTE_PEDIDO (
-  pedidoID integer,
-  clienteID integer
-);
-
-ALTER TABLE CLIENTE_PEDIDO OWNER TO alumnodb;
-
--- --------------------
 -- POBLAMOS LA BASE DE DATOS
 -- --------------------
 
@@ -299,3 +288,23 @@ FROM public.imdb_movielanguages;
 INSERT INTO PAIS_PELICULA (peliculaID, pais)
 SELECT movieid, country
 FROM public.imdb_moviecountries;
+
+INSERT INTO PRODUCTO (prodcutoID, precio, peliculaID, descripcion)
+SELECT prod_id, price, movieid, description
+FROM public.products;
+
+INSERT INTO PRODUCTO (stock, ventas)
+SELECT stock, sales
+FROM public.inventory;
+
+INSERT INTO PEDIDO_PRODUCTO (pedidoID, productoID, precio, cantidad)
+SELECT orderid, prod_id, price, quantity
+FROM public.orderdetail;
+
+INSERT INTO PEDIDO (pedidoID, fecha, total, estado, clienteID)
+SELECT orderid, orderdate, totalamount, status, customerid
+FROM public.orders;
+
+INSERT INTO CLIENTE
+SELECT customerid, username, password, firstname, email, creditcard, 000, 200
+FROM public.customers;
