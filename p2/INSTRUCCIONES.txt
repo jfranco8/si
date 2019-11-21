@@ -1,0 +1,9 @@
+
+--> PARA DAR PERMISOS A LAS CARPETAS
+chmod -R a+rwX $HOME/public_html
+
+--> PARA REINICIAR EL SERVIDOR APACHE
+sudo systemctl restart apache2
+
+--> PARA VER ERRORES DEL SERVIDOR APACHE
+cat /var/log/apache2/error.log

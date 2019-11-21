@@ -289,13 +289,15 @@ INSERT INTO PAIS_PELICULA (peliculaID, pais)
 SELECT movieid, country
 FROM public.imdb_moviecountries;
 
-INSERT INTO PRODUCTO (prodcutoID, precio, peliculaID, descripcion)
-SELECT prod_id, price, movieid, description
-FROM public.products;
+INSERT INTO PRODUCTO (productoID, precio, peliculaID, descripcion, stock, ventas)
+SELECT public.products.prod_id, price, movieid, description, stock, sales
+FROM public.products JOIN public.inventory
+ON public.products.prod_id = public.inventory.prod_id;
 
-INSERT INTO PRODUCTO (stock, ventas)
-SELECT stock, sales
-FROM public.inventory;
+-- INSERT INTO PRODUCTO (stock, ventas)
+-- SELECT stock, sales
+-- FROM public.inventory
+-- WHERE prod_id = productoID;
 
 INSERT INTO PEDIDO_PRODUCTO (pedidoID, productoID, precio, cantidad)
 SELECT orderid, prod_id, price, quantity

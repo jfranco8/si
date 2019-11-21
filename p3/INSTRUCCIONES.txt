@@ -1,0 +1,9 @@
+
+--> CREAR LA BASE DE DATOS
+createdb -U alumnodb si1
+
+-->CARGAR SU BASE DE DATOS
+cat dump_v1.3.sql | psql -U alumnodb si1
+
+-->CARGAR NUESTRAS TABLAS Y POBLARLAS
+cat actualiza.sql | psql -U alumnodb si1
