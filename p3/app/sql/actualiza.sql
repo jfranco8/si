@@ -5,7 +5,8 @@
 
 DROP TABLE
   public.country,
-  public.genres;
+  public.genres,
+  public.languages;
 
 ----------------------------
 ----- CLAVES EXTRANJERAS
@@ -87,7 +88,7 @@ ALTER TABLE public.movie_country
 ADD FOREIGN KEY (movieid) REFERENCES imdb_movies(movieid);
 
 ----------------------------
------ MOVIE genres
+----- MOVIE GENRES
 ----------------------------
 
 CREATE TABLE public.genres (
@@ -128,4 +129,48 @@ ALTER TABLE public.movie_genre
 ADD FOREIGN KEY (genreid) REFERENCES genres(genreid);
 
 ALTER TABLE public.movie_genre
+ADD FOREIGN KEY (movieid) REFERENCES imdb_movies(movieid);
+
+----------------------------
+----- MOVIE LANGUAGES
+----------------------------
+
+CREATE TABLE public.languages (
+  languageid integer NOT NULL PRIMARY KEY,
+  language char(40) NOT NULL
+);
+
+ALTER TABLE public.languages OWNER TO alumnodb;
+
+CREATE SEQUENCE LANGUAGE_NEW_SEQ
+    START 1
+    INCREMENT BY 1
+    MINVALUE 1
+    NO MAXVALUE
+    CACHE 1;
+
+ALTER TABLE LANGUAGE_NEW_SEQ OWNER TO alumnodb;
+
+ALTER SEQUENCE LANGUAGE_NEW_SEQ OWNED BY public.languages.languageid;
+
+ALTER TABLE public.languages ALTER COLUMN languageid SET DEFAULT nextval('LANGUAGE_NEW_SEQ'::regclass);
+
+CREATE TABLE public.movie_language (
+  languageid integer,
+  movieid integer
+);
+
+INSERT INTO public.languages (language)
+SELECT DISTINCT language
+FROM public.imdb_movielanguages;
+
+INSERT INTO public.movie_language
+SELECT languageid, movieid
+FROM public.languages, public.imdb_movielanguages
+WHERE public.languages.language = public.imdb_movielanguages.language;
+
+ALTER TABLE public.movie_language
+ADD FOREIGN KEY (languageid) REFERENCES languages(languageid);
+
+ALTER TABLE public.movie_language
 ADD FOREIGN KEY (movieid) REFERENCES imdb_movies(movieid);
