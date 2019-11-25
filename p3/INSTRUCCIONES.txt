@@ -1,3 +1,5 @@
+--> BORRAR LA BASE DE DATOS
+dropdb -U alumnodb si1
 
 --> CREAR LA BASE DE DATOS
 createdb -U alumnodb si1
