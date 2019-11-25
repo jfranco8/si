@@ -1,3 +1,7 @@
+
+----------------------------
+----- SET PRICE ORDER
+----------------------------
 update public.orderdetail
 set
   price = orderdetail.quantity * prod_mov.price /
