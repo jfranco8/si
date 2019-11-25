@@ -10,6 +10,7 @@ from hashlib import md5
 import random
 from os.path import isdir
 import time
+from app import database
 
 # f = []
 #
