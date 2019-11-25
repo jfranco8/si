@@ -9,3 +9,10 @@ cat dump_v1.3.sql | psql -U alumnodb si1
 
 -->CARGAR NUESTRAS TABLAS Y POBLARLAS
 cat actualiza.sql | psql -U alumnodb si1
+
+-->QUERY DE getTopVentas
+cat getTopVentas.sql | psql -U alumnodb -h localhost si1
+
+Para ejecutar esa funcion
+SELECT *
+FROM getTopVentas('anno')
