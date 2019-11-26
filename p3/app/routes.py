@@ -31,7 +31,6 @@ def index():
     return render_template('index.html', title = titulo, movies=movies)
 
 #tipos de pelis
-
 @app.route('/novedades')
 def novedades():
     print(url_for('static', filename='styles.css'))
@@ -43,14 +42,9 @@ def novedades():
 @app.route('/masvistas')
 def masvistas():
     print(url_for('static', filename='styles.css'))
-    catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json'), encoding="utf-8").read()
-    catalogue = json.loads(catalogue_data)
-    pelis = []
-    titulo="Muuuvies mas vistas"
-    for p in catalogue['peliculas']:
-        if p['mas_vistas'] == True:
-            pelis.append(p)
-    return render_template('index.html', title = titulo, movies=pelis)
+    movies = database.topventas()
+    titulo = "Muuuvies mas vistas"
+    return render_template('index.html', title = titulo, movies=movies)
 
 #categorias de pelis
 @app.route('/categorias/<cat>')
@@ -292,36 +286,21 @@ def login():
 def signup():
     if 'username' in request.form:
         if request.form['password']  == request.form['password2']:
-            path = os.path.dirname(__file__)
-            path += "/usuarios/"+request.form['username']
 
             if request.method == 'POST':
                 user = request.form['username']
                 resp = make_response(redirect(url_for('index')))
                 resp.set_cookie('userID', user)
 
-            if not isdir(path):
-                os.mkdir(path)
-                path += "/"
-                #historial
-                data = {}
-                data['pedidos'] = []
-                historial =  open(path+"historial.json", "w")
-                json.dump(data, historial)
-                #datos
-                datos = open(path+"datos.json", "w")
                 password_cif = md5(request.form['password'].encode()).hexdigest()
-                data={}
-                data = {
-                    'username': request.form['username'],
-                    'psw': password_cif,
-                    'nombre': request.form['nombre'],
-                    'mail': request.form['mail'],
-                    'tarjeta': request.form['tarjeta'],
-                    'cvc': request.form['cvc'],
-                    'saldo': random.randrange(100)
-                }
-                json.dump(data, datos)
+                nombre = request.form['nombre'],
+                mail = request.form['mail'],
+                tarjeta = request.form['tarjeta'],
+                cvc = request.form['cvc'],
+                saldo = random.randrange(100)
+
+                database.adduser(user, password_cif, nombre, mail, tarjeta, cvc, saldo);
+
                 session['usuario'] = request.form['username']
                 session.modified = True
 

@@ -174,3 +174,16 @@ ADD FOREIGN KEY (languageid) REFERENCES languages(languageid);
 
 ALTER TABLE public.movie_language
 ADD FOREIGN KEY (movieid) REFERENCES imdb_movies(movieid);
+
+----------------------------
+----- TABLE CUSTOMER
+----------------------------
+
+ALTER TABLE public.customers
+ADD money numeric;
+
+ALTER TABLE public.customers
+ADD cvc character varying(3);
+
+UPDATE public.customers
+SET money = 100, cvc = '000';

@@ -13,7 +13,7 @@
     {% for item in movies %}
     <div class="basic_peli">
       <!-- hay que ver si pasando solo el id se puede hacer -->
-      <a href = "{{ url_for('pelicula', valor =  item.movieid) }}"><img class="basic_foto" alt="Error" src="{{ url_for('static', filename ='images/pelis/camp_rock.jpg') }}"></a>
+      <a href = "{{ url_for('pelicula', valor =  item.movieid) }}"><img class="basic_foto" alt="Error" src="{{ url_for('static', filename ='images/pelis/cine.jpg') }}"></a>
       <div class="punt_año">
         &nbsp;<label class="cheked_star">5★</label>
         <p class="año">{{ item.year }}</p>
