@@ -13,8 +13,30 @@ db_meta = MetaData(bind=db_engine)
 db_conn = None
 db_conn = db_engine.connect()
 
-# esta funcion devuelve la tabla como tal, no se si vale para leerla luego en el routes.py
+def todas():
+    db_result = db_conn.execute("SELECT * FROM imdb_movies ORDER BY movietitle")
+    return  list(db_result)
+
 def novedades():
-    # Seleccionar las peliculas del este anno
     db_result = db_conn.execute("SELECT * FROM imdb_movies ORDER BY year DESC LIMIT 20")
     return  list(db_result)
+
+def getmovie(id):
+    db_result = db_conn.execute("SELECT * FROM imdb_movies WHERE movieid = " + id)
+    return  list(db_result)
+
+def getactors(id):
+    db_result = db_conn.execute("SELECT * FROM imdb_actormovies NATURAL JOIN imdb_actors WHERE movieid = " + id + " ORDER BY actorname")
+    return  list(db_result)
+
+def getdirectors(id):
+    db_result = db_conn.execute("SELECT * FROM imdb_directormovies NATURAL JOIN imdb_directors WHERE movieid = " + id + " ORDER BY directorname")
+    return  list(db_result)
+
+def getgenres(id):
+    db_result = db_conn.execute("SELECT * FROM imdb_moviegenres WHERE movieid = " + id)
+    return  list(db_result)
+
+def getproduct(id):
+    db_result = db_conn.execute("SELECT * FROM products WHERE movieid = " + id)
+    return list(db_result)

@@ -26,23 +26,18 @@ from app import database
 @app.route('/index')
 def index():
     print(url_for('static', filename='styles.css'))
-    catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json'), encoding="utf-8").read()
-    catalogue = json.loads(catalogue_data)
-    return render_template('index.html', title = "Todas las muuuvies", movies=catalogue['peliculas'])
+    movies = database.todas()
+    titulo = "Todas las muuuvies"
+    return render_template('index.html', title = titulo, movies=movies)
 
 #tipos de pelis
 
 @app.route('/novedades')
 def novedades():
     print(url_for('static', filename='styles.css'))
-    catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json'), encoding="utf-8").read()
-    catalogue = json.loads(catalogue_data)
-    pelis = []
-    for p in catalogue['peliculas']:
-        if p['novedades'] == True:
-            pelis.append(p)
+    movies = database.novedades()
     titulo = "Novedades"
-    return render_template('index.html', title = titulo, movies=pelis)
+    return render_template('index.html', title = titulo, movies=movies)
 
 
 @app.route('/masvistas')
@@ -90,16 +85,12 @@ def categorias(cat):
 @app.route('/pelicula/<valor>/', methods=['GET', 'POST'])
 def pelicula(valor):
     print(url_for('static', filename='styles.css'))
-    catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json'), encoding="utf-8").read()
-    catalogue = json.loads(catalogue_data)
-    for p in catalogue['peliculas']:
-        if p['id'] == int(valor):
-            if request.method == 'POST':
-                if not 'carrito' in session:
-                    session['carrito'] = []
-                session['carrito'].append(p)
-            return render_template('pelicula.html', title = p['titulo'], pelicula=p)
-    return redirect(url_for('index'))
+    peli = database.getmovie(valor)[0]
+    categorias = database.getgenres(valor)
+    actores = database.getactors(valor)
+    directores = database.getdirectors(valor)
+    producto = database.getproduct(valor)[0]
+    return render_template('pelicula.html', peli = peli, categorias = categorias, directores = directores, actores = actores, producto = producto)
 
 #busqueda de peli
 @app.route('/busqueda', methods=['GET', 'POST'])

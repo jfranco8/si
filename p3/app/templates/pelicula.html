@@ -1,40 +1,47 @@
 {% extends "base.html" %}
 
 {% block title %}
-  {{ title }}
+  {{ peli.movietitle }}
 {% endblock %}
 
 {% block content %}
 
 <div class="info_peli">
       <div>
-        <h1>{{ title }}</h1>
+        <h1>{{ peli.movietitle }}</h1>
         <div class="info_peli" id="info_sin_foto">
-          <p class="elem_info_peli orange_guay">Precio: {{ pelicula.precio }} ubres</p>
+          <p class="elem_info_peli orange_guay">Precio: {{ producto.price }} ubres</p>
           <p class="elem_info_peli">Puntuación:</p>
-          <label class="elem_info_peli" id="cheked_star_peli">{{ pelicula.puntuacion }}★</label>
-          <p class="elem_info_peli">{{ pelicula.anno }}</p>
-          {% for c in pelicula.categorias %}
-            <p class="elem_info_peli">{{ c.cat }}</p>
+          <label class="elem_info_peli" id="cheked_star_peli">5★</label>
+          <p class="elem_info_peli">{{ peli.year }}</p>
+          {% for c in categorias %}
+            <p class="elem_info_peli">{{ c.genre }}</p>
           {% endfor %}
           </form>
         </div>
         <p class="sinopsis_title">Director</p>
-        <p class = "elem_info_peli">{{ pelicula.director }}</p>
+        <ul>
+        {% if not  directores %}
+          no hay directores conocidos
+        {% endif %}
+        {% for a in directores %}
+          <li> {{ a.directorname }}</li>
+        {% endfor %}
+        </ul>
         <p class="sinopsis_title">Sinopsis</p>
-        <p class="elem_info_peli">{{ pelicula.sinopsis }}</p>
-        <a href = '{{pelicula.trailer}}' class="elem_info_peli" id="trailer_link">
+        <p class="elem_info_peli">DEBAJO UN BOTON TON TON</p>
+        <a href = 'https://www.youtube.com/?hl=es&gl=ES' class="elem_info_peli" id="trailer_link">
           Ver trailer</a>
         <p class="sinopsis_title">Reparto</p>
         <ul>
-        {% for a in pelicula.actores %}
-          <li>  {{ a.personaje }} interpretado por {{ a.nombre }}</li>
+        {% for a in actores %}
+          <li>  {{ a.character }} interpretado por {{ a.actorname}}</li>
         {% endfor %}
         </ul>
       </div>
       <div class="right_side_film">
       <br><br/>
-        <img class="foto_info_peli" alt="Error" src="{{ url_for('static', filename ='images/pelis/' + pelicula.poster) }}">
+        <img class="foto_info_peli" alt="Error" src="{{ url_for('static', filename ='images/pelis/camp_rock.jpg') }}">
         <br><br/>
         <form name="formulario" action="" method="POST">
           <button type="submit" class="button1 hov">Añadir al carrito</button>
