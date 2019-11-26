@@ -298,13 +298,22 @@ def signup():
                 tarjeta = request.form['tarjeta'],
                 cvc = request.form['cvc'],
                 saldo = random.randrange(100)
+                id_cust_n = str(database.getMaxIdCustomer()[0])
+                id_cust_n = id_cust_n[1:-2]
+                id_cust = int(id_cust_n) + 1
 
-                database.adduser(user, password_cif, nombre, mail, tarjeta, cvc, saldo);
+                num_user_username = str(database.getNumberUsersWithUsername(user)[0])
+                num_user_username = num_user_username[1:-2]
+                num_user_username = int(num_user_username)
+                if num_user_username != 0:
+                    return render_template('registro.html', title = "Sign", existe=True)
+
+                database.adduser(id_cust, user, password_cif, nombre, mail, tarjeta, cvc, saldo);
 
                 session['usuario'] = request.form['username']
                 session.modified = True
 
-                historial.close()
+                # historial.close()
                 return resp
             else:
                 return render_template('registro.html', title = "Sign", existe=True)

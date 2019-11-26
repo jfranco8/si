@@ -45,5 +45,41 @@ def getproduct(id):
     db_result = db_conn.execute("SELECT * FROM products WHERE movieid = " + id)
     return list(db_result)
 
-def adduser(user, password_cif, nombre, mail, tarjeta, cvc, saldo):
-    db_conn.execute("INSERT INTO customers (firstname,lastname,address1,city,country,email,creditcardtype,creditcard,creditcardexpiration,username,password,cvc,money) VALUES ("+nombre+",' ','EPS UAM','Madrid','Spain',"+mail",'Mastercard',"+tarjeta+",'202203',"+user+","+password_cif+","+cvc+","+saldo+")")
+def getMaxIdCustomer():
+    db_result = db_conn.execute("SELECT MAX(customerid) FROM customers")
+    return list(db_result)
+
+def getNumberUsersWithUsername(username):
+    db_result = db_conn.execute("SELECT count(customerid) FROM customers WHERE username = '" + username + "'")
+    return list(db_result)
+
+def adduser(id_cust, user, password_cif, nombre, mail, tarjeta, cvc, saldo):
+    new_nombre = str(nombre)
+    new_nombre = new_nombre[1:-2]
+    new_mail = str(mail)
+    new_mail = new_mail[1:-2]
+    new_tarj = str(tarjeta)
+    new_tarj = new_tarj[1:-2]
+    new_cvc = str(cvc)
+    new_cvc = new_cvc[1:-2]
+    query = "INSERT INTO customers (customerid,firstname,lastname,address1,city,country,email,creditcardtype,creditcard,creditcardexpiration,username,password,cvc,money,region)"
+    query += " VALUES ("
+    query += str(id_cust)
+    query += ","
+    query += new_nombre
+    query += ",' ','EPS UAM','Madrid','Spain',"
+    query += new_mail
+    query += ",'Mastercard',"
+    query += new_tarj
+    query += ",'202203','"
+    query += user
+    query += "','"
+    query += str(password_cif)
+    query += "',"
+    query += new_cvc
+    query += ","
+    query += str(saldo)
+    query += ", ' ')"
+    db_conn.execute(query)
+
+    # db_conn.execute("INSERT INTO customers (firstname,lastname,address1,city,country,email,creditcardtype,creditcard,creditcardexpiration,username,password,cvc,money) VALUES ("+nombre+",' ','EPS UAM','Madrid','Spain',"+mail",'Mastercard',"+tarjeta+",'202203',"+user+","+password_cif+","+cvc+","+saldo+")")
