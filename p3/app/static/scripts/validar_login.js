@@ -27,6 +27,6 @@ window.onload=function(){
   if (flag == 0){
     micookie = "";
   }
-  document.formulario.username.value=micookie;
+  document.formulario.username.value=micookie.slice(1, -1);
   return true;
 }

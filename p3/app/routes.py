@@ -12,16 +12,6 @@ from os.path import isdir
 import time
 from app import database
 
-# f = []
-#
-# def files(path):
-#     for file in os.listdir(path):
-#         os.path.join(path, file)
-#         yield file
-#
-# for file in files("."):
-#     f.append(file)
-
 @app.route('/')
 @app.route('/index')
 def index():
@@ -84,6 +74,23 @@ def pelicula(valor):
     actores = database.getactors(valor)
     directores = database.getdirectors(valor)
     producto = database.getproduct(valor)[0]
+
+    if 'usuario' not in session:
+        if request.method == 'POST':
+            if not 'carrito' in session:
+                session['carrito'] = []
+            session['carrito'].append(producto)
+
+    else:
+        if request.method == 'POST':
+            user = session['usuario']
+            usuarios = database.getuser(user)
+            id_usuario=usuarios[0]['customerid']
+            # INSERT A ORDERDETAIL PARA ORDER CON STATUS NULL
+            # database.getCurrentOrder()
+            # database.inserIntoCarrito(str(id_usuario), str(producto['prod_id']))
+            database.insertIntoOrders(producto['price'], str(id_usuario), producto['prod_id'])
+
     return render_template('pelicula.html', peli = peli, categorias = categorias, directores = directores, actores = actores, producto = producto)
 
 #busqueda de peli
@@ -183,48 +190,72 @@ def carrito():
 
     if request.method == 'POST':
 
-        if session['carrito'] != []:
+        if 'usuario' in session:
 
-            if 'usuario' in session:
+            user = session['usuario']
+            usuarios = database.getuser(user)
 
-                path = os.path.dirname(__file__)
-                path += "/usuarios/"+session['usuario']+"/"
-                datos = json.load(open(path+"datos.json"))
-                saldo=datos['saldo']
+            # path = os.path.dirname(__file__)
+            # path += "/usuarios/"+session['usuario']+"/"
+            # datos = json.load(open(path+"datos.json"))
+            # saldo=datos['saldo']
+            saldo = database.getUserSaldo(session['usuario'])
+            saldo = str(saldo)[2:-3]
+            coste = database.getOrderPrice(usuarios[0]['customerid'])
+            coste = str(coste)[11:-5]
 
-                coste = 0
+            print('saldoooooo', saldo)
+            print('costeeeeee', coste)
 
-                for p in session['carrito']:
-                    coste += float(p['precio'])
-
-                if float(coste) <= float(saldo):
-                    saldo -= coste
-
-                    data = json.load(open(path+'historial.json'))
-                    pedido = {
-                        'fecha' : time.strftime("%d.%m.%Y"),
-                        'total' : coste,
-                        'peliculas' : []
-                    }
-                    for p in session['carrito']:
-                        pedido['peliculas'].append(p)
-                    data['pedidos'].append(pedido)
-
-                    with open(path+'historial.json', 'w') as file:
-                        json.dump(data, file)
-
-                    session['carrito'] = []
-                    datos['saldo']=saldo
-                    with open(path+"datos.json", 'w') as f:
-                        f.write(json.dumps(datos))
-
-                    compra = True
-
-                else:
-                    no_saldo = True
+            if float(coste) <= float(saldo):
+                saldo = float(saldo) - float(coste)
+                # setOrderStatus(Paid)
+                # Decrementar la cantidad del usuario
+                database.setOrderStatusPaid(str(usuarios[0]['customerid']))
+                database.setUserSaldo(str(usuarios[0]['customerid']), saldo)
+                compra = True
 
             else:
-                no_registrado = True
+                no_saldo = True
+
+
+                # iculas_nombre = database.getPeliculasInCarrito()
+                # no_registrado = True
+                # print("AQUIIIII", peliculas_nombre)
+                # return render_template('carrito.html', title = "Carrito", peliculas=peliculas_nombre,compra=compra, no_saldo=no_saldo, no_registrado=no_registrado)
+            all_carrito = database.getPeliculasInCarrito(str(usuarios[0]['customerid']))
+            return render_template('carrito.html', title = "Carrito", peliculas=all_carrito,compra=compra, no_saldo=no_saldo, no_registrado=no_registrado)
+
+
+        else:
+            # No registrado
+            peliculas_nombre = []
+            for prod in session['carrito']:
+                peliculas_nombre.append(database.getPeliculasProdById(prod['movieid'])[0])
+            no_registrado = True
+            return render_template('carrito.html', title = "Carrito", peliculas=peliculas_nombre,compra=compra, no_saldo=no_saldo, no_registrado=no_registrado)
+
+    else:
+
+        if 'usuario' in session:
+
+            user = session['usuario']
+            usuarios = database.getuser(user)
+
+            if session['carrito'] == []:
+                for prod in session['carrito']:
+                    pelicula = database.getPeliculasProdById(prod['movieid'])[0]
+                    database.inserIntoCarrito( str(usuarios[0]['customerid']), str(pelicula['prod_id']))
+                session['carrito'] = []
+            all_carrito = database.getPeliculasInCarrito(str(usuarios[0]['customerid']))
+            return render_template('carrito.html', title = "Carrito", peliculas=all_carrito,compra=compra, no_saldo=no_saldo, no_registrado=no_registrado)
+
+        else:
+            peliculas_nombre = []
+            for prod in session['carrito']:
+                peliculas_nombre.append(database.getPeliculasProdById(prod['movieid'])[0])
+            return render_template('carrito.html', title = "Carrito", peliculas=peliculas_nombre,compra=compra, no_saldo=no_saldo, no_registrado=no_registrado)
+
 
     return render_template('carrito.html', title = "Carrito", peliculas=session['carrito'],compra=compra, no_saldo=no_saldo, no_registrado=no_registrado)
 
@@ -232,10 +263,11 @@ def carrito():
 @app.route('/carrito/borrar/<valor>')
 def carrito_borrar(valor):
 
-    for p in session['carrito']:
-        if p['id'] == int(valor):
-            session['carrito'].remove(p)
-            break
+    user = session['usuario']
+    usuarios = database.getuser(user)
+    id_usuario=usuarios[0]['customerid']
+
+    database.borrarProductoCarrito(valor, id_usuario)
 
     return redirect(url_for('carrito'))
 
@@ -253,11 +285,11 @@ def login():
             return render_template('login_registro.html', title = "Log In", existe=True)
         else:
             usuarios = database.getuser(user)
-            nombre_usuario=usuarios[0]['username']
+            mail_usuario=usuarios[0]['email']
             passw_cif=usuarios[0]['password']
             passw = md5(request.form['password'].encode()).hexdigest()
             # aqui se deberia validar con fichero .dat del usuario
-            cond = request.form['username'] == nombre_usuario and passw_cif == passw
+            cond = request.form['username'] == mail_usuario and passw_cif == passw
             if cond:
                 session['usuario'] = request.form['username']
                 session.modified = True
@@ -306,7 +338,7 @@ def signup():
 
                 database.adduser(id_cust, user, password_cif, nombre, mail, tarjeta, cvc, saldo);
 
-                session['usuario'] = request.form['username']
+                session['usuario'] = request.form['mail']
                 session.modified = True
 
                 # historial.close()
@@ -321,5 +353,6 @@ def signup():
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():
     session.pop('usuario', None)
+    session['carrito'] = []
     # session.pop('carrito', None)
     return redirect(url_for('index'))

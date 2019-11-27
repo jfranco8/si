@@ -4,6 +4,7 @@ create or replace function updOrders() returns trigger as $$
 
 begin
   if (TG_OP = 'INSERT') then
+    -- insert into orderdetail(orderid, prod_id, price, quantity) values (new.orderid, new.prod_id, new.price, new.quantity);
     update orders set netamount = netamount + new.price*new.quantity where orderid=new.orderid;
     update orders set totalamount = netamount*(100+tax)/100 where orderid=new.orderid;
     return null;
@@ -20,4 +21,4 @@ end;
 $$
 language plpgsql;
 
-create trigger updOrders before INSERT or UPDATE or DELETE on orderdetail for each row execute procedure updOrders();
+create trigger updOrders after INSERT or UPDATE or DELETE on orderdetail for each row execute procedure updOrders();

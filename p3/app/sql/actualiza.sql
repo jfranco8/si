@@ -28,16 +28,16 @@ ALTER TABLE public.products
 ADD FOREIGN KEY (prod_id) REFERENCES products(prod_id);
 
 ALTER TABLE public.orderdetail
-ADD FOREIGN KEY (orderid) REFERENCES orders(orderid);
+ADD FOREIGN KEY (orderid) REFERENCES orders(orderid) ON DELETE CASCADE;
 
 ALTER TABLE public.orderdetail
-ADD FOREIGN KEY (prod_id) REFERENCES products(prod_id);
+ADD FOREIGN KEY (prod_id) REFERENCES products(prod_id) ON DELETE CASCADE;
 
 ALTER TABLE public.inventory
 ADD FOREIGN KEY (prod_id) REFERENCES products(prod_id);
 
 ALTER TABLE public.orders
-ADD FOREIGN KEY (customerid) REFERENCES customers(customerid);
+ADD FOREIGN KEY (customerid) REFERENCES customers(customerid) ON DELETE CASCADE;
 
 ALTER TABLE public.products
 ADD FOREIGN KEY (movieid) REFERENCES imdb_movies(movieid);
@@ -184,3 +184,5 @@ ADD IF NOT EXISTS cvc character varying(3);
 
 UPDATE public.customers
 SET cvc = '000';
+
+DROP TABLE imdb_moviegenres, imdb_movielanguages, imdb_moviecountries
