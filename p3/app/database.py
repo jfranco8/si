@@ -62,7 +62,7 @@ def adduser(id_cust, user, password_cif, nombre, mail, tarjeta, cvc, saldo):
     new_tarj = new_tarj[1:-2]
     new_cvc = str(cvc)
     new_cvc = new_cvc[1:-2]
-    query = "INSERT INTO customers (customerid,firstname,lastname,address1,city,country,email,creditcardtype,creditcard,creditcardexpiration,username,password,cvc,money,region)"
+    query = "INSERT INTO customers (customerid,firstname,lastname,address1,city,country,email,creditcardtype,creditcard,creditcardexpiration,username,password,cvc,income,region)"
     query += " VALUES ("
     query += str(id_cust)
     query += ","
@@ -83,3 +83,13 @@ def adduser(id_cust, user, password_cif, nombre, mail, tarjeta, cvc, saldo):
     db_conn.execute(query)
 
     # db_conn.execute("INSERT INTO customers (firstname,lastname,address1,city,country,email,creditcardtype,creditcard,creditcardexpiration,username,password,cvc,money) VALUES ("+nombre+",' ','EPS UAM','Madrid','Spain',"+mail",'Mastercard',"+tarjeta+",'202203',"+user+","+password_cif+","+cvc+","+saldo+")")
+def isuser(name):
+    db_result = db_conn.execute("SELECT username FROM customers WHERE username = " + name)
+    res = list(db_result)
+    if res[0]:
+        return True
+    return False
+
+def getuser(name):
+    db_result = db_conn.execute("SELECT * FROM customers WHERE username = " + name)
+    return list(db_resul)

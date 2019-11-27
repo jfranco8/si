@@ -47,7 +47,7 @@ ADD FOREIGN KEY (movieid) REFERENCES imdb_movies(movieid);
 ----- MOVIE COUNTRIES
 ----------------------------
 
-CREATE TABLE public.country (
+CREATE TABLE IF NOT EXISTS public.country (
   countryid integer NOT NULL PRIMARY KEY,
   country char(40) NOT NULL
 );
@@ -67,7 +67,7 @@ ALTER SEQUENCE COUNTRY_NEW_SEQ OWNED BY public.country.countryid;
 
 ALTER TABLE public.country ALTER COLUMN countryid SET DEFAULT nextval('COUNTRY_NEW_SEQ'::regclass);
 
-CREATE TABLE public.movie_country (
+CREATE TABLE IF NOT EXISTS public.movie_country (
   countryid integer,
   movieid integer
 );
@@ -91,7 +91,7 @@ ADD FOREIGN KEY (movieid) REFERENCES imdb_movies(movieid);
 ----- MOVIE GENRES
 ----------------------------
 
-CREATE TABLE public.genres (
+CREATE TABLE IF NOT EXISTS public.genres (
   genreid integer NOT NULL PRIMARY KEY,
   genre char(40) NOT NULL
 );
@@ -111,7 +111,7 @@ ALTER SEQUENCE GENRE_NEW_SEQ OWNED BY public.genres.genreid;
 
 ALTER TABLE public.genres ALTER COLUMN genreid SET DEFAULT nextval('GENRE_NEW_SEQ'::regclass);
 
-CREATE TABLE public.movie_genre (
+CREATE TABLE IF NOT EXISTS public.movie_genre (
   genreid integer,
   movieid integer
 );
@@ -135,7 +135,7 @@ ADD FOREIGN KEY (movieid) REFERENCES imdb_movies(movieid);
 ----- MOVIE LANGUAGES
 ----------------------------
 
-CREATE TABLE public.languages (
+CREATE TABLE IF NOT EXISTS public.languages (
   languageid integer NOT NULL PRIMARY KEY,
   language char(40) NOT NULL
 );
@@ -155,7 +155,7 @@ ALTER SEQUENCE LANGUAGE_NEW_SEQ OWNED BY public.languages.languageid;
 
 ALTER TABLE public.languages ALTER COLUMN languageid SET DEFAULT nextval('LANGUAGE_NEW_SEQ'::regclass);
 
-CREATE TABLE public.movie_language (
+CREATE TABLE IF NOT EXISTS public.movie_language (
   languageid integer,
   movieid integer
 );
@@ -180,10 +180,7 @@ ADD FOREIGN KEY (movieid) REFERENCES imdb_movies(movieid);
 ----------------------------
 
 ALTER TABLE public.customers
-ADD money numeric;
-
-ALTER TABLE public.customers
-ADD cvc character varying(3);
+ADD IF NOT EXISTS cvc character varying(3);
 
 UPDATE public.customers
-SET money = 100, cvc = '000';
+SET cvc = '000';

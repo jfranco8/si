@@ -244,21 +244,17 @@ def carrito_borrar(valor):
 def login():
     # doc sobre request object en http://flask.pocoo.org/docs/1.0/api/#incoming-request-data
     if 'username' in request.form:
-        path = os.path.dirname(__file__)
-        path += "/usuarios/"+request.form['username']
-
         if request.method == 'POST':
             user = request.form['username']
             resp = make_response(redirect(url_for('index')))
             resp.set_cookie('userID', user)
 
-        if not isdir(path):
+        if not database.isuser(user):
             return render_template('login_registro.html', title = "Log In", existe=True)
         else:
-            path += "/"
-            datos = json.load(open(path+"datos.json"))
-            nombre_usuario=datos['username']
-            passw_cif=datos['psw']
+            usuarios = database.getuser(user)
+            nombre_usuario=usuarios[0]['username']
+            passw_cif=usuarios[0]['password']
             passw = md5(request.form['password'].encode()).hexdigest()
             # aqui se deberia validar con fichero .dat del usuario
             cond = request.form['username'] == nombre_usuario and passw_cif == passw
