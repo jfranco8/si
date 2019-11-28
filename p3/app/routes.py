@@ -139,18 +139,19 @@ def cambiar_contrasena(usuario):
     return render_template('cambiar_contrasena.html', title = "Cambiar contrasena", mal=False)
 
 
-@app.route('/perfil/<usuario>/', methods=['GET', 'POST'])
+@app.route('/perfil//', methods=['GET', 'POST'])
 def perfil(usuario):
-    path = os.path.dirname(__file__)
-    path += "/usuarios/"+usuario+"/"
-    datos = json.load(open(path+"datos.json"))
-    username=datos['username'] #nombre de usuario
-    passw=datos['psw'] #ps
-    name=datos['nombre'] #nombre
-    mail=datos['mail'] #mail
-    card=datos['tarjeta'] #tarjeta
-    cvc=datos['cvc'] #cvc
-    saldo=datos['saldo'] #saldo
+    user = session['usuario']
+    usuarios = database.getuser(user)
+    usuario = usuarios[0]
+    id_usuario = usuario['customerid']
+    username = usuario['username'] #nombre de usuario
+    passw = usuario['password'] #ps
+    name = usuario['firstname'] #nombre
+    mail = usuario['email'] #mail
+    card = usuario['creditcard'] #tarjeta
+    cvc = usuario['cvc'] #cvc
+    saldo = usuario['income'] #saldo
     error = False
 
     if request.method == 'POST':
@@ -159,12 +160,9 @@ def perfil(usuario):
             error = True
         else:
             saldo = float(saldo) + float(saldo_new)
-        datos = json.load(open(path+"datos.json"))
-        datos['saldo']=saldo
-        with open(path+"datos.json", 'w') as f:
-            f.write(json.dumps(datos))
+            database.setUserSaldo(id_usuario,saldo)
     return render_template('perfil.html', name=name, passw=passw, username=username,
-        mail=mail, card=card, saldo=saldo, error=error)
+    mail=mail, card=card, saldo=saldo, error=error)
 
 
 @app.route('/historial',methods=['GET', 'POST'])
@@ -263,13 +261,23 @@ def carrito():
 @app.route('/carrito/borrar/<valor>')
 def carrito_borrar(valor):
 
-    user = session['usuario']
-    usuarios = database.getuser(user)
-    id_usuario=usuarios[0]['customerid']
+    if 'usuario' in session:
 
-    database.borrarProductoCarrito(valor, id_usuario)
+        user = session['usuario']
+        usuarios = database.getuser(user)
+        id_usuario=usuarios[0]['customerid']
 
-    return redirect(url_for('carrito'))
+        database.borrarProductoCarrito(valor, id_usuario)
+
+        return redirect(url_for('carrito'))
+
+    else:
+        for p in session['carrito']:
+            if p['prod_id'] == int(valor):
+                session['carrito'].remove(p)
+                break
+
+        return redirect(url_for('carrito'))
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -279,7 +287,7 @@ def login():
         if request.method == 'POST':
             user = request.form['username']
             resp = make_response(redirect(url_for('index')))
-            resp.set_cookie('userID', user)
+            resp.set_cookie('userID', request.form['username'])
 
         if not database.isuser(user):
             return render_template('login_registro.html', title = "Log In", existe=True)
