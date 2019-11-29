@@ -153,26 +153,16 @@ def createCurrentOrder(user):
     return new_order_id
 
 def insertIntoOrders(price, user_id, prod_id):
-    # order_id = str(getCurrentOrder(user_id))
-    # query = "insert into orderdetail(orderid, prod_id, price, quantity) values (" +str(order_id)+ ", " +str(prod_id)+ ", " +str(price)+ ", 1)"
-    # db_conn.execute(query)
 
     order_id = str(getCurrentOrder(user_id))
     query = "select count(*) from orderdetail where orderid = "+str(order_id)+" and prod_id = "+str(prod_id)
-    # print("HA CONTADO ", str(list(db_conn.execute(query))[0])[1:-2])
     num_peliculas = int(str(list(db_conn.execute(query))[0])[1:-2])
     if num_peliculas == 0:
         query = "insert into orderdetail(orderid, prod_id, price, quantity) values (" +str(order_id)+ ", " +str(prod_id)+ ", " +str(price)+ ", 1)"
     else:
-        print("PILLA QUE YA HAY ALGUNO")
         query = "select quantity from orderdetail where orderid = "+str(order_id)+" and prod_id = "+str(prod_id)
         quantity = int(str(list(db_conn.execute(query))[0])[1:-2]) + 1
-        print("CANTIDAD NUEVA =", quantity)
-        # query = "select price from orderdetail where orderid = "+str(order_id)+" and prod_id = "+str(prod_id)
-        # new_price = int(str(list(db_conn.execute(query))[0])[10:-4]) + price
-        # print("PRECIO NUEVO =", new_price)
         query = "update orderdetail set quantity = "+ str(quantity)+ " where orderid = "+str(order_id)+" and prod_id = "+str(prod_id)
-        # query = "update orderdetail(orderid, prod_id, price, quantity) values (" +str(order_id)+ ", " +str(prod_id)+ ", " +str(price)+ ", "+ str(quantity)+")"
     db_conn.execute(query)
 
 def setUserSaldo(customerid, saldo):
@@ -190,9 +180,6 @@ def getOrderPrice(user):
     return list(db_result)
 
 def borrarProductoCarrito(prod_id, user_id):
-    # order_id = str(getCurrentOrder(user_id))
-    # query = "delete from orderdetail where orderdetailid in (select orderdetailid from orderdetail where (orderid = " + str(order_id) + " and prod_id = " + str(prod_id) + ") LIMIT 1)"
-    # db_conn.execute(query)
     order_id = str(getCurrentOrder(user_id))
     query = "select quantity from orderdetail where orderid = "+str(order_id)+" and prod_id = "+str(prod_id)
     quantity = int(str(list(db_conn.execute(query))[0])[1:-2])
@@ -212,3 +199,31 @@ def buscarPeli(busqueda):
 def setpsw(id_usuario, new_psw_encode):
     query = "UPDATE customers SET password = '" + str(new_psw_encode) + "' WHERE customerid = " + str(id_usuario)
     db_result = db_conn.execute(query)
+
+def getPeliculasOrder(orderid):
+    query = "select movieid, price, quantity, movietitle, orderdate, cast(totalamount as decimal(10,2)) from orderdetail natural join products natural join imdb_movies natural join orders where orderid = " + str(orderid)
+    db_result = db_conn.execute(query)
+    dict = [{'movieid': col1,
+            'price': col2,
+            'quantity': col3,
+            'movietitle': col4,
+            'orderdate': col5,
+            'totalamount': col6}
+            for (col1, col2, col3, col4, col5, col6) in db_result
+            ]
+    return dict
+
+def getPaidOrders(user_id):
+    query = "select orderid from orders where customerid = " + str(user_id) + " and status = 'Paid'"
+    db_result = db_conn.execute(query)
+    return list(db_result)
+
+def getHistorial(user_id):
+    orders = getPaidOrders(user_id)
+    pedidos = []
+    for ord in orders:
+        new_order = str(ord)[1:-2]
+        pelis = getPeliculasOrder(new_order)
+        pelis_dict = {'pedidos': pelis}
+        pedidos.append(pelis_dict)
+    return pedidos

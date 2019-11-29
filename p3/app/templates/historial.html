@@ -21,22 +21,22 @@
 
 <h1>Historial de compra</h1>
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    Su saldo actual es de {{ datos.saldo }} ubres. Si desea incrementarlo <a href="{{ url_for('perfil', usuario = datos.username )}}">accede al perfil</a>
+    Su saldo actual es de {{ datos.income }} ubres. Si desea incrementarlo <a href="{{ url_for('perfil', usuario = datos.username )}}">accede al perfil</a>
     <br></br>
 
     {% for a in pedidos %}
 				<div class="padre black-border flex-row max_ancho margin_left_min">
 					<div class="historial">
-						<button class="boton_despl detalles button1 hov max_ancho">{{a.fecha}}</button>
-						<h4> Importe: {{a.total}} ubres</h4>
+						<button class="boton_despl detalles button1 hov max_ancho">{{a.pedidos[0].orderdate}}</button>
+						<h4> Importe: {{a.pedidos[0].totalamount}} ubres</h4>
 					</div>
 					<div class="pelis_desplegar desplegable black-border flex-column">
-						{% for e in a.peliculas %}
+						{% for e in a.pedidos %}
 						<div class="flex-row grey">
-							<img alt="{{ e.titulo }}" src="{{ url_for('static', filename ='images/pelis/' + e.poster) }}" class="pedidos-img">
+							<img alt="{{ e.titulo }}" src="{{ url_for('static', filename ='images/pelis/cine.jpg') }}" class="pedidos-img">
 							<div class="grey margin_left_min">
-								<h2><a href="{{ url_for('pelicula', valor = e.id )}}" class="white">{{ e.titulo }}</a></h2>
-								<h4><b>Precio: {{ e.precio }} ubres</b></h4>
+								<h2><a href="{{ url_for('pelicula', valor = e.movieid )}}" class="white">{{ e.movietitle }}</a></h2>
+								<h4><b>Precio: {{ e.price }} ubres - Cantidad {{ e.quantity }}</b></h4>
 							</div>
 						</div>
 						{% endfor %}

@@ -158,13 +158,19 @@ def perfil():
 
 @app.route('/historial',methods=['GET', 'POST'])
 def historial():
+    user = database.getuser(session['usuario'])
+    userid = str(user[0]['customerid'])
+    print("queremos los pedidos hechos por", userid)
+    historial = database.getHistorial(str(userid))
     genres = database.getgenres()
-    path = os.path.dirname(__file__)
-    path += "/usuarios/"+session['usuario']
-    historial = json.load(open(path+"/historial.json"))['pedidos']
-    datos = json.load(open(path+"/datos.json"))
-    historial.reverse()
+    # path = os.path.dirname(__file__)
+    # path += "/usuarios/"+session['usuario']
+    # historial = json.load(open(path+"/historial.json"))['pedidos']
+    # datos = json.load(open(path+"/datos.json"))
+    # historial.reverse()
+    datos = user[0]
     return render_template('historial.html', genres = genres, title = "Historial", pedidos=historial, datos=datos)
+    return redirect(url_for('index'))
 
 
 @app.route('/carrito', methods=['GET', 'POST'])
