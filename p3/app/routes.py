@@ -17,16 +17,18 @@ from app import database
 def index():
     print(url_for('static', filename='styles.css'))
     movies = database.todas()
+    genres = database.getgenres()
     titulo = "Todas las muuuvies"
-    return render_template('index.html', title = titulo, movies=movies)
+    return render_template('index.html', title = titulo, movies = movies, genres = genres)
 
 #tipos de pelis
 @app.route('/novedades')
 def novedades():
     print(url_for('static', filename='styles.css'))
     movies = database.novedades()
+    genres = database.getgenres()
     titulo = "Novedades"
-    return render_template('index.html', title = titulo, movies=movies)
+    return render_template('index.html', title = titulo, movies = movies, genres = genres)
 
 
 @app.route('/masvistas')
@@ -34,53 +36,36 @@ def masvistas():
     print(url_for('static', filename='styles.css'))
     movies = database.masVistas()
     titulo = "Muuuvies mas vistas"
-    return render_template('index.html', title = titulo, movies=movies)
+    genres = database.getgenres()
+    return render_template('index.html', title = titulo, movies = movies, genres = genres)
 
 
 @app.route('/topventas')
 def ventas():
     print(url_for('static', filename='styles.css'))
     movies = database.topventas()
+    genres = database.getgenres()
     titulo = "Top ventas"
-    return render_template('index.html', title = titulo, movies=movies)
+    return render_template('index.html', title = titulo, movies = movies, genres = genres)
 
 #categorias de pelis
 @app.route('/categorias/<cat>')
 def categorias(cat):
     print(url_for('static', filename='styles.css'))
-    catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json'), encoding="utf-8").read()
-    catalogue = json.loads(catalogue_data)
-    pelis = []
-    if cat=="animacion":
-        titulo="Animación"
-    elif cat=="aventura":
-        titulo="Aventura"
-    elif cat=="comedia":
-        titulo="Comedia"
-    elif cat=="drama":
-        titulo="Drama"
-    elif cat=="miedo":
-        titulo="Miedo"
-    elif cat=="musical":
-        titulo="Musical"
-    elif cat=="romantica":
-        titulo="Romántica"
-    else:
-        titulo="Ciencia ficcion"
-    for p in catalogue['peliculas']:
-        for c in p['categorias']:
-            if c['cat'] == titulo:
-                pelis.append(p)
-    return render_template('index.html', title = titulo, movies=pelis)
+    pelis = database.getmoviesbygenre(cat)
+    genres = database.getgenres()
+    titulo = genres[int(cat)-1]['genre']
+    return render_template('index.html', title = titulo, movies = pelis, genres = genres)
 
 #peli concreta
 @app.route('/pelicula/<valor>/', methods=['GET', 'POST'])
 def pelicula(valor):
     print(url_for('static', filename='styles.css'))
+    genres = database.getgenres()
     peli = database.getmovie(valor)[0]
-    categorias = database.getgenres(valor)
-    actores = database.getactors(valor)
-    directores = database.getdirectors(valor)
+    categorias = database.getgenres_movie(valor)
+    actores = database.getactors_movie(valor)
+    directores = database.getdirectors_movie(valor)
     producto = database.getproduct(valor)[0]
 
     if 'usuario' not in session:
@@ -99,35 +84,35 @@ def pelicula(valor):
             # database.inserIntoCarrito(str(id_usuario), str(producto['prod_id']))
             database.insertIntoOrders(producto['price'], str(id_usuario), producto['prod_id'])
 
-    return render_template('pelicula.html', peli = peli, categorias = categorias, directores = directores, actores = actores, producto = producto)
+    return render_template('pelicula.html', peli = peli, genres = genres, categorias = categorias, directores = directores, actores = actores, producto = producto)
 
 #busqueda de peli
 @app.route('/busqueda', methods=['GET', 'POST'])
 def busqueda():
     print(url_for('static', filename='styles.css'))
-    catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json')).read()
-    catalogue = json.loads(catalogue_data)
-    pelis = []
+    genres = database.getgenres()
     if 'busqueda' in request.form:
-        for p in catalogue['peliculas']:
-            if request.form['busqueda'].lower() in p['titulo'].lower():
-                pelis.append(p)
-        return render_template('index.html', title = request.form['busqueda'], movies=pelis)
+        buscado = request.form['busqueda']
+        pelis = database.buscarPeli(buscado)
+        return render_template('index.html', title = buscado, genres = genres, movies=pelis)
     else:
         return redirect(url_for('index'))
 
 
 @app.route('/ayuda')
 def ayuda():
-    return render_template('ayuda.html')
+    genres = database.getgenres()
+    return render_template('ayuda.html', genres = genres)
 
 
 @app.route('/cambiar_contrasena/<usuario>/', methods=['GET', 'POST'])
 def cambiar_contrasena(usuario):
-    path = os.path.dirname(__file__)
-    path += "/usuarios/"+usuario+"/"
-    datos = json.load(open(path+"datos.json"))
-    passw=datos['psw']
+    genres = database.getgenres()
+    user = session['usuario']
+    usuarios = database.getuser(user)
+    usuario = usuarios[0]
+    passw = usuario['password'] #ps
+    id_usuario = usuario['customerid']
 
     if request.method == 'POST':
         old_contr = request.form['old']
@@ -135,20 +120,18 @@ def cambiar_contrasena(usuario):
         new_contr2 = request.form['new2']
 
         if md5(old_contr.encode()).hexdigest() != passw:
-            return render_template('cambiar_contrasena.html', title = "Cambiar contrasena", mal=True)
+            return render_template('cambiar_contrasena.html', title = "Cambiar contrasena", mal=True, genres = genres)
 
-        datos = json.load(open(path+"datos.json"))
-        datos['psw'] = md5(new_contr1.encode()).hexdigest()
-
-        with open(path+"datos.json", 'w') as f:
-            f.write(json.dumps(datos))
+        new_psw_encode = md5(new_contr1.encode()).hexdigest()
+        database.setpsw(id_usuario, new_psw_encode)
 
         return redirect(url_for('index'))
-    return render_template('cambiar_contrasena.html', title = "Cambiar contrasena", mal=False)
+    return render_template('cambiar_contrasena.html', title = "Cambiar contrasena", mal=False, genres = genres)
 
 
 @app.route('/perfil/', methods=['GET', 'POST'])
 def perfil():
+    genres = database.getgenres()
     user = session['usuario']
     usuarios = database.getuser(user)
     usuario = usuarios[0]
@@ -170,23 +153,23 @@ def perfil():
             saldo = float(saldo) + float(saldo_new)
             database.setUserSaldo(id_usuario,saldo)
 
-    return render_template('perfil.html', name=name, passw=passw, username=username,
-    mail=mail, card=card, saldo=saldo, error=error, title=username)
+    return render_template('perfil.html', genres = genres, name=name, passw=passw, username=username, mail=mail, card=card, saldo=saldo, error=error, title=username)
 
 
 @app.route('/historial',methods=['GET', 'POST'])
 def historial():
+    genres = database.getgenres()
     path = os.path.dirname(__file__)
     path += "/usuarios/"+session['usuario']
     historial = json.load(open(path+"/historial.json"))['pedidos']
     datos = json.load(open(path+"/datos.json"))
     historial.reverse()
-    return render_template('historial.html', title = "Historial", pedidos=historial, datos=datos)
+    return render_template('historial.html', genres = genres, title = "Historial", pedidos=historial, datos=datos)
 
 
 @app.route('/carrito', methods=['GET', 'POST'])
 def carrito():
-
+    genres = database.getgenres()
     no_saldo = False
     no_registrado = False
     compra = False
@@ -211,9 +194,6 @@ def carrito():
             coste = database.getOrderPrice(usuarios[0]['customerid'])
             coste = str(coste)[11:-5]
 
-            print('saldoooooo', saldo)
-            print('costeeeeee', coste)
-
             if float(coste) <= float(saldo):
                 saldo = float(saldo) - float(coste)
                 # setOrderStatus(Paid)
@@ -231,7 +211,7 @@ def carrito():
                 # print("AQUIIIII", peliculas_nombre)
                 # return render_template('carrito.html', title = "Carrito", peliculas=peliculas_nombre,compra=compra, no_saldo=no_saldo, no_registrado=no_registrado)
             all_carrito = database.getPeliculasInCarrito(str(usuarios[0]['customerid']))
-            return render_template('carrito.html', title = "Carrito", peliculas=all_carrito,compra=compra, no_saldo=no_saldo, no_registrado=no_registrado)
+            return render_template('carrito.html', genres = genres, title = "Carrito", peliculas=all_carrito,compra=compra, no_saldo=no_saldo, no_registrado=no_registrado)
 
 
         else:
@@ -240,7 +220,7 @@ def carrito():
             for prod in session['carrito']:
                 peliculas_nombre.append(database.getPeliculasProdById(prod['movieid'])[0])
             no_registrado = True
-            return render_template('carrito.html', title = "Carrito", peliculas=peliculas_nombre,compra=compra, no_saldo=no_saldo, no_registrado=no_registrado)
+            return render_template('carrito.html', genres = genres, title = "Carrito", peliculas=peliculas_nombre,compra=compra, no_saldo=no_saldo, no_registrado=no_registrado)
 
     else:
 
@@ -255,21 +235,20 @@ def carrito():
                     database.insertIntoOrders( str(pelicula['price']), str(usuarios[0]['customerid']), str(pelicula['prod_id']))
                 session['carrito'] = []
             all_carrito = database.getPeliculasInCarrito(str(usuarios[0]['customerid']))
-            return render_template('carrito.html', title = "Carrito", peliculas=all_carrito,compra=compra, no_saldo=no_saldo, no_registrado=no_registrado)
+            return render_template('carrito.html', genres = genres, title = "Carrito", peliculas=all_carrito,compra=compra, no_saldo=no_saldo, no_registrado=no_registrado)
 
         else:
             peliculas_nombre = []
             for prod in session['carrito']:
                 peliculas_nombre.append(database.getPeliculasProdById(prod['movieid'])[0])
-            return render_template('carrito.html', title = "Carrito", peliculas=peliculas_nombre,compra=compra, no_saldo=no_saldo, no_registrado=no_registrado)
+            return render_template('carrito.html', genres = genres, title = "Carrito", peliculas=peliculas_nombre,compra=compra, no_saldo=no_saldo, no_registrado=no_registrado)
 
 
-    return render_template('carrito.html', title = "Carrito", peliculas=session['carrito'],compra=compra, no_saldo=no_saldo, no_registrado=no_registrado)
+    return render_template('carrito.html', genres = genres, title = "Carrito", peliculas=session['carrito'],compra=compra, no_saldo=no_saldo, no_registrado=no_registrado)
 
 
 @app.route('/carrito/borrar/<valor>')
 def carrito_borrar(valor):
-
     if 'usuario' in session:
 
         user = session['usuario']
@@ -291,6 +270,7 @@ def carrito_borrar(valor):
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    genres = database.getgenres()
     # doc sobre request object en http://flask.pocoo.org/docs/1.0/api/#incoming-request-data
     if 'username' in request.form:
         if request.method == 'POST':
@@ -299,7 +279,7 @@ def login():
             resp.set_cookie('userID', request.form['username'])
 
         if not database.isuser(user):
-            return render_template('login_registro.html', title = "Log In", existe=True)
+            return render_template('login_registro.html', genres = genres, title = "Log In", existe=True)
         else:
             usuarios = database.getuser(user)
             mail_usuario=usuarios[0]['email']
@@ -318,17 +298,17 @@ def login():
             else:
                 # aqui se le puede pasar como argumento un mensaje de login invalido
 
-                return render_template('login_registro.html', title = "Log In", existe=False)
+                return render_template('login_registro.html', genres = genres, title = "Log In", existe=False)
     else:
         # se puede guardar la pagina desde la que se invoca
         session['url_origen']=request.referrer
         session.modified=True
         # print a error.log de Apache si se ejecuta bajo mod_wsgi
-        print (request.referrer)
-        return render_template('login_registro.html', title = "Log In", existe=False)
+        return render_template('login_registro.html', genres = genres, title = "Log In", existe=False)
 
 @app.route('/registro', methods=['GET', 'POST'])
 def signup():
+    genres = database.getgenres()
     if 'username' in request.form:
         if request.form['password']  == request.form['password2']:
 
@@ -351,7 +331,7 @@ def signup():
                 num_user_username = num_user_username[1:-2]
                 num_user_username = int(num_user_username)
                 if num_user_username != 0:
-                    return render_template('registro.html', title = "Sign", existe=True)
+                    return render_template('registro.html', genres = genres, title = "Sign", existe=True)
 
                 database.adduser(id_cust, user, password_cif, nombre, mail, tarjeta, cvc, saldo);
 
@@ -361,10 +341,10 @@ def signup():
                 # historial.close()
                 return resp
             else:
-                return render_template('registro.html', title = "Sign", existe=True)
+                return render_template('registro.html', genres = genres, title = "Sign", existe=True)
         else:
-            return render_template('registro.html', title = "Sign", existe=False)
-    return render_template('registro.html', title = "Sign", existe=False)
+            return render_template('registro.html', genres = genres, title = "Sign", existe=False)
+    return render_template('registro.html', title = "Sign", genres = genres, existe=False)
 
 
 @app.route('/logout', methods=['GET', 'POST'])

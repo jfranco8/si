@@ -56,14 +56,9 @@
 
       <select id="categorias" onchange="location = this.value;">
         <option>Elegir categoría</option>
-        <option value="{{ url_for('categorias', cat =  'animacion' ) }}">Animación</option>
-        <option value="{{ url_for('categorias', cat =  'aventura' ) }}">Aventuras</option>
-        <option value="{{ url_for('categorias', cat =  'comedia' ) }}">Comedia</option>
-        <option value="{{ url_for('categorias', cat =  'drama' ) }}">Drama</option>
-        <option value="{{ url_for('categorias', cat =  'miedo' ) }}">Miedo</option>
-        <option value="{{ url_for('categorias', cat =  'ciencia_ficcion' ) }}">Ciencia ficción</option>
-        <option value="{{ url_for('categorias', cat =  'musical' ) }}">Musical</option>
-        <option value="{{ url_for('categorias', cat =  'romantica' ) }}">Romanticas</option>
+        {% for g in genres %}
+          <option value="{{ url_for('categorias', cat =  g.genreid ) }}">{{ g.genre }}</option>
+        {% endfor %}
       </select>
     </nav>
 

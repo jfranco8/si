@@ -36,16 +36,24 @@ def getmovie(id):
     db_result = db_conn.execute("SELECT * FROM imdb_movies WHERE movieid = " + id)
     return  list(db_result)
 
-def getactors(id):
+def getactors_movie(id):
     db_result = db_conn.execute("SELECT * FROM imdb_actormovies NATURAL JOIN imdb_actors WHERE movieid = " + id + " ORDER BY actorname")
     return  list(db_result)
 
-def getdirectors(id):
+def getdirectors_movie(id):
     db_result = db_conn.execute("SELECT * FROM imdb_directormovies NATURAL JOIN imdb_directors WHERE movieid = " + id + " ORDER BY directorname")
     return  list(db_result)
 
-def getgenres(id):
+def getgenres_movie(id):
     db_result = db_conn.execute("SELECT * FROM movie_genre natural join genres WHERE movieid = " + id)
+    return  list(db_result)
+
+def getgenres():
+    db_result = db_conn.execute("SELECT * FROM genres")
+    return  list(db_result)
+
+def getmoviesbygenre(genre):
+    db_result = db_conn.execute("SELECT * FROM imdb_movies natural join genres WHERE genreid = " + str(genre))
     return  list(db_result)
 
 def getproduct(id):
@@ -195,3 +203,12 @@ def borrarProductoCarrito(prod_id, user_id):
         quantity = str(quantity)
         query = "update orderdetail set quantity = "+ str(quantity)+ " where orderid = "+str(order_id)+" and prod_id = "+str(prod_id)
     db_conn.execute(query)
+
+def buscarPeli(busqueda):
+    query = "select * from imdb_movies where movietitle like '%%" + str(busqueda) + "%%'"
+    db_result = db_conn.execute(query)
+    return list(db_result)
+
+def setpsw(id_usuario, new_psw_encode):
+    query = "UPDATE customers SET password = '" + str(new_psw_encode) + "' WHERE customerid = " + str(id_usuario)
+    db_result = db_conn.execute(query)
