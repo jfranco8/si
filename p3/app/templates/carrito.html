@@ -11,6 +11,7 @@
         <tr>
           <th>Película</th>
           <th>Precio</th>
+          <th>Cantidad</th>
           <th>Mantener?</th>
         </tr>
 
@@ -18,6 +19,7 @@
         <tr>
           <td class="titulos"><a href="{{ url_for('pelicula', valor =  p.movieid  ) }}">{{ p.movietitle }}</a></td>
           <td>{{ p.price }} ubres</td>
+          <td>{{ p.quantity }}</td>
           <td> <a href="{{ url_for('carrito_borrar', valor =  p.prod_id ) }}">eliminar</a> </td>
         </tr>
         {% endfor %}

@@ -32,8 +32,16 @@ def novedades():
 @app.route('/masvistas')
 def masvistas():
     print(url_for('static', filename='styles.css'))
-    movies = database.topventas()
+    movies = database.masVistas()
     titulo = "Muuuvies mas vistas"
+    return render_template('index.html', title = titulo, movies=movies)
+
+
+@app.route('/topventas')
+def ventas():
+    print(url_for('static', filename='styles.css'))
+    movies = database.topventas()
+    titulo = "Top ventas"
     return render_template('index.html', title = titulo, movies=movies)
 
 #categorias de pelis
@@ -139,8 +147,8 @@ def cambiar_contrasena(usuario):
     return render_template('cambiar_contrasena.html', title = "Cambiar contrasena", mal=False)
 
 
-@app.route('/perfil//', methods=['GET', 'POST'])
-def perfil(usuario):
+@app.route('/perfil/', methods=['GET', 'POST'])
+def perfil():
     user = session['usuario']
     usuarios = database.getuser(user)
     usuario = usuarios[0]
@@ -161,8 +169,9 @@ def perfil(usuario):
         else:
             saldo = float(saldo) + float(saldo_new)
             database.setUserSaldo(id_usuario,saldo)
+
     return render_template('perfil.html', name=name, passw=passw, username=username,
-    mail=mail, card=card, saldo=saldo, error=error)
+    mail=mail, card=card, saldo=saldo, error=error, title=username)
 
 
 @app.route('/historial',methods=['GET', 'POST'])
@@ -240,10 +249,10 @@ def carrito():
             user = session['usuario']
             usuarios = database.getuser(user)
 
-            if session['carrito'] == []:
+            if session['carrito'] != []:
                 for prod in session['carrito']:
                     pelicula = database.getPeliculasProdById(prod['movieid'])[0]
-                    database.inserIntoCarrito( str(usuarios[0]['customerid']), str(pelicula['prod_id']))
+                    database.insertIntoOrders( str(pelicula['price']), str(usuarios[0]['customerid']), str(pelicula['prod_id']))
                 session['carrito'] = []
             all_carrito = database.getPeliculasInCarrito(str(usuarios[0]['customerid']))
             return render_template('carrito.html', title = "Carrito", peliculas=all_carrito,compra=compra, no_saldo=no_saldo, no_registrado=no_registrado)
@@ -326,7 +335,7 @@ def signup():
             if request.method == 'POST':
                 user = request.form['username']
                 resp = make_response(redirect(url_for('index')))
-                resp.set_cookie('userID', user)
+                resp.set_cookie('userID', request.form['mail'])
 
                 password_cif = md5(request.form['password'].encode()).hexdigest()
                 nombre = request.form['nombre'],

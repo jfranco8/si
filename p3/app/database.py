@@ -21,6 +21,13 @@ def novedades():
     db_result = db_conn.execute("SELECT * FROM imdb_movies ORDER BY year DESC LIMIT 20")
     return  list(db_result)
 
+def masVistas():
+    query =  "select * from products natural join inventory natural join imdb_movies \
+                order by sales desc limit 10"
+    db_result = db_conn.execute(query)
+    return list(db_result)
+
+
 def topventas():
     db_result = db_conn.execute("SELECT * FROM getTopVentas('1990') LIMIT 15")
     return list(db_result)
@@ -94,8 +101,8 @@ def getuser(name):
     db_result = db_conn.execute("SELECT * FROM customers WHERE email = '" + name + "'")
     return list(db_result)
 
-def inserIntoCarrito(customerid, productoid):
-    db_conn.execute("INSERT INTO carrito(customerid, prod_id) VALUES ( " + customerid +  ", " + productoid + " )")
+# def inserIntoCarrito(customerid, productoid):
+#     db_conn.execute("INSERT INTO carrito(customerid, prod_id) VALUES ( " + customerid +  ", " + productoid + " )")
 
 def getPeliculasInCarrito(user_id):
     query = "select * from orders natural join orderdetail natural join products natural join imdb_movies where orderid = " + str(getCurrentOrder(user_id))
@@ -119,13 +126,10 @@ def getCurrentOrder(user):
     db_result = db_conn.execute(query)
     db_list = list(db_result)
     if db_list == []:
-        print('0NO HABIA Y CREA UN')
         current_order = createCurrentOrder(user)
     else:
-        print('Hay u order abierto que es:')
         current_ord = db_list[0]
         current_order = str(current_ord)[1:-2]
-        print(current_order)
     return current_order
 
 def getMaxOrderId():
@@ -141,8 +145,26 @@ def createCurrentOrder(user):
     return new_order_id
 
 def insertIntoOrders(price, user_id, prod_id):
+    # order_id = str(getCurrentOrder(user_id))
+    # query = "insert into orderdetail(orderid, prod_id, price, quantity) values (" +str(order_id)+ ", " +str(prod_id)+ ", " +str(price)+ ", 1)"
+    # db_conn.execute(query)
+
     order_id = str(getCurrentOrder(user_id))
-    query = "insert into orderdetail(orderid, prod_id, price, quantity) values (" +str(order_id)+ ", " +str(prod_id)+ ", " +str(price)+ ", 1)"
+    query = "select count(*) from orderdetail where orderid = "+str(order_id)+" and prod_id = "+str(prod_id)
+    # print("HA CONTADO ", str(list(db_conn.execute(query))[0])[1:-2])
+    num_peliculas = int(str(list(db_conn.execute(query))[0])[1:-2])
+    if num_peliculas == 0:
+        query = "insert into orderdetail(orderid, prod_id, price, quantity) values (" +str(order_id)+ ", " +str(prod_id)+ ", " +str(price)+ ", 1)"
+    else:
+        print("PILLA QUE YA HAY ALGUNO")
+        query = "select quantity from orderdetail where orderid = "+str(order_id)+" and prod_id = "+str(prod_id)
+        quantity = int(str(list(db_conn.execute(query))[0])[1:-2]) + 1
+        print("CANTIDAD NUEVA =", quantity)
+        # query = "select price from orderdetail where orderid = "+str(order_id)+" and prod_id = "+str(prod_id)
+        # new_price = int(str(list(db_conn.execute(query))[0])[10:-4]) + price
+        # print("PRECIO NUEVO =", new_price)
+        query = "update orderdetail set quantity = "+ str(quantity)+ " where orderid = "+str(order_id)+" and prod_id = "+str(prod_id)
+        # query = "update orderdetail(orderid, prod_id, price, quantity) values (" +str(order_id)+ ", " +str(prod_id)+ ", " +str(price)+ ", "+ str(quantity)+")"
     db_conn.execute(query)
 
 def setUserSaldo(customerid, saldo):
@@ -160,6 +182,16 @@ def getOrderPrice(user):
     return list(db_result)
 
 def borrarProductoCarrito(prod_id, user_id):
+    # order_id = str(getCurrentOrder(user_id))
+    # query = "delete from orderdetail where orderdetailid in (select orderdetailid from orderdetail where (orderid = " + str(order_id) + " and prod_id = " + str(prod_id) + ") LIMIT 1)"
+    # db_conn.execute(query)
     order_id = str(getCurrentOrder(user_id))
-    query = "delete from orderdetail where orderid = " + str(order_id) + " and prod_id = " + str(prod_id)
+    query = "select quantity from orderdetail where orderid = "+str(order_id)+" and prod_id = "+str(prod_id)
+    quantity = int(str(list(db_conn.execute(query))[0])[1:-2])
+    if quantity == 1:
+        query = "delete from orderdetail where (orderid = " + str(order_id) + " and prod_id = " + str(prod_id) + ")"
+    else:
+        quantity = quantity - 1
+        quantity = str(quantity)
+        query = "update orderdetail set quantity = "+ str(quantity)+ " where orderid = "+str(order_id)+" and prod_id = "+str(prod_id)
     db_conn.execute(query)
