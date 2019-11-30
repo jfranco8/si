@@ -52,9 +52,11 @@ def ventas():
 @app.route('/categorias/<cat>')
 def categorias(cat):
     print(url_for('static', filename='styles.css'))
-    pelis = database.getmoviesbygenre(cat)
     genres = database.getgenres()
     titulo = genres[int(cat)-1]['genre']
+    genreid = genres[int(cat)-1]['genreid']
+    print("QUEREMOS EL GENRE DE ID", genreid)
+    pelis = database.getmoviesbygenre(genreid)
     return render_template('index.html', title = titulo, movies = pelis, genres = genres)
 
 #peli concreta

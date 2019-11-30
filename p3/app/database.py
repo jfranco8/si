@@ -53,7 +53,7 @@ def getgenres():
     return  list(db_result)
 
 def getmoviesbygenre(genre):
-    db_result = db_conn.execute("SELECT * FROM imdb_movies natural join genres WHERE genreid = " + str(genre))
+    db_result = db_conn.execute("SELECT * FROM imdb_movies natural join movie_genre WHERE genreid = " + str(genre))
     return  list(db_result)
 
 def getproduct(id):
