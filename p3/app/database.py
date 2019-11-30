@@ -9,6 +9,7 @@ from sqlalchemy.sql import select
 # configurar el motor de sqlalchemy
 db_engine = create_engine("postgresql://alumnodb:alumnodb@localhost/si1", echo=False)
 db_meta = MetaData(bind=db_engine)
+
 # conexion a la base de datos
 db_conn = None
 db_conn = db_engine.connect()
@@ -26,7 +27,6 @@ def masVistas():
                 order by sales desc limit 10"
     db_result = db_conn.execute(query)
     return list(db_result)
-
 
 def topventas():
     db_result = db_conn.execute("SELECT * FROM getTopVentas('1990') LIMIT 15")
@@ -97,7 +97,6 @@ def adduser(id_cust, user, password_cif, nombre, mail, tarjeta, cvc, saldo):
     query += ", ' ')"
     db_conn.execute(query)
 
-    # db_conn.execute("INSERT INTO customers (firstname,lastname,address1,city,country,email,creditcardtype,creditcard,creditcardexpiration,username,password,cvc,money) VALUES ("+nombre+",' ','EPS UAM','Madrid','Spain',"+mail",'Mastercard',"+tarjeta+",'202203',"+user+","+password_cif+","+cvc+","+saldo+")")
 def isuser(name):
     db_result = db_conn.execute("SELECT email FROM customers WHERE email = '" + name + "'")
     res = list(db_result)
@@ -109,12 +108,8 @@ def getuser(name):
     db_result = db_conn.execute("SELECT * FROM customers WHERE email = '" + name + "'")
     return list(db_result)
 
-# def inserIntoCarrito(customerid, productoid):
-#     db_conn.execute("INSERT INTO carrito(customerid, prod_id) VALUES ( " + customerid +  ", " + productoid + " )")
-
 def getPeliculasInCarrito(user_id):
     query = "select * from orders natural join orderdetail natural join products natural join imdb_movies where orderid = " + str(getCurrentOrder(user_id))
-    # query = "select * from (	select movietitle, price, prod_id, movieid 	from (select * from carrito natural join products where carrito.prod_id = products.prod_id) as T4 natural join imdb_movies where T4.movieid = imdb_movies.movieid) as T"
     db_result = db_conn.execute(query)
     return list(db_result)
 
@@ -153,7 +148,6 @@ def createCurrentOrder(user):
     return new_order_id
 
 def insertIntoOrders(price, user_id, prod_id):
-
     order_id = str(getCurrentOrder(user_id))
     query = "select count(*) from orderdetail where orderid = "+str(order_id)+" and prod_id = "+str(prod_id)
     num_peliculas = int(str(list(db_conn.execute(query))[0])[1:-2])
@@ -192,7 +186,7 @@ def borrarProductoCarrito(prod_id, user_id):
     db_conn.execute(query)
 
 def buscarPeli(busqueda):
-    query = "select * from imdb_movies where movietitle like '%%" + str(busqueda) + "%%'"
+    query = "select * from imdb_movies where lower(movietitle) like '%%" + str(busqueda) + "%%'"
     db_result = db_conn.execute(query)
     return list(db_result)
 

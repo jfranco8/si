@@ -45,7 +45,7 @@ def ventas():
     print(url_for('static', filename='styles.css'))
     movies = database.topventas()
     genres = database.getgenres()
-    titulo = "Top ventas"
+    titulo = "Top ventas por año"
     return render_template('index.html', title = titulo, movies = movies, genres = genres)
 
 #categorias de pelis
@@ -93,6 +93,7 @@ def busqueda():
     genres = database.getgenres()
     if 'busqueda' in request.form:
         buscado = request.form['busqueda']
+        buscado = str(buscado).lower()
         pelis = database.buscarPeli(buscado)
         return render_template('index.html', title = buscado, genres = genres, movies=pelis)
     else:
@@ -120,13 +121,19 @@ def cambiar_contrasena(usuario):
         new_contr2 = request.form['new2']
 
         if md5(old_contr.encode()).hexdigest() != passw:
-            return render_template('cambiar_contrasena.html', title = "Cambiar contrasena", mal=True, genres = genres)
+            return render_template('cambiar_contrasena.html', title = "Cambiar contrasena", mal=True, distintas=False, genres = genres)
 
-        new_psw_encode = md5(new_contr1.encode()).hexdigest()
-        database.setpsw(id_usuario, new_psw_encode)
+        if new_contr1 == new_contr2:
+            # # Código para guardar las contraseñas cifradas
+            # # Lo comentamos porque en la base de datos proporcionada no están cifradas
+            # new_psw_encode = md5(new_contr1.encode()).hexdigest()
+            # database.setpsw(id_usuario, new_psw_encode)
+            database.setpsw(id_usuario, new_contr1)
 
-        return redirect(url_for('index'))
-    return render_template('cambiar_contrasena.html', title = "Cambiar contrasena", mal=False, genres = genres)
+            return redirect(url_for('index'))
+        else:
+            return render_template('cambiar_contrasena.html', title = "Cambiar contrasena", mal=False, distintas=True, genres = genres)
+    return render_template('cambiar_contrasena.html', title = "Cambiar contrasena", mal=False, distintas=False, genres = genres)
 
 
 @app.route('/perfil/', methods=['GET', 'POST'])
@@ -290,7 +297,8 @@ def login():
             usuarios = database.getuser(user)
             mail_usuario=usuarios[0]['email']
             passw_cif=usuarios[0]['password']
-            passw = md5(request.form['password'].encode()).hexdigest()
+            # passw = md5(request.form['password'].encode()).hexdigest()
+            passw = request.form['password']
             # aqui se deberia validar con fichero .dat del usuario
             cond = request.form['username'] == mail_usuario and passw_cif == passw
             if cond:
@@ -323,7 +331,8 @@ def signup():
                 resp = make_response(redirect(url_for('index')))
                 resp.set_cookie('userID', request.form['mail'])
 
-                password_cif = md5(request.form['password'].encode()).hexdigest()
+                # password_cif = md5(request.form['password'].encode()).hexdigest()
+                password_cif = request.form['password']
                 nombre = request.form['nombre'],
                 mail = request.form['mail'],
                 tarjeta = request.form['tarjeta'],

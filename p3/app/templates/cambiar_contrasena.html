@@ -46,6 +46,9 @@
   <br><br/>
   <span id="passstrength" class="cuadradito"></span>
   <br><br/>
+  {% if distintas %}
+    <p class="erroruser">Las contraseñas no coinciden</p>
+  {% endif %}
   <b>Nueva contraseña: </b> <input id="new1" name="new1" type="password" class="cuadradito">
   <br><br/>
   <b>Repetir contraseña: </b> <input name="new2" type="password" class="cuadradito">
