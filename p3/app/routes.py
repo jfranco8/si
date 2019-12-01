@@ -15,6 +15,8 @@ from app import database
 @app.route('/')
 @app.route('/index')
 def index():
+    if 'carrito' not in session:
+        session['carrito'] = []
     print(url_for('static', filename='styles.css'))
     movies = database.todas()
     genres = database.getgenres()
@@ -248,7 +250,7 @@ def carrito():
                 for prod in session['carrito']:
                     pelicula = database.getPeliculasProdById(prod['movieid'])[0]
                     database.insertIntoOrders( str(pelicula['price']), str(usuarios[0]['customerid']), str(pelicula['prod_id']))
-                session['carrito'] = []
+            session['carrito'] = []
             all_carrito = database.getPeliculasInCarrito(str(usuarios[0]['customerid']))
             return render_template('carrito.html', genres = genres, title = "Carrito", peliculas=all_carrito,compra=compra, no_saldo=no_saldo, no_registrado=no_registrado)
 
