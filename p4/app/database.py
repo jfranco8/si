@@ -99,7 +99,7 @@ def delCustomer(customerid, bFallo, bSQL, duerme, bCommit):
     query3 = "DELETE * FROM customers WHERE customerid = '" + customerid + "'"
 
     #Transacción vía sentencias SQL
-    if bSQL = True:
+    if bSQL == True:
         db_conn = db_engine.connect()
         try:
             db_conn.execute("BEGIN")
@@ -108,14 +108,14 @@ def delCustomer(customerid, bFallo, bSQL, duerme, bCommit):
             dbr.append('Pedidos de orderdetail borrados')
 
             #Ejecutar commit intermedio
-            if bCommit = True:
+            if bCommit == True:
                 db_conn.execute("COMMIT")
                 dbr.append('COMMIT intermedio ejecutado')
                 db_conn.execute("BEGIN")
                 dbr.append('BEGIN intermedio ejecutado')
 
             #Provocar error de integridad (eliminando el customer antes que sus orders)
-            if bFallo = True:
+            if bFallo == True:
                 db_conn.execute(query3)
                 dbr.append('Usuario customerid eliminado de customers')
                 db_conn.execute(query2)
@@ -140,12 +140,10 @@ def delCustomer(customerid, bFallo, bSQL, duerme, bCommit):
             db_conn.execute("ROLLBACK")
             dbr.append('ROLLBACK ejecutado debido a un error')
 
-        db_conn.close()
-        
     #Transacción vía funciones SQLAlchemy
     else:
         connection = engine.connect()
-        trans = connection.begin()
+        db_conn = connection.begin()
         dbr.append('BEGIN ejecutado')
         try:
             db_conn.execute(query1)
@@ -153,13 +151,13 @@ def delCustomer(customerid, bFallo, bSQL, duerme, bCommit):
 
             #Ejecutar commit intermedio
             if bCommit == True:
-                trans.commit()
+                db_conn.commit()
                 dbr.append('COMMIT intermedio ejecutado')
-                trans = connection.begin()
+                db_conn = connection.begin()
                 dbr.append('BEGIN intermedio ejecutado')
 
             #Provocar error de integridad (eliminando el customer antes que sus orders)
-            if bFallo = True:
+            if bFallo == True:
                 connection.execute(query3)
                 dbr.append('Usuario customerid eliminado de customers')
                 connection.execute(query2)
@@ -176,11 +174,11 @@ def delCustomer(customerid, bFallo, bSQL, duerme, bCommit):
             connection.execute(query)
             dbr.append('Duerme ' + duerme + ' segundos')
 
-            trans.commit()
+            db_conn.commit()
             dbr.append('COMMIT final ejecutado')
         except exc.IntegrityError:
-            trans.rollback()
+            db_conn.rollback()
             dbr.append('ROLLBACK ejecutado debido a un error')
 
-        trans.close()
+    db_conn.close()
     return dbr
