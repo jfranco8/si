@@ -87,17 +87,100 @@ def delCustomer(customerid, bFallo, bSQL, duerme, bCommit):
     # - usar sentencias SQL ('BEGIN', 'COMMIT', ...) si bSQL es True
     # - suspender la ejecución 'duerme' segundos en el punto adecuado para forzar deadlock
     # - ir guardando trazas mediante dbr.append()
-    query1 = "DELETE * FROM orderdetail NATURAL JOIN orders WHERE orderdetail.orderid = orders.orderid AND orders.customerid = " + customerid + ";"
-    query2 = "DELETE FROM customers WHERE customerid = " + customerid + ";"
 
-    try:
-        # TODO: ejecutar consultas
+    #Eliminamos tablas de 1 en 1 para hacer commit intermedio y error integridad
+    #Borramos contenido de orderdetail
+    query1 = "DELETE * FROM orderdetail USING orders WHERE orderdetail.orderid = orders.orderid AND orders.customerid = '" + customerid + "'"
 
-    except Exception as e:
-        # TODO: deshacer en caso de error
+    #Borramos contenido de orders
+    query2 = "DELETE * FROM orders WHERE customerid = '" + customerid + "'"
 
+    #Borramos contenido de customers
+    query3 = "DELETE * FROM customers WHERE customerid = '" + customerid + "'"
+
+    #Transacción vía sentencias SQL
+    if bSQL = True:
+        db_conn = db_engine.connect()
+        try:
+            db_conn.execute("BEGIN")
+            dbr.append('BEGIN ejecutado')
+            db_conn.execute(query1)
+            dbr.append('Pedidos de orderdetail borrados')
+
+            #Ejecutar commit intermedio
+            if bCommit = True:
+                db_conn.execute("COMMIT")
+                dbr.append('COMMIT intermedio ejecutado')
+                db_conn.execute("BEGIN")
+                dbr.append('BEGIN intermedio ejecutado')
+
+            #Provocar error de integridad (eliminando el customer antes que sus orders)
+            if bFallo = True:
+                db_conn.execute(query3)
+                dbr.append('Usuario customerid eliminado de customers')
+                db_conn.execute(query2)
+                dbr.append('Pedidos de orders borrados')
+
+            #Sin error de integridad
+            else:
+                db_conn.execute(query2)
+                dbr.append('Pedidos de orders borrados')
+                db_conn.execute(query3)
+                dbr.append('Usuario customerid eliminado de customers')
+
+            query = "SELECT * FROM pg_sleep ('" + duerme + "');"
+            db_conn.execute(query)
+            dbr.append('Duerme ' + duerme + ' segundos')
+
+            db_conn.execute("COMMIT")
+            dbr.append('COMMIT final ejecutado')
+
+        #Ejecutar ROLLBACK en caso de error
+        except exc.IntegrityError:
+            db_conn.execute("ROLLBACK")
+            dbr.append('ROLLBACK ejecutado debido a un error')
+
+        db_conn.close()
+        
+    #Transacción vía funciones SQLAlchemy
     else:
-        # TODO: confirmar cambios si todo va bien
+        connection = engine.connect()
+        trans = connection.begin()
+        dbr.append('BEGIN ejecutado')
+        try:
+            db_conn.execute(query1)
+            dbr.append('Pedidos de orderdetail borrados')
 
+            #Ejecutar commit intermedio
+            if bCommit == True:
+                trans.commit()
+                dbr.append('COMMIT intermedio ejecutado')
+                trans = connection.begin()
+                dbr.append('BEGIN intermedio ejecutado')
 
+            #Provocar error de integridad (eliminando el customer antes que sus orders)
+            if bFallo = True:
+                connection.execute(query3)
+                dbr.append('Usuario customerid eliminado de customers')
+                connection.execute(query2)
+                dbr.append('Pedidos de orders borrados')
+
+            #Sin error de integridad
+            else:
+                connection.execute(query2)
+                dbr.append('Pedidos de orders borrados')
+                connection.execute(query3)
+                dbr.append('Usuario customerid eliminado de customers')
+
+            query = "SELECT * FROM pg_sleep ('" + duerme + "');"
+            connection.execute(query)
+            dbr.append('Duerme ' + duerme + ' segundos')
+
+            trans.commit()
+            dbr.append('COMMIT final ejecutado')
+        except exc.IntegrityError:
+            trans.rollback()
+            dbr.append('ROLLBACK ejecutado debido a un error')
+
+        trans.close()
     return dbr

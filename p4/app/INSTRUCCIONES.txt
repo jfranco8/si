@@ -1,0 +1,8 @@
+--> BORRAR LA BASE DE DATOS
+dropdb -U alumnodb si1
+
+--> CREAR LA BASE DE DATOS
+createdb -U alumnodb si1
+
+-->CARGAR SU BASE DE DATOS
+cat dump_v1.1-P4.sql | psql -U alumnodb si1
