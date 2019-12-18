@@ -17,7 +17,11 @@ def dbCloseConnect(db_conn):
 def getListaCliMes(db_conn, mes, anio, iumbral, iintervalo, use_prepare, break0, niter):
 
     # TODO: implementar la consulta; asignar nombre 'cc' al contador resultante
-    consulta = " ... "
+    orderdate = anio+mes
+
+    if use_prepare:
+        query = "PREPARE getListaCliMes(varchar, integer) as SELECT count(DISTINCT customerid) as cc FROM orders WHERE totalamount > $2 and TO_CHAR(orderdate, 'YYYYMM') = $1;"
+        db_conn.execute(query)
 
     # TODO: ejecutar la consulta
     # - mediante PREPARE, EXECUTE, DEALLOCATE si use_prepare es True
@@ -30,13 +34,27 @@ def getListaCliMes(db_conn, mes, anio, iumbral, iintervalo, use_prepare, break0,
 
         # TODO: ...
 
+        if use_prepare:
+            query = "EXECUTE getListaCliMes ('"+str(anio)+str(mes)+"', "+str(iumbral)+");"
+            res = list(db_conn.execute(query))[0]
+        else:
+            query = "SELECT count(DISTINCT customerid) as cc FROM orders WHERE totalamount >" + str(iumbral)  +" and TO_CHAR(orderdate, 'YYYYMM') = '" + str(orderdate) + "'"
+            res = list(db_conn.execute(query))[0]
+
         # Guardar resultado de la query
         dbr.append({"umbral":iumbral,"contador":res['cc']})
+
+        if break0 == True and res['cc'] == 0:
+            break
 
         # TODO: si break0 es True, salir si contador resultante es cero
 
         # Actualizacion de umbral
         iumbral = iumbral + iintervalo
+
+    if use_prepare:
+        query = "DEALLOCATE getListaCliMes"
+        db_conn.execute(query)
 
     return dbr
 
