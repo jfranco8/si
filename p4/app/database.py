@@ -3,7 +3,7 @@
 import os
 import sys, traceback, time
 
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, text, func, exc
 
 # configurar el motor de sqlalchemy
 db_engine = create_engine("postgresql://alumnodb:alumnodb@localhost/si1", echo=False, execution_options={"autocommit":False})
@@ -108,17 +108,26 @@ def delCustomer(customerid, bFallo, bSQL, duerme, bCommit):
 
     #Eliminamos tablas de 1 en 1 para hacer commit intermedio y error integridad
     #Borramos contenido de orderdetail
-    query1 = "DELETE * FROM orderdetail USING orders WHERE orderdetail.orderid = orders.orderid AND orders.customerid = '" + customerid + "'"
+    query1 = "delete from orderdetail using orders where orderdetail.orderid = orders.orderid and orders.customerid = " + str(customerid)
 
     #Borramos contenido de orders
-    query2 = "DELETE * FROM orders WHERE customerid = '" + customerid + "'"
+    query2 = "delete FROM orders WHERE customerid = " + str(customerid)
 
     #Borramos contenido de customers
-    query3 = "DELETE * FROM customers WHERE customerid = '" + customerid + "'"
+    query3 = "delete FROM customers WHERE customerid = " + str(customerid)
+
+    query_contenido = "select * from customers where customerid = " + str(customerid)
+
+
 
     #Transacción vía sentencias SQL
     if bSQL == True:
         db_conn = db_engine.connect()
+
+        dbr.append("Contenido antes:")
+        contenido_det = list(db_conn.execute(query_contenido))
+        dbr.append(contenido_det)
+
         try:
             db_conn.execute("BEGIN")
             dbr.append('BEGIN ejecutado')
@@ -146,25 +155,36 @@ def delCustomer(customerid, bFallo, bSQL, duerme, bCommit):
                 db_conn.execute(query3)
                 dbr.append('Usuario customerid eliminado de customers')
 
-            query = "SELECT * FROM pg_sleep ('" + duerme + "');"
+            query = "select * FROM pg_sleep ('" + str(duerme) + "');"
             db_conn.execute(query)
-            dbr.append('Duerme ' + duerme + ' segundos')
-
-            db_conn.execute("COMMIT")
-            dbr.append('COMMIT final ejecutado')
+            dbr.append('Duerme ' + str(duerme) + ' segundos')
 
         #Ejecutar ROLLBACK en caso de error
         except exc.IntegrityError:
-            db_conn.execute("ROLLBACK")
+            db_conn.execute("ROLLBACK;")
             dbr.append('ROLLBACK ejecutado debido a un error')
+
+        else:
+            db_conn.execute("COMMIT")
+            dbr.append('COMMIT final ejecutado')
+
+        finally:
+            dbr.append("Contenido despues:")
+            contenido_det = list(db_conn.execute(query_contenido))
+            dbr.append(contenido_det)
 
     #Transacción vía funciones SQLAlchemy
     else:
-        connection = engine.connect()
+        connection = db_engine.connect()
         db_conn = connection.begin()
-        dbr.append('BEGIN ejecutado')
+
+        dbr.append("Contenido antes:")
+        contenido_det = list(connection.execute(query_contenido))
+        dbr.append(contenido_det)
+
         try:
-            db_conn.execute(query1)
+            dbr.append('BEGIN ejecutado')
+            connection.execute(query1)
             dbr.append('Pedidos de orderdetail borrados')
 
             #Ejecutar commit intermedio
@@ -188,15 +208,22 @@ def delCustomer(customerid, bFallo, bSQL, duerme, bCommit):
                 connection.execute(query3)
                 dbr.append('Usuario customerid eliminado de customers')
 
-            query = "SELECT * FROM pg_sleep ('" + duerme + "');"
+            query = "select * FROM pg_sleep ('" + str(duerme) + "');"
             connection.execute(query)
-            dbr.append('Duerme ' + duerme + ' segundos')
+            dbr.append('Duerme ' + str(duerme) + ' segundos')
 
-            db_conn.commit()
-            dbr.append('COMMIT final ejecutado')
         except exc.IntegrityError:
             db_conn.rollback()
             dbr.append('ROLLBACK ejecutado debido a un error')
+
+        else:
+            db_conn.commit()
+            dbr.append('COMMIT final ejecutado')
+
+        finally:
+            dbr.append("Contenido despues:")
+            contenido_det = list(connection.execute(query_contenido))
+            dbr.append(contenido_det)
 
     db_conn.close()
     return dbr

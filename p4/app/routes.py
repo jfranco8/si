@@ -17,11 +17,6 @@ def borraCliente():
         bFallo  = "bFallo"  in request.form
         duerme  = request.form["duerme"]
         dbr = database.delCustomer(customerid, bFallo, bSQL=='1', int(duerme), bCommit)
-        print('hola')
-        for s in dbr:
-            print(s)
-            print ('martolaa')
-        print('adios')
         return render_template('borraCliente.html', dbr=dbr)
     else:
         return render_template('borraCliente.html')
